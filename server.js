@@ -599,25 +599,7 @@ async function createTableIfNotExists() {
 }
 createTableIfNotExists();
 
-async function createtest2IfNotExists() {
-  const query = `
-      CREATE TABLE IF NOT EXISTS test3 (
-          id SERIAL PRIMARY KEY,
-          username VARCHAR(255) UNIQUE NOT NULL,
-          password VARCHAR(255) NOT NULL,
-      );
-  `;
-  try {
-      const client = await pool.connect();
-      await client.query(query);
-      client.release();
-      console.log("Table ensured to exist.");
-  } catch (error) {
-      console.error("Error creating table:", error);
-  }
-}
-createtest2fNotExists();
-
+// Ensure table exists
 // Serve static files
 app.use(express.static(path.join(__dirname)));
 
