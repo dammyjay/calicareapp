@@ -497,7 +497,7 @@
                 document.getElementById("liveDeviceId").textContent = deviceId;
 
                 // Now send to cloud backend
-                await fetch("https://calicareapp.onrender.com/postData2", {
+                await fetch("https://calicareapp.up.railway.app/postData2", {
                     method: "POST",
                     headers: {
                     "Content-Type": "application/x-www-form-urlencoded"

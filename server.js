@@ -63,9 +63,11 @@ const pool = new Pool({
 
 
   app.use(cors({
-    origin: 'https://calicareapp.onrender.com', // Your frontend domain
+    // origin: 'https://calicareapp.onrender.com', // Your frontend domain
+    origin: 'https://calicareapp.up.railway.app', // Your frontend domain
     credentials: true                            // Allow cookies to be sent
   }));
+  
 
   //-------solution for CORS error
   app.set("trust proxy", 1); // trust first proxy
@@ -354,7 +356,7 @@ app.get("/getUserData", async (req, res) => {
     await pool.query(`
       INSERT INTO pending_users (email, username, phone, gender, password, otp, profile_picture, role)
       VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
-      ON CONFLICT (email) DO UPDATE SET otp = $6, created_at = CURRENT_TIMESTAMP
+      
     `, [email, username, phone, gender, password, otp, profile_picture, role]);
   
     await transporter.sendMail({
