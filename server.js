@@ -565,19 +565,44 @@ app.post('/updateProfile', upload.single('profile_picture'), async (req, res) =>
     
   });
   
-  app.post('/reset-password/:token', async (req, res) => {
-    const tokenData = passwordResetTokens.get(req.params.token);
-    if (!tokenData || tokenData.expires < Date.now()) {
-      return res.send("Reset token is invalid or has expired.");
-    }
+  // app.post('/reset-password/:token', async (req, res) => {
+  //   const tokenData = passwordResetTokens.get(req.params.token);
+  //   if (!tokenData || tokenData.expires < Date.now()) {
+  //     return res.send("Reset token is invalid or has expired.");
+  //   }
   
-    const { password } = req.body;
-    await pool.query("UPDATE users SET password = $1 WHERE email = $2", [password, tokenData.email]);
+   
+  //   await pool.query("UPDATE users SET password = $1 WHERE email = $2", [password, tokenData.email]);
   
-    passwordResetTokens.delete(req.params.token);
-    res.send("Password successfully updated. You can now <a href='/login'>login</a>.");
-  });
+  //   passwordResetTokens.delete(req.params.token);
+  //   res.send("Password successfully updated. You can now <a href='/login'>login</a>.");
+// });
   
+
+app.post('/reset-password/:token', async (req, res) => {
+  const tokenData = passwordResetTokens.get(req.params.token);
+
+  if (!tokenData || tokenData.expires < Date.now()) {
+    return res.send("Reset token is invalid or has expired.");
+  }
+
+  const { password } = req.body;
+
+  // Check if user still exists
+  const userCheck = await pool.query("SELECT * FROM users WHERE email = $1", [tokenData.email]);
+  if (userCheck.rows.length === 0) {
+    return res.send("User account no longer exists.");
+  }
+
+  // Update password
+  await pool.query("UPDATE users SET password = $1 WHERE email = $2", [password, tokenData.email]);
+
+  // Clear the token after successful reset
+  passwordResetTokens.delete(req.params.token);
+
+  res.send("Password successfully updated. You can now <a href='/login'>login</a>.");
+});
+
 
 // Ensure table exists
 async function createTableIfNotExists() {
