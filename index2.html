@@ -18,8 +18,8 @@
     <style>
       body {
         font-family: Arial, sans-serif;
-        /* background-color: #f0f4f8; */
-        background-image: url(/Images/Background.png);
+        background-color: #EBFAFB;
+        /* background-image: url(/Images/Background.png); */
         background-size: auto;
         background-repeat: no-repeat;
         /* color: #333; */
@@ -47,6 +47,15 @@
         cursor: pointer;
         transition: background-color 0.3s ease;
       }
+
+      .mask{
+        position: fixed;    
+        top: 0;
+        left: 0;
+        z-index: -1;
+        width: 100px;
+        height:150px;
+    }
 
       .btn-dark-green {
         background-color: #006400;
@@ -172,7 +181,22 @@
         padding: 5px 10px;
         cursor: pointer;
       }
+      .background-image {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: -1; /* Puts it behind everything */
+      width: 50vw;  /* Or set specific width/height */
+      height: 50vh;
+      object-fit: cover;
+      opacity: 1;  /* Optional: Make it faint */
+    }
       @media (max-width: 600px) {
+        .background-image {
+        width: 500vw; /* Full width on small screens */
+        height: auto; /* Maintain aspect ratio */
+      }
         .navi-button {
           display: flex;
           justify-content: space-around;
@@ -207,6 +231,8 @@
     </style>
   </head>
   <body>
+    <img class="mask" src="Images/mask.png" alt="">
+    <img src="/Images/necktrans.png" class="background-image" alt="Background">
     <div class="header">
       <img
 
@@ -219,26 +245,31 @@
 
     <div class="navi">
       <div class="navi-header">
-        <img
-          id="userPhoto"
-          style="
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            object-fit: cover;
-          "
-        />
-        <span style="font-weight: bold" id="usernameDisplay"></span>
+        
+         <span style="font-weight: bold" id="usernameDisplay"></span>
       </div>
       <div class="navi-header">
-        <a href="/profile" style="background-color: #006400">Profile</a>
-        <a href="/logout" style="background-color: red">Logout</a>
+        <a href="/profile">
+          <img
+            id="userPhoto"
+            style="
+              width: 40px;
+              height: 40px;
+              border-radius: 50%;
+              object-fit: cover;  
+              border: 2px solid #0F9894;
+            "
+          />
+        </a>
+        <!-- <a href="/profile" style="background-color: #006400">Profile</a> -->
+        <!-- <a href="/logout" style="background-color: red">Logout</a> -->
       </div>
     </div>
 
     <div id="chart"></div>
-
-    <img id="posture" src="" alt="" />
+    <div style="width: 100%; text-align: center; margin-bottom: 20px;">
+      <img id="posture" src="" alt="" />
+    </div>
 
     <div class="navi-button">
       <div class="navigate">
@@ -357,12 +388,18 @@
         let barColor = "red";
         if (temperature > 80) {
           barColor = "green";
-          document.getElementById("posture").src = "mangreen.png";
+          document.getElementById("posture").src = "/Images/mangreen.png";
         } else if (temperature > 50) {
           barColor = "yellow";
-          document.getElementById("posture").src = "mangreen.png";
+          document.getElementById("posture").src = "/Images/mangreen.png";
+        } else if (temperature >= 0) {
+          barColor = "red";
+          document.getElementById("posture").src = "/Images/manred.png";
+        } else {
+          // For negative temperatures, show a default or warning image
+          barColor = "red";
+          document.getElementById("posture").src = "/Images/manred.png";
         }
-        document.getElementById("posture").src = "mangred.png";
 
         Plotly.react(
           "chart",
@@ -389,9 +426,11 @@
           {
             title: " ",
             margin: { t: 50, b: 0, l: 0, r: 0 },
-            // paper_bgcolor: 'rgba(0,0,0,0)',  // <-- Makes outer background transparent
-            // plot_bgcolor: 'rgba(0,0,0,0)'    // <-- Makes inner plot area transparent
-          }
+            paper_bgcolor: 'rgba(0,0,0,0)',  // Makes outer background transparent
+            plot_bgcolor: 'rgba(0,0,0,0)',   // Makes inner plot area transparent
+            responsive: true
+          },
+          {responsive: true}
         );
       }
 
@@ -417,7 +456,7 @@
           return res.json();
         })
         .then((user) => {
-          document.getElementById("usernameDisplay").innerText = user.username;
+          document.getElementById("usernameDisplay").innerText = "Hello " + user.username;
           if (user.profile_picture) {
             // document.getElementById('userPhoto').src = '/uploads/' + user.profile_picture;
             document.getElementById("userPhoto").src = user.profile_picture;
