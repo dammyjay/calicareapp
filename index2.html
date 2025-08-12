@@ -182,16 +182,37 @@
         cursor: pointer;
       }
       .background-image {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      z-index: -1; /* Puts it behind everything */
-      width: 50vw;  /* Or set specific width/height */
-      height: 50vh;
-      object-fit: cover;
-      opacity: 1;  /* Optional: Make it faint */
-    }
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: -1;
+        width: 50vw;
+        height: 50vh;
+        max-width: 100vw;
+        max-height: 100vh;
+        min-width: 200px;
+        min-height: 200px;
+        object-fit: cover;
+        opacity: 1;
+        transition: width 0.3s, height 0.3s;
+      }
+
+      @media (max-width: 900px) {
+        .background-image {
+          width: 80vw;
+          height: 40vh;
+        }
+      }
+
+      @media (max-width: 600px) {
+        .background-image {
+          width: 100vw;
+          height: 30vh;
+          min-width: 100px;
+          min-height: 100px;
+        }
+      }
       @media (max-width: 600px) {
         .background-image {
         width: 500vw; /* Full width on small screens */
