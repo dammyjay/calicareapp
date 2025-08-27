@@ -227,6 +227,7 @@ app.get('/', (req, res) => {
     res.redirect('/splash');
 });
 
+// Middleware to check if user is admin
 function isAdmin(req, res, next) {
   if (req.session && req.session.user && req.session.user.role === 'admin') {
     return next();
@@ -235,7 +236,7 @@ function isAdmin(req, res, next) {
   }
 }
 
-
+// Admin dashboard route
 app.get("/admin", (req, res) => {
   if (req.session.user && req.session.user.role === "admin") {
     res.sendFile(__dirname + "Admin/admin.html");
@@ -283,14 +284,127 @@ app.put("/admin/users/:id", isAdmin, async (req, res) => {
   }
 });
 
+// Get user-specific device data
+// app.get("/getUserDeviceData", async (req, res) => {
+//   const { email } = req.query;
+//   const result = await pool.query(
+//     "SELECT * FROM nodemcu2_data WHERE email = $1 ORDER BY date DESC, time DESC LIMIT 10",
+//     [email]
+//   );
+//   res.json(result.rows);
+// });
+
+// Get filtered, paginated data
+// app.get("/getUserDeviceData", async (req, res) => {
+//   try {
+//     const {
+//       email,
+//       filterType = "today",   // today | yesterday | last2 | last7 | custom
+//       startDate,              // YYYY-MM-DD (when custom)
+//       endDate,                // YYYY-MM-DD (when custom)
+//       startTime,              // HH:MM (optional)
+//       endTime,                // HH:MM (optional)
+//       page = 1,
+//       limit = 50
+//     } = req.query;
+
+//     if (!email) return res.status(400).json({ error: "email is required" });
+
+//     const pageNum = Math.max(parseInt(page, 10) || 1, 1);
+//     const lim = Math.min(Math.max(parseInt(limit, 10) || 50, 1), 500); // hard cap
+//     const offset = (pageNum - 1) * lim;
+
+//     // Build date range (server-side) for non-custom filters
+//     // Uses CURRENT_DATE in DB (UTC on server). If you need Africa/Lagos strictly,
+//     // consider using `current_timestamp AT TIME ZONE 'Africa/Lagos'`.
+//     let whereParts = [`email = $1`];
+//     let params = [email];
+
+//     // Build a single timestamp for filtering: ts = date::timestamp + time
+//     // (If time can be NULL, coalesce to midnight)
+//     let tsExpr = `(date::timestamp + COALESCE(time, '00:00:00'::time))`;
+
+//     // Helper: push "ts between x and y"
+//     const addBetween = (startTsParam, endTsParam) => {
+//       whereParts.push(`${tsExpr} BETWEEN $${params.length + 1} AND $${params.length + 2}`);
+//       params.push(startTsParam, endTsParam);
+//     };
+
+//     // Compute ranges
+//     if (filterType === "today") {
+//       whereParts.push(`date = CURRENT_DATE`);
+//     } else if (filterType === "yesterday") {
+//       whereParts.push(`date = CURRENT_DATE - INTERVAL '1 day'`);
+//     } else if (filterType === "last2") {
+//       // Today + yesterday
+//       whereParts.push(`date >= CURRENT_DATE - INTERVAL '1 day'`);
+//     } else if (filterType === "last7") {
+//       whereParts.push(`date >= CURRENT_DATE - INTERVAL '7 days'`);
+//     } else if (filterType === "custom") {
+//       if (!startDate || !endDate) {
+//         return res.status(400).json({ error: "startDate and endDate are required for custom filter" });
+//       }
+
+//       // Build day boundaries first (00:00:00 to 23:59:59) then refine by time below
+//       const startTs = `${startDate} 00:00:00`;
+//       const endTs = `${endDate} 23:59:59`;
+//       addBetween(startTs, endTs);
+//     } else {
+//       // default to today if unrecognized
+//       whereParts.push(`date = CURRENT_DATE`);
+//     }
+
+//     // Time-of-day window (optional) — applies within the chosen dates above.
+//     // If the filter wasn’t custom we still need a BETWEEN window. Create a wide window for non-custom,
+//     // then refine by time using EXTRACT(EPOCH) bounds to keep index-friendly filtering.
+//     if (startTime || endTime) {
+//       // Normalize times
+//       // If startTime missing -> 00:00; if endTime missing -> 23:59:59
+//       const startT = (startTime || "00:00") + ":00";
+//       const endT   = (endTime   || "23:59") + ":59";
+
+//       whereParts.push(`(time BETWEEN $${params.length + 1} AND $${params.length + 2})`);
+//       params.push(startT, endT);
+//     }
+
+//     // Build SQL
+//     // We’ll also get an extra row (lim+1) to detect "hasMore"
+//     const sql = `
+//       WITH filtered AS (
+//         SELECT *,
+//                (date::timestamp + COALESCE(time, '00:00:00'::time)) AS ts
+//         FROM nodemcu2_data
+//         WHERE ${whereParts.join(" AND ")}
+//       )
+//       SELECT device_id, temperature, humidity, date, time
+//       FROM filtered
+//       ORDER BY ts DESC
+//       LIMIT $${params.length + 1} OFFSET $${params.length + 2};
+//     `;
+
+//     const result = await pool.query(sql, [...params, lim + 1, offset]);
+
+//     const rows = result.rows.slice(0, lim);
+//     const hasMore = result.rows.length > lim;
+
+//     res.json({ rows, hasMore, page: pageNum, limit: lim });
+//   } catch (err) {
+//     console.error("getUserDeviceData error:", err);
+//     res.status(500).json({ error: "Internal server error" });
+//   }
+// });
+
+
 app.get("/getUserDeviceData", async (req, res) => {
-  const { email } = req.query;
+  const { email, page = 1, limit = 50 } = req.query;
+  const offset = (page - 1) * limit;
   const result = await pool.query(
-    "SELECT * FROM nodemcu2_data WHERE email = $1 ORDER BY date DESC, time DESC",
-    [email]
+    "SELECT * FROM nodemcu2_data WHERE email = $1 ORDER BY date DESC, time DESC LIMIT $2 OFFSET $3",
+    [email, limit, offset]
   );
   res.json(result.rows);
 });
+
 
 
 app.get("/getUserData", async (req, res) => {
@@ -438,7 +552,7 @@ app.post('/updateProfile', upload.single('profile_picture'), async (req, res) =>
 });
 
 
-  
+// Forgot password route  
   app.get('/forgot-password', (req, res) => {
     res.sendFile(path.join(__dirname, 'forgot-password.html'));
   });
@@ -468,6 +582,7 @@ app.post('/updateProfile', upload.single('profile_picture'), async (req, res) =>
     res.send("Reset link sent to your email.");
   });
 
+  // Render reset password form
   app.get('/reset-password/:token', (req, res) => {
     const tokenData = passwordResetTokens.get(req.params.token);
   
@@ -567,20 +682,8 @@ app.post('/updateProfile', upload.single('profile_picture'), async (req, res) =>
     
   });
   
-  // app.post('/reset-password/:token', async (req, res) => {
-  //   const tokenData = passwordResetTokens.get(req.params.token);
-  //   if (!tokenData || tokenData.expires < Date.now()) {
-  //     return res.send("Reset token is invalid or has expired.");
-  //   }
   
-   
-  //   await pool.query("UPDATE users SET password = $1 WHERE email = $2", [password, tokenData.email]);
-  
-  //   passwordResetTokens.delete(req.params.token);
-  //   res.send("Password successfully updated. You can now <a href='/login'>login</a>.");
-// });
-  
-
+// Handle password reset form submission
 app.post('/reset-password/:token', async (req, res) => {
   const tokenData = passwordResetTokens.get(req.params.token);
 
@@ -701,25 +804,7 @@ app.post("/postData2", express.urlencoded({ extended: true }), async (req, res) 
   }
 });
 
-
-// app.get('/nodemcu-status', (req, res) => {
-//     if (!nodeMCULastSeen) {
-//         return res.json({ online: false, message: 'No data received yet' });
-//     }
-
-//     const now = new Date();
-//     const diffInSeconds = (now - nodeMCULastSeen) / 1000;
-
-//     if (diffInSeconds < 10) { // if data received in last 10 seconds, consider it online
-//         res.json({ online: true, lastSeen: nodeMCULastSeen });
-//     } else {
-//         res.json({ online: false, lastSeen: nodeMCULastSeen });
-//     }
-// });
-
-
-// Retrieve all data in descending order
-
+// Endpoint to check NodeMCU status
 app.get('/nodemcu-status', (req, res) => {
   if (!nodeMCULastSeen) {
     return res.json({ online: false, message: 'No data received yet' });

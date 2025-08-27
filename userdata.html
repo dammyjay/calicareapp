@@ -139,6 +139,7 @@
         <p>🌡️ EMG Reading: <span id="liveTemp">--</span> %</p>
         <!-- <p>💧 Humidity: <span id="liveHum">--</span> %</p> -->
         <p>🆔 Device ID: <span id="liveDeviceId">--</span></p>
+        <p>🔋 Battery: <span id="batt">--</span> %</p>
       </div>
       <div class="connectbtn">
         <!-- <p id="node-status"></p> -->
@@ -186,6 +187,7 @@
       </thead>
       <tbody></tbody>
     </table>
+    <button id="loadMore"> Load More</button>
 
     <script>
       let userEmail = null;
@@ -203,24 +205,51 @@
         })
         .catch(() => alert("Failed to load user email"));
 
-      function loadUserData() {
-        fetch(`/getUserDeviceData?email=${encodeURIComponent(userEmail)}`)
-          .then((res) => res.json())
-          .then((data) => {
-            const tableBody = document.querySelector("#dataTable tbody");
-            tableBody.innerHTML = "";
-            data.forEach((row) => {
-              tableBody.innerHTML += `
-                        <tr>
-                            <td>${row.device_id}</td>
-                            <td>${row.temperature}</td>
-                            <td>${row.date.slice(0, 10)}</td>
-                            <td>${row.time}</td>
-                        </tr>
-                    `;
-            });
-          });
-      }
+      // function loadUserData() {
+      //   fetch(`/getUserDeviceData?email=${encodeURIComponent(userEmail)}`)
+      //     .then((res) => res.json())
+      //     .then((data) => {
+      //       const tableBody = document.querySelector("#dataTable tbody");
+      //       tableBody.innerHTML = "";
+      //       data.forEach((row) => {
+      //         tableBody.innerHTML += `
+      //                   <tr>
+      //                       <td>${row.device_id}</td>
+      //                       <td>${row.temperature}</td>
+      //                       <td>${row.date.slice(0, 10)}</td>
+      //                       <td>${row.time}</td>
+      //                   </tr>
+      //               `;
+      //       });
+      //     });
+      // }
+
+      let currentPage = 1;
+const limit = 50;
+
+function loadUserData() {
+  fetch(`/getUserDeviceData?email=${encodeURIComponent(userEmail)}&page=${currentPage}&limit=${limit}`)
+    .then(res => res.json())
+    .then(data => {
+      const tableBody = document.querySelector("#dataTable tbody");
+      data.forEach(row => {
+        tableBody.innerHTML += `
+          <tr>
+            <td>${row.device_id}</td>
+            <td>${row.temperature}</td>
+            <td>${row.date.slice(0, 10)}</td>
+            <td>${row.time}</td>
+          </tr>`;
+      });
+    });
+}
+
+// When "Load More" is clicked
+document.getElementById("loadMoreBtn").addEventListener("click", () => {
+  currentPage++;
+  loadUserData();
+});
+
 
       setTimeout(loadUserData, 2000); // Wait for userEmail to load
 
@@ -235,6 +264,8 @@
               // document.getElementById("liveHum").textContent = latest.humidity;
               document.getElementById("liveDeviceId").textContent =
                 latest.device_id;
+              // document.getElementById("batt").textContent =
+              //   latest.hum; // Assuming humidity is used for battery
             }
           });
       }
@@ -611,6 +642,7 @@ data.forEach((row, index) => {
               // Optional UI update:
               document.getElementById("liveTemp").textContent = temp;
               document.getElementById("liveDeviceId").textContent = deviceId;
+              document.getElementById("batt").textContent = hum; // Assuming humidity is used for battery
 
               // Now send to cloud backend
               await fetch("https://calicareapp.up.railway.app/postData2", {
