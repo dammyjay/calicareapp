@@ -158,11 +158,11 @@
       flex-direction: column;
     } */
     .setting-label-group {
-  display: flex;
-  align-items: start; /* vertical alignment */
-  flex-direction: column;
-  line-height: 0.0; /* reduce vertical spacing */
-}
+      display: flex;
+      align-items: start; /* vertical alignment */
+      flex-direction: column;
+      line-height: 0.0; /* reduce vertical spacing */
+    }
 
     .top1 {
       display: flex;
@@ -171,6 +171,18 @@
       flex-direction: row;
       gap: 10px;
       width: 100%;
+    }
+
+    .background-image {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: -1; /* Puts it behind everything */
+      width: 50vw;  /* Or set specific width/height */
+      height: 50vh;
+      object-fit: cover;
+      opacity: 1;  /* Optional: Make it faint */
     }
 
     @media (max-width: 768px) {
@@ -218,6 +230,10 @@
       .btn {
         font-size: 12px;
       }
+      .background-image {
+        width: 500vw; /* Full width on small screens */
+        height: auto; /* Maintain aspect ratio */
+      }
     }
 
     .dark-mode {
@@ -242,6 +258,7 @@
   <div class="settings-card">
     <div class="top1">
         <img id="goBack" src="/Images/Back.png" alt="logo" width="20" height="20"  style="cursor:pointer;"/>
+        <img src="/Images/necktrans.png" class="background-image" alt="Background">
         <h2>Settings</h2>
         
     </div>
@@ -353,7 +370,7 @@
 
   </div>
 
-  <script>
+  <!-- <script>
     let userEmail = '';
     let connectedDevice = null;
 
@@ -636,7 +653,166 @@
     };
 
 
-  </script>
+  </script> -->
+
+  <!-- <script>
+  // Load saved values
+  document.getElementById("notifToggle").checked = localStorage.getItem("notif") === "true";
+  document.getElementById("reminderToggle").checked = localStorage.getItem("reminder") === "true";
+
+  // Handle theme (dark/light)
+  const savedTheme = localStorage.getItem("theme") || "light";
+  document.getElementById("darkToggle").checked = savedTheme === "dark";
+  applyTheme(savedTheme);
+
+  document.getElementById("languageSelect").value = localStorage.getItem("lang") || "en";
+
+  // Update storage when toggled
+  document.getElementById("notifToggle").onchange = e =>
+    localStorage.setItem("notif", e.target.checked);
+
+  document.getElementById("reminderToggle").onchange = e =>
+    localStorage.setItem("reminder", e.target.checked);
+
+  document.getElementById("darkToggle").onchange = e => {
+    const newTheme = e.target.checked ? "dark" : "light";
+    localStorage.setItem("theme", newTheme);
+    applyTheme(newTheme);
+  };
+
+  document.getElementById("languageSelect").onchange = e =>
+    localStorage.setItem("lang", e.target.value);
+
+  // Apply theme helper
+  function applyTheme(theme) {
+    if (theme === "dark") {
+      document.body.classList.add("dark-mode");
+    } else {
+      document.body.classList.remove("dark-mode");
+    }
+  }
+
+  // Simulated API check for NodeMCU (to be replaced with real API)
+  function checkDeviceStatus() {
+    fetch("/nodemcu-status")
+      .then(res => res.json())
+      .then(data => {
+        const statusImg = document.getElementById("deviceStatus");
+        statusImg.src = data.online ? "/Images/online.png" : "/Images/offline.png";
+        document.getElementById("node-status").innerText = data.online ? "Online" : "Offline";
+      })
+      .catch(() => {
+        document.getElementById("deviceStatus").src = "/Images/offline.png";
+        document.getElementById("node-status").innerText = "Offline";
+      });
+  }
+
+  // Check on load
+  checkDeviceStatus();
+
+  // Device connection (Bluetooth simulation)
+  async function connectDevice() {
+    try {
+      const device = await navigator.bluetooth.requestDevice({
+        acceptAllDevices: true
+      });
+      alert("Connected to: " + device.name);
+    } catch (err) {
+      alert("Bluetooth connection failed: " + err.message);
+    }
+  }
+
+  // Go back button
+  document.getElementById('goBack').addEventListener('click', () => {
+    window.history.back();
+  });
+</script> -->
+
+<script>
+  // --- Cleanup old keys ---
+  localStorage.removeItem("darkmode");
+  localStorage.removeItem("lang");
+
+  // --- Apply Theme ---
+  function applyTheme(theme) {
+    if (theme === "dark") {
+      document.body.classList.add("dark-mode");
+    } else {
+      document.body.classList.remove("dark-mode");
+    }
+  }
+
+  // --- Load persisted settings ---
+  document.getElementById("notifToggle").checked =
+    localStorage.getItem("notif") === "true";
+  document.getElementById("reminderToggle").checked =
+    localStorage.getItem("reminder") === "true";
+
+  // Theme (use only "theme")
+  const savedTheme = localStorage.getItem("theme") || "light";
+  applyTheme(savedTheme);
+  document.getElementById("darkToggle").checked = savedTheme === "light";
+
+  // Language (use only "language")
+  const savedLang = localStorage.getItem("language") || "en";
+  document.getElementById("languageSelect").value = savedLang;
+
+  // --- Update storage on change ---
+  document.getElementById("notifToggle").onchange = (e) =>
+    localStorage.setItem("notif", e.target.checked);
+
+  document.getElementById("reminderToggle").onchange = (e) =>
+    localStorage.setItem("reminder", e.target.checked);
+
+  document.getElementById("darkToggle").onchange = (e) => {
+    const newTheme = e.target.checked ? "light" : "dark";
+    localStorage.setItem("theme", newTheme);
+    applyTheme(newTheme);
+  };
+
+  document.getElementById("languageSelect").onchange = (e) => {
+    localStorage.setItem("language", e.target.value);
+  };
+
+  // --- Simulated API check for NodeMCU ---
+  function checkDeviceStatus() {
+    fetch("/nodemcu-status")
+      .then((res) => res.json())
+      .then((data) => {
+        const statusImg = document.getElementById("deviceStatus");
+        statusImg.src = data.online ? "/Images/online.png" : "/Images/offline.png";
+        document.getElementById("node-status").innerText = data.online
+          ? "Online"
+          : "Offline";
+      })
+      .catch(() => {
+        document.getElementById("deviceStatus").src = "/Images/offline.png";
+        document.getElementById("node-status").innerText = "Offline";
+      });
+  }
+
+  // Check device status on load
+  checkDeviceStatus();
+
+  // --- Device connection (Bluetooth simulation) ---
+  async function connectDevice() {
+    try {
+      const device = await navigator.bluetooth.requestDevice({
+        acceptAllDevices: true,
+      });
+      alert("Connected to: " + device.name);
+    } catch (err) {
+      alert("Bluetooth connection failed: " + err.message);
+    }
+  }
+
+  // --- Go Back ---
+  document.getElementById("goBack").addEventListener("click", () => {
+    window.history.back();
+  });
+</script>
+
+<script src="/app-setting.js"></script>
 </body>
 </html>
 

@@ -123,6 +123,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Serve static files (CSS, JS)
 app.use(express.static('public'));
+// app.use(express.static(__dirname));
 
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
@@ -283,117 +284,6 @@ app.put("/admin/users/:id", isAdmin, async (req, res) => {
     res.status(500).send("Error updating user");
   }
 });
-
-// Get user-specific device data
-// app.get("/getUserDeviceData", async (req, res) => {
-//   const { email } = req.query;
-//   const result = await pool.query(
-//     "SELECT * FROM nodemcu2_data WHERE email = $1 ORDER BY date DESC, time DESC LIMIT 10",
-//     [email]
-//   );
-//   res.json(result.rows);
-// });
-
-// Get filtered, paginated data
-// app.get("/getUserDeviceData", async (req, res) => {
-//   try {
-//     const {
-//       email,
-//       filterType = "today",   // today | yesterday | last2 | last7 | custom
-//       startDate,              // YYYY-MM-DD (when custom)
-//       endDate,                // YYYY-MM-DD (when custom)
-//       startTime,              // HH:MM (optional)
-//       endTime,                // HH:MM (optional)
-//       page = 1,
-//       limit = 50
-//     } = req.query;
-
-//     if (!email) return res.status(400).json({ error: "email is required" });
-
-//     const pageNum = Math.max(parseInt(page, 10) || 1, 1);
-//     const lim = Math.min(Math.max(parseInt(limit, 10) || 50, 1), 500); // hard cap
-//     const offset = (pageNum - 1) * lim;
-
-//     // Build date range (server-side) for non-custom filters
-//     // Uses CURRENT_DATE in DB (UTC on server). If you need Africa/Lagos strictly,
-//     // consider using `current_timestamp AT TIME ZONE 'Africa/Lagos'`.
-//     let whereParts = [`email = $1`];
-//     let params = [email];
-
-//     // Build a single timestamp for filtering: ts = date::timestamp + time
-//     // (If time can be NULL, coalesce to midnight)
-//     let tsExpr = `(date::timestamp + COALESCE(time, '00:00:00'::time))`;
-
-//     // Helper: push "ts between x and y"
-//     const addBetween = (startTsParam, endTsParam) => {
-//       whereParts.push(`${tsExpr} BETWEEN $${params.length + 1} AND $${params.length + 2}`);
-//       params.push(startTsParam, endTsParam);
-//     };
-
-//     // Compute ranges
-//     if (filterType === "today") {
-//       whereParts.push(`date = CURRENT_DATE`);
-//     } else if (filterType === "yesterday") {
-//       whereParts.push(`date = CURRENT_DATE - INTERVAL '1 day'`);
-//     } else if (filterType === "last2") {
-//       // Today + yesterday
-//       whereParts.push(`date >= CURRENT_DATE - INTERVAL '1 day'`);
-//     } else if (filterType === "last7") {
-//       whereParts.push(`date >= CURRENT_DATE - INTERVAL '7 days'`);
-//     } else if (filterType === "custom") {
-//       if (!startDate || !endDate) {
-//         return res.status(400).json({ error: "startDate and endDate are required for custom filter" });
-//       }
-
-//       // Build day boundaries first (00:00:00 to 23:59:59) then refine by time below
-//       const startTs = `${startDate} 00:00:00`;
-//       const endTs = `${endDate} 23:59:59`;
-//       addBetween(startTs, endTs);
-//     } else {
-//       // default to today if unrecognized
-//       whereParts.push(`date = CURRENT_DATE`);
-//     }
-
-//     // Time-of-day window (optional) — applies within the chosen dates above.
-//     // If the filter wasn’t custom we still need a BETWEEN window. Create a wide window for non-custom,
-//     // then refine by time using EXTRACT(EPOCH) bounds to keep index-friendly filtering.
-//     if (startTime || endTime) {
-//       // Normalize times
-//       // If startTime missing -> 00:00; if endTime missing -> 23:59:59
-//       const startT = (startTime || "00:00") + ":00";
-//       const endT   = (endTime   || "23:59") + ":59";
-
-//       whereParts.push(`(time BETWEEN $${params.length + 1} AND $${params.length + 2})`);
-//       params.push(startT, endT);
-//     }
-
-//     // Build SQL
-//     // We’ll also get an extra row (lim+1) to detect "hasMore"
-//     const sql = `
-//       WITH filtered AS (
-//         SELECT *,
-//                (date::timestamp + COALESCE(time, '00:00:00'::time)) AS ts
-//         FROM nodemcu2_data
-//         WHERE ${whereParts.join(" AND ")}
-//       )
-//       SELECT device_id, temperature, humidity, date, time
-//       FROM filtered
-//       ORDER BY ts DESC
-//       LIMIT $${params.length + 1} OFFSET $${params.length + 2};
-//     `;
-
-//     const result = await pool.query(sql, [...params, lim + 1, offset]);
-
-//     const rows = result.rows.slice(0, lim);
-//     const hasMore = result.rows.length > lim;
-
-//     res.json({ rows, hasMore, page: pageNum, limit: lim });
-//   } catch (err) {
-//     console.error("getUserDeviceData error:", err);
-//     res.status(500).json({ error: "Internal server error" });
-//   }
-// });
-
 
 app.get("/getUserDeviceData", async (req, res) => {
   const { email, page = 1, limit = 50 } = req.query;
@@ -903,7 +793,98 @@ app.post("/admin/add-exercise", exerciseUpload.single("poster_image"), async (re
   }
 });
 
+const productStorage = new CloudinaryStorage({
+  cloudinary,
+  params: {
+    folder: 'product_images',
+    allowed_formats: ['jpg', 'jpeg', 'png'],
+    transformation: [{ width: 600, height: 600, crop: 'limit' }]
+  }
+});
+const productUpload = multer({ storage: productStorage });
 
+// Get all products (admin)
+app.get('/admin/products', isAdmin, async (req, res) => {
+  try {
+    const result = await pool.query('SELECT * FROM products ORDER BY id DESC');
+    res.json(result.rows);
+  } catch (err) {
+    res.status(500).send('Server error');
+  }
+});
+
+// Add a new product (admin)
+app.post('/admin/products', isAdmin, productUpload.single('image'), async (req, res) => {
+  const { name, description, price, category } = req.body;
+  const image = req.file ? req.file.path : null;
+  try {
+    await pool.query(
+      'INSERT INTO products (name, description, price, category, image) VALUES ($1, $2, $3, $4, $5)',
+      [name, description, price, category, image]
+    );
+    res.status(200).send('Product added successfully');
+  } catch (err) {
+    console.error('Error adding product:', err);
+    res.status(500).send('Error saving product');
+  }
+});
+
+// Update a product (admin)
+app.put('/admin/products/:id', isAdmin, productUpload.single('image'), async (req, res) => {
+  const { name, description, price, category } = req.body;
+  const image = req.file ? req.file.path : null;
+  const id = req.params.id;
+  try {
+    if (image) {
+      await pool.query(
+        'UPDATE products SET name=$1, description=$2, price=$3, category=$4, image=$5 WHERE id=$6',
+        [name, description, price, category, image, id]
+      );
+    } else {
+      await pool.query(
+        'UPDATE products SET name=$1, description=$2, price=$3, category=$4 WHERE id=$5',
+        [name, description, price, category, id]
+      );
+    }
+    res.status(200).send('Product updated');
+  } catch (err) {
+    console.error('Error updating product:', err);
+    res.status(500).send('Error updating product');
+  }
+});
+
+// Delete a product (admin)
+app.delete('/admin/products/:id', isAdmin, async (req, res) => {
+  try {
+    await pool.query('DELETE FROM products WHERE id = $1', [req.params.id]);
+    res.sendStatus(200);
+  } catch (err) {
+    res.status(500).send('Error deleting product');
+  }
+});
+
+async function createProductsTableIfNotExists() {
+  const query = `
+    CREATE TABLE IF NOT EXISTS products (
+      id SERIAL PRIMARY KEY,
+      name VARCHAR(255) NOT NULL,
+      description TEXT,
+      price NUMERIC(10,2) NOT NULL,
+      category VARCHAR(100),
+      image TEXT,
+      created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+    );
+  `;
+  try {
+    const client = await pool.connect();
+    await client.query(query);
+    client.release();
+    console.log("✅ Products table ensured to exist.");
+  } catch (error) {
+    console.error("❌ Error creating products table:", error);
+  }
+}
+createProductsTableIfNotExists();
 
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => console.log(`Server running on port ${PORT}`));

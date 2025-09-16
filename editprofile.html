@@ -5,6 +5,7 @@
     <title>Edit Profile</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" href="/Images/calicare logo.png" type="image/x-icon" />
+    <link rel="stylesheet" href="style.css">
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
@@ -152,10 +153,30 @@
         opacity: 0.8;
         transition: opacity 0.3s;
       }
+
+        .background-image {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: -1; /* Puts it behind everything */
+      width: 50vw;  /* Or set specific width/height */
+      height: 50vh;
+      object-fit: cover;
+      opacity: 1;  /* Optional: Make it faint */
+    }
+
+      @media (min-width: 600px) {
+      .background-image {
+        width: 500vw; /* Full width on small screens */
+        height: auto; /* Maintain aspect ratio */
+      }
+    }
     </style>
   </head>
   <body>
     <img class="mask" src="Images/mask.png" alt="">
+  <img src="/Images/necktrans.png" class="background-image" alt="Background">
     <div class="profile-card">
       <h3 style="width: 100%; text-align: left;">Edit Profile</h3>
       <!-- <img
@@ -293,5 +314,6 @@
           }
         });
     </script>
+      <script src="/app-setting.js"></script>
   </body>
 </html>

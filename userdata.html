@@ -4,6 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="icon" href="/Images/calicare logo.png" type="image/x-icon" />
+    <link rel="stylesheet" href="style.css">
     <title>EMG Tracking</title>
 
     <style>
@@ -19,7 +20,7 @@
         /* align-items: center; */
         justify-content: center;
         margin-top: 30px;
-        background: #e9fdf4;
+        background: rgba(233, 253, 244, 0.3);
         border-radius: 10px;
         padding: 20px;
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
@@ -96,6 +97,18 @@
         margin-bottom: 10px;
       }
 
+      .background-image {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: -1; /* Puts it behind everything */
+      width: 50vw;  /* Or set specific width/height */
+      height: 50vh;
+      object-fit: cover;
+      opacity: 1;  /* Optional: Make it faint */
+    }
+
       @media (max-width: 600px) {
         .live-readings {
           width: 90%;
@@ -114,6 +127,11 @@
           height: 100px;
           width: 90%;
         }
+
+        .background-image {
+        width: 500vw; /* Full width on small screens */
+        height: auto; /* Maintain aspect ratio */
+      }
       }
     </style>
   </head>
@@ -122,6 +140,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
   <body>
+    <img src="/Images/necktrans.png" class="background-image" alt="Background">
     <div class="live-readings">
       <a href="index2.html">
         <img
@@ -696,5 +715,6 @@ data.forEach((row, index) => {
         tableBody.prepend(row); // add to top
       }
     </script>
+      <script src="/app-setting.js"></script>
   </body>
 </html>

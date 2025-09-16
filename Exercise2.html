@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Exercise Tutorials</title>
   <link rel="icon" href="Images/calicare logo.png" type="image/x-icon" />
+  <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"/>
 
   <style>
@@ -71,6 +72,18 @@
       margin-top: 15px;
     }
 
+    .background-image {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      z-index: -1; /* Puts it behind everything */
+      width: 50vw;  /* Or set specific width/height */
+      height: 50vh;
+      object-fit: cover;
+      opacity: 1;  /* Optional: Make it faint */
+    }
+
     @media (max-width: 768px) {
       .exercise-card {
         flex-direction: column;
@@ -81,11 +94,22 @@
         border-right: none;
         border-bottom: 2px solid #e0e0e0;
       }
+      .background-image {
+        width: 500vw; /* Full width on small screens */
+        height: auto; /* Maintain aspect ratio */
+      }
+    }
+
+    @media (max-width: 600px){
+      .background-image {
+        width: 500vw; /* Full width on small screens */
+        height: auto; /* Maintain aspect ratio */
+      }
     }
   </style>
 </head>
 <body>
-
+  <img src="/Images/necktrans.png" class="background-image" alt="Background">
   <a href="index2.html">
     <img style="width: 40px; height: 40px;" src="Images/calicare logo.png" alt="Site Logo" />
   </a>
@@ -105,6 +129,66 @@
   
 
   <div id="exercise-container"></div>
+  <div id="product-viewer" style="margin-top:40px;">
+    <h2 style="color:#024c12;">🛒 Products</h2>
+    <div style="display:flex;align-items:center;justify-content:center;gap:20px;">
+      <button id="prevProduct" style="font-size:2rem;background:none;border:none;cursor:pointer;">&#8592;</button>
+      <div id="product-card" style="min-width:250px;max-width:350px;background:#fff;border-radius:12px;box-shadow:0 4px 10px rgba(0,0,0,0.08);padding:20px;text-align:center;">
+        <!-- Product details will be injected here -->
+      </div>
+      <button id="nextProduct" style="font-size:2rem;background:none;border:none;cursor:pointer;">&#8594;</button>
+    </div>
+    <div id="product-pagination" style="text-align:center;margin-top:10px;color:#1270b0;font-size:14px;"></div>
+  </div>
+  <script>
+    let products = [];
+    let currentProduct = 0;
+
+    async function loadProducts() {
+      try {
+        const res = await fetch("/admin/products");
+        products = await res.json();
+        showProduct(currentProduct);
+      } catch (e) {
+        document.getElementById("product-card").innerHTML = "<p style='color:red;'>Failed to load products.</p>";
+      }
+    }
+
+    function showProduct(idx) {
+      if (!products.length) {
+        document.getElementById("product-card").innerHTML = "<p>No products available.</p>";
+        document.getElementById("product-pagination").textContent = "";
+        return;
+      }
+      const p = products[idx];
+      document.getElementById("product-card").innerHTML = `
+        <img src="${p.image_url || 'Images/calicare logo.png'}" alt="${p.name}" style="width:100%;max-height:180px;object-fit:contain;border-radius:8px;">
+        <h3 style="color:#024c12;">${p.name}</h3>
+        <p style="color:#333;">${p.description || ''}</p>
+        <p style="font-weight:bold;color:#1270b0;">₦${p.price}</p>
+      `;
+      document.getElementById("product-pagination").textContent = `Product ${idx+1} of ${products.length}`;
+      document.getElementById("prevProduct").disabled = idx === 0;
+      document.getElementById("nextProduct").disabled = idx === products.length-1;
+    }
+
+    document.getElementById("prevProduct").onclick = function() {
+      if (currentProduct > 0) {
+        currentProduct--;
+        showProduct(currentProduct);
+      }
+    };
+    document.getElementById("nextProduct").onclick = function() {
+      if (currentProduct < products.length-1) {
+        currentProduct++;
+        showProduct(currentProduct);
+      }
+    };
+
+    loadProducts();
+  </script>
+
+  </div>
 
   <script>
     // async function loadExercises() {
@@ -264,5 +348,6 @@
 
     loadExercises();
   </script>
+    <script src="/app-setting.js"></script>
 </body>
 </html>

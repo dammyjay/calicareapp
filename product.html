@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Product Management</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        form, table { margin-bottom: 30px; }
+        table { width: 100%; border-collapse: collapse; }
+        th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
+        th { background: #f4f4f4; }
+        button { margin-right: 5px; }
+        img { max-width: 60px; max-height: 60px; }
+    </style>
+</head>
+<body>
+    <h1>Product Management</h1>
+    <h2>Add / Edit Product</h2>
+    <form id="productForm" enctype="multipart/form-data">
+        <input type="hidden" id="productId">
+        <label>
+            Title:
+            <input type="text" id="productTitle" required>
+        </label>
+        <label>
+            Description:
+            <textarea id="productDescription" required></textarea>
+        </label>
+        <label>
+            Category:
+            <select id="productCategory" required>
+                <option value="">Select Category</option>
+                <option value="New Intake">New Intake</option>
+                <option value="Best Sellers">Best Sellers</option>
+                <option value="Top Rated">Top Rated</option>
+            </select>
+        </label>
+        <label>
+            Price:
+            <input type="number" id="productPrice" required>
+        </label>
+        <label>
+            Image:
+            <input type="file" id="productImage" accept="image/*">
+        </label>
+        <button type="submit">Save Product</button>
+        <button type="button" id="cancelEdit" style="display:none;">Cancel</button>
+    </form>
+
+    <h2>All Products</h2>
+    <table id="productTable">
+        <thead>
+            <tr>
+                <th>Image</th>
+                <th>Title</th>
+                <th>Description</th>
+                <th>Category</th>
+                <th>Price ($)</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Products will be listed here -->
+        </tbody>
+    </table>
+
+    <script>
+    let products = [];
+    let editingProductId = null;
+
+    // Fetch products from the backend API
+    async function fetchProducts() {
+        const res = await fetch('/admin/products');
+        products = await res.json();
+        renderProducts();
+    }
+
+    function renderProducts() {
+        const tbody = document.querySelector('#productTable tbody');
+        tbody.innerHTML = '';
+        products.forEach((product, idx) => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+                <td>${product.image ? `<img src="${product.image.replace(/^public[\\/]/, '')}" alt="${product.name}">` : ''}</td>
+                <td>${product.name}</td>
+                <td>${product.description}</td>
+                <td>${product.category}</td>
+                <td>${product.price}</td>
+                <td>
+                    <button onclick="editProduct(${idx})">Edit</button>
+                    <button onclick="deleteProduct(${idx})">Delete</button>
+                </td>
+            `;
+            tbody.appendChild(tr);
+        });
+    }
+
+    document.getElementById('productForm').onsubmit = async function(e) {
+        e.preventDefault();
+        const name = document.getElementById('productTitle').value;
+        const description = document.getElementById('productDescription').value;
+        const category = document.getElementById('productCategory').value;
+        const price = document.getElementById('productPrice').value;
+        const imageInput = document.getElementById('productImage');
+        const file = imageInput.files[0];
+
+        const formData = new FormData();
+        formData.append('name', name);
+        formData.append('description', description);
+        formData.append('category', category);
+        formData.append('price', price);
+        if (file) {
+            formData.append('image', file);
+        }
+
+        if (editingProductId) {
+            // Update product in DB
+            await fetch(`/admin/products/${editingProductId}`, {
+                method: 'PUT',
+                body: formData
+            });
+            editingProductId = null;
+            document.getElementById('cancelEdit').style.display = 'none';
+        } else {
+            // Add new product to DB
+            await fetch('/admin/products', {
+                method: 'POST',
+                body: formData
+            });
+        }
+        document.getElementById('productForm').reset();
+        fetchProducts();
+    };
+
+    window.editProduct = function(idx) {
+        const product = products[idx];
+        document.getElementById('productTitle').value = product.name;
+        document.getElementById('productDescription').value = product.description;
+        document.getElementById('productCategory').value = product.category;
+        document.getElementById('productPrice').value = product.price;
+        editingProductId = product.id;
+        document.getElementById('cancelEdit').style.display = '';
+    };
+
+    window.deleteProduct = async function(idx) {
+        if (confirm('Delete this product?')) {
+            const product = products[idx];
+            await fetch(`/admin/products/${product.id}`, { method: 'DELETE' });
+            fetchProducts();
+        }
+    };
+
+    document.getElementById('cancelEdit').onclick = function() {
+        editingProductId = null;
+        document.getElementById('productForm').reset();
+        this.style.display = 'none';
+    };
+
+    // Initial fetch
+    fetchProducts();
+    </script>
+      <script src="/app-setting.js"></script>
+</body>
+</html>
