@@ -305,7 +305,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title data-i18n="login">Login</title>
+  <title data-i18n="login_title">Login</title>
   <link rel="icon" href="/Images/calicare logo.png" type="image/x-icon">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"/>
@@ -447,19 +447,19 @@
 
     <div class="log-details">
       <h2 data-i18n="welcomeBack">Welcome Back!</h2>
-      <p data-i18n="enterDetails">PLEASE ENTER YOUR DETAILS</p>
+      <span data-i18n="enterDetails">PLEASE ENTER YOUR DETAILS</span>
     </div>
 
     <form action="/login" method="post">
       <div class="container">
-        <input data-i18n="email" type="text" name="email" placeholder="Email" required>
+        <input data-i18n-placeholder="email_placeholder" type="text" name="email" placeholder="Email" required>
         <span class="toggle-password">
           <i class="fa fa-envelope"></i>
         </span>
       </div>
 
       <div class="password-container">
-        <input data-i18n="password" id="password" type="password" name="password" placeholder="Password" required />
+        <input data-i18n-placeholder="password" id="password" type="password" name="password" placeholder="Password" required />
         <span id="togglePassword" class="toggle-password">
           <i class="fa fa-eye"></i>
         </span>
@@ -475,15 +475,15 @@
 
       <div class="log-with">
         <img src="/Images/face.png" alt="Facebook Logo">
-        <p style="font-size: 12px; font-weight: bold;">Login with Facebook</p>
+        <p data-i18n="loginWithFacebook" style="font-size: 12px; font-weight: bold;">Login with Facebook</p>
       </div>
 
       <div class="log-with">
         <img src="/Images/goog.png" alt="Google Logo">
-        <p style="font-size: 12px; font-weight: bold;">Login with Google</p>
+        <p data-i18n="loginWithGoogle" style="font-size: 12px; font-weight: bold;">Login with Google</p>
       </div>
 
-      <button data-i18n="login" type="submit">Login</button>
+      <button data-i18n="login_button" type="submit">Login</button>
     </form>
 
     <p><span data-i18n="dontHaveAccount">Don't have an account?</span> 

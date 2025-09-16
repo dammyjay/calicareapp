@@ -233,8 +233,8 @@
     <div class="form-container">
       <img src="/Images/calicare logo.png" alt="Logo" class="logo" />
       <div class="log-details">
-        <h2>Welcome Onboard!</h2>
-        <p>PLEASE ENTER YOUR DETAILS</p>
+        <h2 data-i18n="welcome_onbard">Welcome Onboard!</h2>
+        <p data-i18n="details">PLEASE ENTER YOUR DETAILS</p>
       </div>
 
       <form
@@ -245,7 +245,7 @@
       >
         <!-- <input type="email" name="email" required placeholder="Email" /> -->
         <div class="container">
-          <input type="text" name="email" placeholder="Email" required />
+          <input data-i18n-placeholder="email_placeholder" type="text" name="email" placeholder="Email" required />
           <span class="toggle-password">
             <i class="fa fa-envelope"></i>
           </span>
@@ -254,7 +254,7 @@
         <!-- <input type="text" name="username" required placeholder="Username" />
         -->
         <div class="container">
-          <input type="text" name="username" placeholder="Full name" required />
+          <input data-i18n-placeholder="fullname" type="text" name="username" placeholder="Fullname" required />
           <span class="toggle-password">
             <i class="fa fa-user"></i>
           </span>
@@ -262,13 +262,13 @@
 
         <!-- <input type="number" name="phone" required placeholder="Phone" /> -->
         <div class="container">
-          <input type="number" name="phone" placeholder="Phone" required />
+          <input data-i18n-placeholder="phone" type="number" name="phone" placeholder="Phone" required />
           <span class="toggle-password">
             <i class="fa fa-phone"></i>
           </span>
         </div>
         <div class="gender-box">
-          <label style="font-size: 13px; color: grey; padding-left: 0px" for=""
+          <label data-i18n="gender" style="font-size: 13px; color: grey; padding-left: 0px" for=""
             >Gender</label
           >
           <select name="gender" required>
@@ -280,6 +280,7 @@
 
         <div class="password-container">
           <input
+            data-i18n-placeholder="password"
             id="password"
             type="password"
             name="password"
@@ -292,7 +293,7 @@
         </div>
 
         <!-- File input for image upload -->
-        <label style="font-size: 12px" for="profile-pic"
+        <label data-i18n="upload" style="font-size: 12px" for="profile-pic"
           >Upload Profile Picture:</label
         >
         <input
@@ -308,20 +309,20 @@
           <img id="preview-image" alt="Image Preview" />
         </div>
 
-        <label class="checkbox-label">
+        <label data-i18n="rememberMe" class="checkbox-label">
           <input type="checkbox" name="remember" />
           Remember me
         </label>
         <div class="terms">
           <label class="checkbox-label">
             <input type="checkbox" name="remember" />
-            I agree to the
-            <a href="terms.html" style="color: #1270b0">Terms and Conditions</a>
+            <span data-i18n="agree">I agree to the </span>
+            <a data-i18n="terms_condition" href="terms.html" style="color: #1270b0"> Terms and Conditions</a>
           </label>
         </div>
-        <button type="submit">Sign Up</button>
+        <button data-i18n="signup" type="submit">Sign Up</button>
       </form>
-      <p>Already have an account? <a href="/login">Login</a></p>
+      <p data-i18n="already_have">Already have an account? </p> <a data-i18n="login_button" href="/login">Login</a>
 
       <!-- OTP Modal -->
       <div id="otp-modal" style="display: none">
@@ -333,16 +334,16 @@
             text-align: center;
           "
         >
-          <p style="color: #218838">
+          <p data-i18n="verify_text" style="color: #218838">
             Please check your email for verification OTP sent and enter it
             below.
           </p>
-          <p style="color: #e73f07">
+          <p data-i18n="spam" style="color: #e73f07">
             you can also check your spam folder if you don't see it in your
             inbox.
           </p>
           <input id="otp-input" placeholder="Enter OTP" />
-          <button onclick="verifyOtp()">Verify OTP</button>
+          <button data-i18n="verify-btn" onclick="verifyOtp()">Verify OTP</button>
         </div>
       </div>
     </div>
