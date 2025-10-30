@@ -72,3 +72,34 @@ body {
     margin-bottom: 70px;
     /* prevents nav overlap with content */
 }
+
+.mask {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -1;
+    width: 100px;
+    height: 150px;
+}
+
+.background-image {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: -1;
+    /* Puts it behind everything */
+    width: 50vw;
+    /* Or set specific width/height */
+    height: 50vh;
+    object-fit: cover;
+    opacity: 1;
+    /* Optional: Make it faint */
+}
+
+@media (max-width: 600px) {
+    .background-image {
+        width: 80vw;
+        height: auto;
+    }
+}
