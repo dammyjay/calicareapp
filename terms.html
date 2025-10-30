@@ -92,11 +92,37 @@
     button:hover {
       background: #20b2b7;
     }
+    .mask{
+        position: fixed;    
+        top: 0;
+        left: 0;
+        z-index: -1;
+        width: 100px;
+        height:150px;
+    }
+    .background-image {
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: -1; /* Puts it behind everything */
+        width: 50vw; /* Or set specific width/height */
+        height: 50vh;
+        object-fit: cover;
+        opacity: 1; /* Optional: Make it faint */
+      }
+
+      @media screen and (max-width: 600px) {
+        .background-image {
+            width: 80vw; /* Adjust width for smaller screens */
+            height: auto; /* Maintain aspect ratio */
+        }
+    }
   </style>
 </head>
 <body>
-    <img class="mask" src="mask.png" alt="">
-  <img src="necktrans.png" class="background-image" alt="Background">
+    <img class="mask" src="/Images/mask.png" alt="">
+  <img src="/images/necktrans.png" class="background-image" alt="Background">
   <h1>CaliCare Terms of Use</h1>
   <button type="button" onclick="window.history.back()">Go Back</button>
 
@@ -236,14 +262,17 @@
     <li>Had recent neck surgery</li>
     <li>Have neurological conditions</li>
   </ul>
+<br><br>
+  <button onclick="window.history.back()" style="background-color: #11b124; width: 100%;">Agree</button>
 
-  <div class="contact">
+  <!-- <div class="contact">
     <h2>Contact Information</h2>
     <p>CaliCare Technologies<br>
     Email: <a href="mailto:legal.calicare@gmail.com">legal.calicare@gmail.com</a><br>
     Phone: 15824522934</p>
     <button type="button" onclick="window.history.back()">Go Back</button>
-  </div>
+    
+  </div> -->
     <script src="/app-setting.js"></script>
 </body>
 </html>

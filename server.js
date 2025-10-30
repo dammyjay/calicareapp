@@ -340,6 +340,12 @@ app.get("/getUserData", async (req, res) => {
     res.sendFile(path.join(__dirname, "profile.html"));
   });
 
+app.get("/userdata.html", (req, res) => {
+  if (!req.session.user) return res.redirect("/login");
+  res.sendFile(path.join(__dirname, "userdata.html"));
+});
+
+
   app.get('/logout', (req, res) => {
     req.session.destroy();
     res.redirect('/login');

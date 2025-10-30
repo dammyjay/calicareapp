@@ -10,3 +10,65 @@ body.dark-mode button {
     color: #fff !important;
     border: 1px solid #555 !important;
 }
+
+body {
+    margin-bottom: 70px;
+    /* prevents nav overlap with content */
+}
+
+.bottom-nav {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: #a2f9fc;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    border-top: 1px solid #ddd;
+    /* padding: 8px 0; */
+    z-index: 1000;
+    box-shadow: 0 -2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.bottom-nav .nav-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    color: #333;
+    font-size: 12px;
+}
+
+.bottom-nav .nav-item img {
+    width: 24px;
+    height: 24px;
+    margin-bottom: 4px;
+    filter: grayscale(100%);
+    transition: 0.3s;
+}
+
+.bottom-nav .nav-item.active img,
+.bottom-nav .nav-item:hover img {
+    filter: none;
+}
+
+.bottom-nav .nav-item.active span,
+.bottom-nav .nav-item:hover span {
+    /* background-color: #0f9894; */
+    color: #ffffff;
+    font-weight: 600;
+}
+
+.nav-item.active {
+    background-color: #0f9894;
+    color: #ffffff;
+    font-weight: 600;
+    border-radius: 0px;
+    padding: 5px 10px;
+}
+
+body {
+    margin-bottom: 70px;
+    /* prevents nav overlap with content */
+}

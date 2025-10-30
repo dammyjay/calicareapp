@@ -13,6 +13,7 @@
         background-color: #ebfafb;
         margin: 0;
         padding: 20px;
+        margin-bottom: 90px;
       }
       .live-readings {
         display: flex;
@@ -210,6 +211,36 @@
     </table>
     <button id="loadMore"> Load More</button>
 
+        <!-- 🌐 Bottom Navigation -->
+<nav class="bottom-nav">
+  <a href="index2.html" class="nav-item">
+    <img src="Images/home.png" alt="Home" />
+    <span>Home</span>
+  </a>
+  <a href="userdata2.html" class="nav-item">
+    <img src="Images/data.png" alt="Live" />
+    <span>Data Analytics</span>
+  </a>
+  <a href="Exercise.html" class="nav-item">
+    <img src="Images/exercise.png" alt="Profile" />
+    <span>Exercise</span>
+  </a>
+  <a href="profile.html" class="nav-item">
+    <img src="Images/profile.png" alt="Settings" />
+    <span>Profile</span>
+  </a>
+</nav>
+
+
+<script>
+  const currentPage = location.pathname.split("/").pop();
+  document.querySelectorAll(".bottom-nav .nav-item").forEach((item) => {
+    if (item.getAttribute("href") === currentPage) {
+      item.classList.add("active");
+    }
+  });
+</script>
+
     <script>
       let userEmail = null;
 
@@ -245,11 +276,11 @@
       //     });
       // }
 
-      let currentPage = 1;
+      let thistPage = 1;
 const limit = 50;
 
 function loadUserData() {
-  fetch(`/getUserDeviceData?email=${encodeURIComponent(userEmail)}&page=${currentPage}&limit=${limit}`)
+  fetch(`/getUserDeviceData?email=${encodeURIComponent(userEmail)}&page=${thisPage}&limit=${limit}`)
     .then(res => res.json())
     .then(data => {
       const tableBody = document.querySelector("#dataTable tbody");
@@ -267,7 +298,7 @@ function loadUserData() {
 
 // When "Load More" is clicked
 document.getElementById("loadMoreBtn").addEventListener("click", () => {
-  currentPage++;
+  thisPage++;
   loadUserData();
 });
 

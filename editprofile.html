@@ -21,6 +21,7 @@
         justify-content: center;
         align-items: center;
         min-height: 100vh;
+        margin-bottom: 90px;
       }
 
       .profile-card {
@@ -259,6 +260,36 @@
         </div>
       </div>
     </div>
+
+        <!-- 🌐 Bottom Navigation -->
+<nav class="bottom-nav">
+  <a href="index2.html" class="nav-item">
+    <img src="Images/home.png" alt="Home" />
+    <span>Home</span>
+  </a>
+  <a href="userdata2.html" class="nav-item">
+    <img src="Images/data.png" alt="Live" />
+    <span>Data Analytics</span>
+  </a>
+  <a href="Exercise.html" class="nav-item">
+    <img src="Images/exercise.png" alt="Profile" />
+    <span>Exercise</span>
+  </a>
+  <a href="settings.html" class="nav-item">
+    <img src="Images/profile.png" alt="Settings" />
+    <span>Profile</span>
+  </a>
+</nav>
+
+
+<script>
+  const currentPage = location.pathname.split("/").pop();
+  document.querySelectorAll(".bottom-nav .nav-item").forEach((item) => {
+    if (item.getAttribute("href") === currentPage) {
+      item.classList.add("active");
+    }
+  });
+</script>
 
     <script>
       fetch("/getProfile")

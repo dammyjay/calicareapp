@@ -5,7 +5,7 @@
     <title>Admin Product Management</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        body { font-family: Arial, sans-serif; margin: 40px; }
+        body { font-family: Arial, sans-serif; margin: 40px; margin-bottom: 90px;}
         form, table { margin-bottom: 30px; }
         table { width: 100%; border-collapse: collapse; }
         th, td { border: 1px solid #ccc; padding: 8px; text-align: left; }
@@ -64,6 +64,36 @@
             <!-- Products will be listed here -->
         </tbody>
     </table>
+
+        <!-- 🌐 Bottom Navigation -->
+<nav class="bottom-nav">
+  <a href="index2.html" class="nav-item">
+    <img src="Images/home.png" alt="Home" />
+    <span>Home</span>
+  </a>
+  <a href="userdata2.html" class="nav-item">
+    <img src="Images/data.png" alt="Live" />
+    <span>Data Analytics</span>
+  </a>
+  <a href="Exercise.html" class="nav-item">
+    <img src="Images/exercise.png" alt="Profile" />
+    <span>Exercise</span>
+  </a>
+  <a href="profile.html" class="nav-item">
+    <img src="Images/profile.png" alt="Settings" />
+    <span>Profile</span>
+  </a>
+</nav>
+
+
+<script>
+  const currentPage = location.pathname.split("/").pop();
+  document.querySelectorAll(".bottom-nav .nav-item").forEach((item) => {
+    if (item.getAttribute("href") === currentPage) {
+      item.classList.add("active");
+    }
+  });
+</script>
 
     <script>
     let products = [];
