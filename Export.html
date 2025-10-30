@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css" />
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  </head>
+  <body>
+    <img class="mask" src="/Images/mask.png" alt="" />
+    <img
+      src="/Images/necktrans.png"
+      class="background-image"
+      alt="Background"
+    />
+    <h2 class="header">🎥 Export Medical Data</h2>
+
+    <div class="row-details">
+        <h3>Data Selection</h2>
+        <div class="datas">
+            <div class="datas1">
+                <img src="/Images/posture data icon.png" alt="">
+                <p>Posture Data</p>
+            </div>
+
+            <div class="datas1">
+                <img src="/Images/pain data icon.png" alt="">
+                <p>Pain Data</p>
+            </div>
+        </div>
+    </div>
+
+        <div class="row-details">
+        <h3>Select Date</h2>
+        <div class="datas">
+            <div class="datas1 datee">
+                <div class="data-date">
+                    <img src="/Images/calendar icon.png" alt="">
+                    <p>From:</p>
+                </div>
+
+                <div class="data-date">
+                    <input style="padding: 5px 2px; border-radius: 10px; border: #d2d2d2 1px solid;   background-color: #ebfafb;" type="date">
+                </div>
+            </div>
+
+            <div class="datas1 datee">
+                <div class="data-date">
+                    <img src="/Images/calendar icon.png" alt="">
+                    <p>To:</p>
+                </div>
+
+                <div class="data-date">
+                    <input style="padding: 5px 2px; border-radius: 10px; border: #d2d2d2 1px solid;   background-color: #ebfafb;" type="date">
+                </div>
+            </div>
+        </div>
+    </div>
+
+     <div class="row-details">
+        <h3>Select Format</h2>
+        <div class="datas format">
+            <div class="datas1 formatting">
+                <img src="/Images/pdf icon.png" alt="">
+                <p>PDF</p>
+            </div>
+
+            <div class="datas1 formatting">
+                <img src="/Images/csv icon.png" alt="">
+                <p>CSV</p>
+            </div>
+        </div>
+    </div>
+
+    <button>Expor Data</button>
+
+    <button onclick="downloadCSV()">📄 Export Data</button>
+    <!-- <button onclick="exportPDF()">🧾 Export PDF</button> -->
+    <button onclick="downloadPDF()">🧾 Export PDF</button>
+
+    <table
+      id="dataTable"
+      class="table table-striped table-bordered"
+      style="
+        width: 100%;
+        margin-top: 20px;
+        border-radius: 10px;
+        overflow: hidden;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        display: none;
+      "
+    >
+      <thead >
+        <tr>
+          <th>Device ID</th>
+          <th>EMG Value</th>
+          <th>Date</th>
+          <th>Time</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+
+        <div class="row-details">
+        <h3>Export Status</h2>
+        <div class="datas">
+            <div class="datas1 datee">
+                <div class="data-date">
+                    <img src="/Images/In progress icon.png" alt="">
+                    <div>
+                        <p style="font-weight: bold;">In Progress</p>
+                        <p style="color: #848484;">Exporting data...</p>
+                    </div>
+                </div>
+
+                <div class="data-date" style="text-align: right;">
+                    <h4>12% Complete</h4>
+                </div>
+            </div>
+
+            <div class="datas1 datee">
+                <div class="data-date">
+                    <img src="/Images/Failed icon.png" alt="">
+                    <div>
+                        <p style="font-weight: bold;">Failed</p>
+                        <p style="color: #848484;">Data Export Failed.</p>
+                    </div>
+                </div>
+
+                <div class="data-date" style="text-align: right;">
+                    <h4>2 files failed</h4>
+                </div>
+            </div>
+
+            <div class="datas1 datee">
+                <div class="data-date">
+                    <img src="/Images/completed icon.png" alt="">
+                    <div>
+                        <p style="font-weight: bold;">Completed</p>
+                        <p style="color: #848484;">Data exported successfully</p>
+                    </div>
+                </div>
+
+                <div class="data-date" style="text-align: right;">
+                    <h4>10 files exported</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- 🌐 Bottom Navigation -->
+    <nav class="bottom-nav">
+      <a href="index2.html" class="nav-item">
+        <img src="Images/home.png" alt="Home" />
+        <span>Home</span>
+      </a>
+      <a href="userdata2.html" class="nav-item">
+        <img src="Images/data.png" alt="Data" />
+        <span>Data Analytics</span>
+      </a>
+      <a href="Exercise.html" class="nav-item active">
+        <img src="Images/exercise.png" alt="Excercise" />
+        <span>Exercise</span>
+      </a>
+      <a href="profile.html" class="nav-item active">
+        <img src="Images/profile.png" alt="Profile" />
+        <span>Profile</span>
+      </a>
+    </nav>
+
+    <script>
+      const currentPage = location.pathname.split("/").pop();
+      document.querySelectorAll(".bottom-nav .nav-item").forEach((item) => {
+        if (item.getAttribute("href") === currentPage) {
+          item.classList.add("active");
+        }
+      });
+    </script>
+
+
+    <div class="live-readings" style="display: none;">
+      <a href="index2.html">
+        <img
+          style="width: 40px; height: 40px"
+          src="Images/calicare logo.png"
+          alt="Site Logo"
+        />
+      </a>
+      <!-- <img src="/Images/calicare logo.png" alt="Logo" style="width: 50px; height: 50px; border-radius: 50%; margin-bottom: 10px;"> -->
+      <h3>📡 Live Readings</h3>
+      <p>👤 Username: <span id="userName">--</span></p>
+      <p>📧 Email: <span id="userEmailDisplay">--</span></p>
+
+      <div class="details">
+        <p>🌡️ EMG Reading: <span id="liveTemp">--</span> %</p>
+        <!-- <p>💧 Humidity: <span id="liveHum">--</span> %</p> -->
+        <p>🆔 Device ID: <span id="liveDeviceId">--</span></p>
+      </div>
+      <div class="connectbtn">
+        <!-- <p id="node-status"></p> -->
+        <p id="neckguard-stat">Device Stat</p>
+        <!-- <button id="device-stat" class="btn-export" onclick="connectToDevice()">Connect</button> -->
+        <!-- <button id="device-stat" class="btn-export" onclick="connectToESP32()">Connect Device</button> -->
+        <button id="connect" class="btn-export">Connect Device</button>
+      </div>
+      <div id="summary">
+        <p><strong>Average EMG:</strong> <span id="avgValue"></span></p>
+        <p><strong>Highest EMG:</strong> <span id="maxValue"></span></p>
+      </div>
+    </div>
+
+    <div class="container" style="display: none;">
+      <h1>ESP32 BLE Messenger</h1>
+      <button id="connect">Connect to Neckguard</button>
+      <textarea
+        id="log"
+        readonly
+        placeholder="NeckGuard messages will appear here..."
+      ></textarea>
+      <input type="text" id="message" placeholder="Type a message..." />
+      <button id="send">Send</button>
+    </div>
+
+<!-- ----------------------- -->
+     <script>
+      let userEmail = null;
+
+      fetch("/getProfile")
+        .then((res) => res.json())
+        .then((user) => {
+          userEmail = user.email;
+          userName = user.username;
+          profilPicUrl = user.profile_picture;
+          document.getElementById("userName").textContent = user.username;
+          document.getElementById("userEmailDisplay").textContent = user.email;
+          loadUserData();
+          pollLiveData();
+        })
+        .catch(() => alert("Failed to load user email"));
+
+      function loadUserData() {
+        fetch(`/getUserDeviceData?email=${encodeURIComponent(userEmail)}`)
+          .then((res) => res.json())
+          .then((data) => {
+            const tableBody = document.querySelector("#dataTable tbody");
+            tableBody.innerHTML = "";
+            data.forEach((row) => {
+              tableBody.innerHTML += `
+                        <tr>
+                            <td>${row.device_id}</td>
+                            <td>${row.temperature}</td>
+                            <td>${row.date.slice(0, 10)}</td>
+                            <td>${row.time}</td>
+                        </tr>
+                    `;
+            });
+          });
+      }
+
+      setTimeout(loadUserData, 2000); // Wait for userEmail to load
+
+      function pollLiveData() {
+        fetch(`/getUserDeviceData?email=${encodeURIComponent(userEmail)}`)
+          .then((res) => res.json())
+          .then((data) => {
+            if (data.length > 0) {
+              const latest = data[0];
+              document.getElementById("liveTemp").textContent =
+                latest.temperature;
+              // document.getElementById("liveHum").textContent = latest.humidity;
+              document.getElementById("liveDeviceId").textContent =
+                latest.device_id;
+            }
+          });
+      }
+
+      // Refresh every 5 seconds
+      setInterval(pollLiveData, 5000);
+
+      async function connectToDevice() {
+        try {
+          const device = await navigator.bluetooth.requestDevice({
+            acceptAllDevices: true,
+            optionalServices: ["battery_service"], // Change to your NodeMCU service UUID if known
+          });
+
+          connectedDevice = device;
+          const server = await device.gatt.connect();
+
+          document.getElementById(
+            "node-status"
+          ).textContent = `Connected to: ${device.name}`;
+          document.getElementById(
+            "device-stat"
+          ).textContent = `Connected to: ${device.name}`;
+          // Optionally send email to device here (requires writable characteristic)
+        } catch (error) {
+          console.error("Bluetooth connection failed:", error);
+          alert("Bluetooth connection failed");
+        }
+      }
+
+      // 🟦 CONNECT TO ESP32 VIA BLE AND SEND EMAIL
+      async function connectToESP32() {
+        try {
+          const serviceUUID = "4fafc201-1fb5-459e-8fcc-c5c9c331914b";
+          const characteristicUUID = "beb5483e-36e1-4688-b7f5-ea07361b26a8";
+
+          const device = await navigator.bluetooth.requestDevice({
+            filters: [{ namePrefix: "ESP32" }],
+            optionalServices: [serviceUUID],
+          });
+
+          const server = await device.gatt.connect();
+          const service = await server.getPrimaryService(serviceUUID);
+          bleCharacteristic = await service.getCharacteristic(
+            characteristicUUID
+          );
+
+          const encoder = new TextEncoder();
+          await bleCharacteristic.writeValue(encoder.encode(userEmail));
+
+          alert("✅ Connected and sent email to ESP32!");
+          console.log("📧 Sent email to ESP32:", userEmail);
+          document.getElementById(
+            "node-status"
+          ).textContent = `Connected to: ${device.name}`;
+          document.getElementById(
+            "device-stat"
+          ).textContent = `Connected to: ${device.name}`;
+        } catch (err) {
+          console.error("❌ BLE connection failed:", err);
+          alert("Failed to connect to ESP32 via Bluetooth.");
+        }
+      }
+
+      function downloadCSV() {
+        fetch(`/getUserDeviceData?email=${encodeURIComponent(userEmail)}`)
+          .then((res) => res.json())
+          .then((data) => {
+            const header = `Username: ${userName}\n`;
+            const header2 = `Email: ${userEmail}\n\n`;
+            const timestamp = new Date()
+              .toISOString()
+              .slice(0, 19)
+              .replace(/[:T]/g, "-");
+            const fileName = `${userName}_Calicare_EMG_Readings_${timestamp}.csv`;
+            const csvHeader = "Device ID,EMG Readings,Date,Time\n";
+            const csvRows = data.map(
+              (row) =>
+                `${row.device_id},${row.temperature},${row.date.slice(0, 10)},${
+                  row.time
+                }`
+            );
+            const csvContent =
+              header + header2 + csvHeader + csvRows.join("\n");
+
+            const blob = new Blob([csvContent], { type: "text/csv" });
+            const url = window.URL.createObjectURL(blob);
+
+            const a = document.createElement("a");
+            a.setAttribute("hidden", "");
+            a.setAttribute("href", url);
+            a.setAttribute(
+              "download",
+              `${userName}_Calicare_EMG_Readings_${timestamp}.csv`
+            );
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+          });
+      }
+
+      async function downloadPDF() {
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+
+        const profileRes = await fetch("/getProfile");
+        const user = await profileRes.json();
+        const dataRes = await fetch(
+          `/getUserDeviceData?email=${encodeURIComponent(user.email)}`
+        );
+        const data = await dataRes.json();
+
+        const userName = user.username;
+        const userEmail = user.email;
+        const profilePicUrl = user.profile_picture;
+        const timestamp = new Date()
+          .toISOString()
+          .slice(0, 19)
+          .replace(/[:T]/g, "-");
+
+        let y = 10;
+
+        // === ✅ Company Logo ===
+        try {
+          const logoBlob = await fetch("/Images/calicare logo.png").then(
+            (res) => res.blob()
+          ); // adjust path if needed
+          const logoBase64 = await new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onloadend = () => resolve(reader.result);
+            reader.onerror = reject;
+            reader.readAsDataURL(logoBlob);
+          });
+          doc.addImage(logoBase64, "PNG", 10, 10, 20, 20); // x, y, width, height
+        } catch (e) {
+          console.warn("Logo not found");
+        }
+
+        // === ✅ Company Name ===
+        doc.setFontSize(18);
+        doc.setFont("helvetica", "bold"); // Set to bold
+        doc.setTextColor(40, 167, 69); // Calicare green
+        doc.text("Calicare Health System", 40, 20);
+
+        y = 40;
+
+        // Add profile picture if available
+        if (profilePicUrl) {
+          try {
+            const imgBlob = await fetch(profilePicUrl).then((res) =>
+              res.blob()
+            );
+            const imgBase64 = await new Promise((resolve, reject) => {
+              const reader = new FileReader();
+              reader.onloadend = () => resolve(reader.result);
+              reader.onerror = reject;
+              reader.readAsDataURL(imgBlob);
+            });
+
+            // Simulate a round mask by drawing a white circle first
+            doc.setFillColor(255, 255, 255);
+            doc.circle(170, y + 20, 20, "F"); // centerX, centerY, radius, 'F' = fill
+
+            // Then draw the image centered inside the circle
+            doc.addImage(imgBase64, "JPEG", 150, y, 30, 35); // x, y, width, height
+
+            // doc.addImage(imgBase64, "JPEG", 150, y, 40, 40); // x, y, width, height
+          } catch (err) {
+            console.warn("⚠️ Failed to load profile image:", err);
+          }
+        }
+
+        // Add text details
+        doc.setFontSize(12);
+        doc.setFont("helvetica", "bold"); // Set to bold
+        doc.text(`Username: ${userName}`, 10, y + 10);
+        doc.text(`Email: ${userEmail}`, 10, y + 20);
+        doc.text("EMG Readings:", 10, y + 35);
+
+        // === ✅ Watermark ===
+        doc.setFontSize(75);
+        doc.setTextColor(230, 230, 230);
+        doc.text("CALICARE", 50, 180, { angle: 45 });
+
+        // Add table headers
+        const headers = ["Device ID", "EMG Value (%)", "Date", "Time"];
+        doc.setFontSize(12);
+        doc.setFont("helvetica", "bold"); // Set to bold
+        doc.setTextColor(0, 0, 0);
+        headers.forEach((header, i) => {
+          doc.text(header, 10 + i * 46, y + 48);
+        });
+
+        // Add user data in the Table
+        // doc.setFontSize(10);
+        // doc.setFont("helvetica", "normal"); // Set to bold
+        // data.forEach((row, index) => {
+        //     const lineY = y + 55 + index * 10;
+        //     doc.text(row.device_id.toString(), 10, lineY);
+        //     doc.text(row.temperature.toString(), 45, lineY);
+        //     doc.text(row.humidity.toString(), 80, lineY);
+        //     doc.text(row.date.slice(0, 10), 115, lineY);
+        //     doc.text(row.time, 150, lineY);
+        // });
+
+        // Draw border under header
+        doc.setDrawColor(0);
+        doc.line(10, y + 52, 200, y + 52);
+
+        // Reset font for table rows
+        doc.setFont("helvetica", "normal");
+        doc.setFontSize(10);
+
+        // Loop through data and draw rows
+        // data.forEach((row, index) => {
+        //   const rowY = y + 60 + index * 10;
+
+        //   // Alternate background color
+        //   if (index % 2 === 0) {
+        //     doc.setFillColor(240, 240, 240); // light gray
+        //     doc.rect(10, rowY - 7, 190, 10, "F"); // filled rectangle
+        //   }
+
+        //   // Add text data space 46 for 4 columns
+        //   doc.text(row.device_id.toString(), 10, rowY);
+        //   doc.text(row.temperature.toString(), 56, rowY);
+        //   // doc.text(row.humidity.toString(), 80, rowY);
+        //   doc.text(row.date.slice(0, 10), 102, rowY);
+        //   doc.text(row.time, 150, rowY);
+        // });
+
+        let currentY = y + 60;
+        const rowHeight = 10;
+        const pageHeight = doc.internal.pageSize.getHeight();
+        const marginBottom = 20; // Keep a bottom margin
+
+        data.forEach((row, index) => {
+          // Check if next row would overflow the page
+          if (currentY + rowHeight > pageHeight - marginBottom) {
+            doc.addPage();
+            currentY = 20; // Reset Y position on new page (adjust if needed)
+
+            // Redraw table headers on new page
+            doc.setFont("helvetica", "bold");
+            doc.setFontSize(12);
+            headers.forEach((header, i) => {
+              doc.text(header, 10 + i * 46, currentY);
+            });
+
+            doc.line(10, currentY + 4, 200, currentY + 4);
+            currentY += 10; // Move down after header
+          }
+
+          // Alternate background
+          if (index % 2 === 0) {
+            doc.setFillColor(240, 240, 240); // light gray
+            doc.rect(10, currentY - 7, 190, rowHeight, "F");
+          }
+
+          // Row data
+          doc.setFont("helvetica", "normal");
+          doc.setFontSize(10);
+          doc.text(row.device_id.toString(), 10, currentY);
+          doc.text(row.temperature.toString(), 56, currentY);
+          doc.text(row.date.slice(0, 10), 102, currentY);
+          doc.text(row.time, 150, currentY);
+
+          currentY += rowHeight;
+        });
+
+        // Save PDF
+        const fileName = `${userName}_Calicare_EMG_Readings_${timestamp}.pdf`;
+        doc.save(fileName);
+      }
+    </script>
+
+    <script>
+      let device;
+      let characteristic;
+
+      const SERVICE_UUID = "4fafc201-1fb5-459e-8fcc-c5c9c331914b";
+      const CHARACTERISTIC_UUID = "beb5483e-36e1-4688-b7f5-ea07361b26a8";
+
+      document.getElementById("connect").addEventListener("click", async () => {
+        try {
+          device = await navigator.bluetooth.requestDevice({
+            filters: [{ namePrefix: "ESP32" }],
+            optionalServices: [SERVICE_UUID],
+          });
+
+          const server = await device.gatt.connect();
+          const service = await server.getPrimaryService(SERVICE_UUID);
+          characteristic = await service.getCharacteristic(CHARACTERISTIC_UUID);
+
+          device.addEventListener("gattserverdisconnected", () => {
+            document.getElementById("neckguard-stat").textContent =
+              "Disconnected";
+            // document.getElementById("container").style.display = "none"; // hide UI
+            log("Device disconnected.");
+          });
+
+          const encoder = new TextEncoder();
+          await characteristic.writeValue(encoder.encode(userEmail));
+          log(`sent email to NeckGuard! and Connected to ${device.name}`);
+          readFromESP32();
+        } catch (error) {
+          log("Error: " + error);
+        }
+      });
+
+      document.getElementById("send").addEventListener("click", async () => {
+        const msg = document.getElementById("message").value;
+        if (!msg || !characteristic) return;
+        const encoder = new TextEncoder();
+        await characteristic.writeValue(encoder.encode(msg));
+        log(`Sent to NeckGuard: ${msg}`);
+        document.getElementById("message").value = "";
+      });
+
+      function log(text) {
+        const logArea = document.getElementById("log");
+        logArea.value += text + "\n";
+        logArea.scrollTop = logArea.scrollHeight;
+
+        // Update connection status if it's a successful connection
+        if (text.includes("Connected to")) {
+          document.getElementById("neckguard-stat").textContent = text;
+        }
+      }
+
+      // async function readFromESP32() {
+      //   try {
+      //     const value = await characteristic.readValue();
+      //     const decoder = new TextDecoder();
+      //     const received = decoder.decode(value);
+      //     log(`Received from ESP32: ${received}`);
+      //   } catch (err) {
+      //     log('Read failed: ' + err);
+      //   }
+      // }
+
+      // async function readFromESP32() {
+      // try {
+      //     await characteristic.startNotifications(); // 👈 Subscribe to notifications
+      //     characteristic.addEventListener('characteristicvaluechanged', (event) => {
+      //     const decoder = new TextDecoder();
+      //     const value = event.target.value;
+      //     const received = decoder.decode(value);
+      //     log(`NeckGuard says: ${received}`);
+      //     });
+      //     log("Subscribed to NeckGuard notifications.");
+      // } catch (err) {
+      //     log('Notification error: ' + err);
+      // }
+      // }
+
+      async function readFromESP32() {
+        try {
+          await characteristic.startNotifications(); // 👈 Subscribe to notifications
+          characteristic.addEventListener(
+            "characteristicvaluechanged",
+            async (event) => {
+              const decoder = new TextDecoder();
+              const value = event.target.value;
+              const received = decoder.decode(value).trim(); // Example: "zucali2022@gmail.com , 25.95 , 44.05 , 24:6f:28:bb:f9:02"
+
+              log(`NeckGuard says: ${received}`);
+
+              const [email, temp, hum, deviceId] = received
+                .split(",")
+                .map((s) => s.trim());
+
+              // Optional UI update:
+              document.getElementById("liveTemp").textContent = temp;
+              document.getElementById("liveDeviceId").textContent = deviceId;
+
+              // Now send to cloud backend
+              await fetch("https://calicareapp.up.railway.app/postData2", {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/x-www-form-urlencoded",
+                },
+                body: new URLSearchParams({
+                  email,
+                  temperature: temp,
+                  humidity: hum,
+                  device_id: deviceId,
+                }),
+              })
+                .then((res) => res.text())
+                .then((result) => console.log("✅ Sent to cloud:", result))
+                .catch((err) =>
+                  console.error("❌ Error sending to cloud:", err)
+                );
+
+              // Append to table// ✅ NOW: Get date and time for the frontend table
+              const now = new Date();
+              const dateStr = now.toISOString().slice(0, 10); // e.g., "2025-05-16"
+              const timeStr = now.toTimeString().slice(0, 8); // e.g., "14:33:20"
+
+              // ✅ Append row to table without reload
+              appendRowToTable(deviceId, temp, dateStr, timeStr);
+            }
+          );
+
+          log("Subscribed to NeckGuard notifications.");
+        } catch (err) {
+          log("Notification error: " + err);
+
+          await loadUserData(); // ✅ refresh table with new reading
+        }
+      }
+
+      function appendRowToTable(device_id, temperature, date, time) {
+        const tableBody = document.querySelector("#dataTable tbody");
+        const row = document.createElement("tr");
+        row.innerHTML = `
+                    <td>${device_id}</td>
+                    <td>${temperature}</td>
+                    <td>${date}</td>
+                    <td>${time}</td>
+                `;
+        tableBody.prepend(row); // add to top
+      }
+    </script>
+
+    <script>
+      function calculateStats() {
+        const table = document.getElementById("dataTable");
+        const rows = table.querySelectorAll("tbody tr");
+
+        let total = 0;
+        let max = 0;
+        let count = 0;
+
+        rows.forEach((row) => {
+          const value = parseFloat(row.cells[1].textContent); // Column index 1 for EMG
+          if (!isNaN(value)) {
+            total += value;
+            if (value > max) max = value;
+            count++;
+          }
+        });
+
+        const avg = count > 0 ? (total / count).toFixed(2) : 0;
+
+        document.getElementById("avgValue").textContent = avg;
+        document.getElementById("maxValue").textContent = max;
+      }
+
+      // Call this after the table is rendered/populated
+      calculateStats();
+    </script>
+  </body>
+</html>

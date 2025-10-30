@@ -14,6 +14,11 @@ body.dark-mode button {
 body {
     margin-bottom: 70px;
     /* prevents nav overlap with content */
+    font-family: Arial, sans-serif;
+    background-color: #ebfafb;
+    margin: 0;
+    padding: 20px;
+    margin-bottom: 90px;
 }
 
 .bottom-nav {
@@ -96,10 +101,236 @@ body {
     opacity: 1;
     /* Optional: Make it faint */
 }
+.product-row {
+    display: flex;
+    overflow-x: auto;
+    gap: 16px;
+    padding: 16px;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+}
+
+.product-card {
+    flex: 0 0 280px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 16px;
+    text-align: left;
+    transition: transform 0.2s;
+    scroll-snap-align: start;
+}
+
+.product-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* .product-card img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 4px;
+    margin-bottom: 12px;
+} */
+
+.product-image {
+    position: relative;
+}
+
+.product-image img {
+    display: block;
+    width: 100%;
+    height: 280px;
+    border-radius: 4px;
+    object-fit: cover;
+}
+
+/* place the <p> like a small "tag" in the top-left corner of the image */
+.product-image p {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    margin: 0;
+    background: rgba(15, 153, 148, 0.95);
+    color: #fff;
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 600;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
+    pointer-events: none;
+}
+
+.produt-text,
+.product-text {
+    font-size: 14px;
+    color: #555;
+    margin: 8px 0;
+
+    /* constrain line width to approx N characters (here ~40) so text wraps after that many chars */
+    max-width: 40ch;
+    white-space: normal;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    hyphens: auto;
+
+    /* optional: limit number of visible lines and show ellipsis */
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* change 3 to the number of lines you want visible */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.datas{
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.datas1 {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+    border: #e2e2e2 1px solid;
+    border-radius: 5px;
+    padding: 0px 10px;
+}
+
+.datas1 img{
+    width: 40px;
+    height: 40px;
+}
+
+.datee{
+    justify-content: space-between;
+}
+
+
+.data-date{
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+    align-items: center;
+    border-radius: 5px;
+
+}
+
+.data, .format{
+    flex-direction: row;
+    gap:10px;
+}
+
+.formatting{
+    width: 100%;
+    
+}
+
+button {
+    width: 100%;
+    padding: 15px;
+    background: #24d0d6;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+    margin: 10px 0 20px;
+}
+
+button:hover {
+    background: #20b2b7;
+}
+.calend-row{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 10px 0px;
+    gap: 30px;
+    width: 100%;
+}
+
+.calend{
+    border: #aaaaaa 1px solid;
+    border-radius: 10px;
+    width: 100%;
+    text-align: center;
+    padding: 10px 0px;
+}
+
+.calend img{
+    width: 50px;
+    height: 50px;
+}
+
+.btn-outline {
+    width: fit-content;
+    padding: 5px 5px;
+    border: #01713d 2px solid;
+    border-radius: 5px;
+    background-color: #ebfafb;
+    color: black;
+    margin: 0;
+}
+
+.habit{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.posture {
+    display: flex;
+    overflow-x: auto;
+    gap: 16px;
+    padding: 16px;
+    scroll-snap-type: x mandatory;
+    -webkit-overflow-scrolling: touch;
+    white-space: nowrap;
+}
+
+.post {
+    flex: 0 0 auto;
+    border: #aaaaaa 1px solid;
+    border-radius: 10px;
+    font-size: 14px;
+    color: #555;
+    margin: 8px 0;
+    padding: 10px;
+    width: 150px; /* Fixed width for each post */
+    
+    /* Text wrapping */
+    white-space: normal;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    hyphens: auto;
+    
+    /* Limit number of lines */
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
 
 @media (max-width: 600px) {
     .background-image {
         width: 80vw;
         height: auto;
+    }
+
+    .calend {
+        border: #aaaaaa 1px solid;
+        border-radius: 10px;
+        width: 100%;
+        text-align: center;
+        padding: 5px 0px;
+    }
+
+    .calend img {
+        width: 40px;
+        height: 40px;
     }
 }

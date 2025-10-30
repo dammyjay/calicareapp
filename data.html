@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <img class="mask" src="/Images/mask.png" alt="" />
+    <img
+      src="/Images/necktrans.png"
+      class="background-image"
+      alt="Background"
+    />
+    <h2 class="header">Calicare Data Tracking & Analytics</h2>
+
+    <div class="calend-row">
+        <div class="calend">
+            <img src="/Images/calendar icon.png" alt="">
+                <p style="font-weight: bold;">Daily</p>
+        </div>
+
+         <div class="calend">
+            <img src="/Images/calendar icon.png" alt="">
+                <p style="font-weight: bold;">Weekly</p>
+        </div>
+
+         <div class="calend">
+            <img src="/Images/calendar icon.png" alt="">
+                <p style="font-weight: bold;">Monthly</p>
+        </div>
+    </div>
+
+    <div>
+        <div class="habit">
+            <div>
+                <h3>Posture Habit Analysis</h3>
+                <p>Track your posture improvement</p>
+            </div>
+            <button class="btn-outline">View Details &gt;</button>
+
+        </div>
+            <div class="posture ">
+                <div class="post">
+                    <p>Average Posture Score</p>
+                    <h3>75</h3>
+                    <p>+5</p>
+                </div>
+
+                <div class="post">
+                    <p>Posture Correction Sessions</p>
+                    <h3>12</h3>
+                    <p>+2</p>
+                </div>
+
+                <div class="post">
+                    <p>Posture Alignment Duration</p>
+                    <h3>3h</h3>
+                    <p>+20</p>
+                </div>
+
+                
+            </div> 
+    </div>
+
+    <div>
+        <div class="habit">
+            <div>
+                <h3>Sleep Quality Analysis</h3>
+                <p>Insight into your sleep patterns</p>
+            </div>
+            <button class="btn-outline">View Details &gt;</button>
+
+        </div>
+            <div class="posture ">
+                <div class="post">
+                    <p>Avg. Sleep Duration</p>
+                    <h3>75</h3>
+                    <p>+5</p>
+                </div>
+
+                <div class="post">
+                    <p>Deep Sleep Hours</p>
+                    <h3>12</h3>
+                    <p>+2</p>
+                </div>
+
+                <div class="post">
+                    <p>Sleep Interruptions</p>
+                    <h3>3h</h3>
+                    <p>+20</p>
+                </div>
+
+                
+            </div> 
+    </div>
+<!-- 🌐 Bottom Navigation -->
+    <nav class="bottom-nav">
+      <a href="index2.html" class="nav-item">
+        <img src="Images/home.png" alt="Home" />
+        <span>Home</span>
+      </a>
+      <a href="userdata2.html" class="nav-item active">
+        <img src="Images/data.png" alt="Data" />
+        <span>Data Analytics</span>
+      </a>
+      <a href="Exercise.html" class="nav-item">
+        <img src="Images/exercise.png" alt="Excercise" />
+        <span>Exercise</span>
+      </a>
+      <a href="profile.html" class="nav-item">
+        <img src="Images/profile.png" alt="Profile" />
+        <span>Profile</span>
+      </a>
+    </nav>
+
+    <script>
+      const currentPage = location.pathname.split("/").pop();
+      document.querySelectorAll(".bottom-nav .nav-item").forEach((item) => {
+        if (item.getAttribute("href") === currentPage) {
+          item.classList.add("active");
+        }
+      });
+    </script>
+</body>
+</html>
