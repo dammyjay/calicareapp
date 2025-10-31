@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <img class="mask" src="/Images/mask.png" alt="" />
+    <img
+      src="/Images/necktrans.png"
+      class="background-image"
+      alt="Background"
+    />
+    
+    <div class="navi">
+      <div class="navi-header">
+        <div>
+           <h3 class="header">Real-time Posture Tracking</h3> 
+           <p style=" color: rgb(171, 171, 171);">Stay aware of your posture</p>
+        </div>
+        
+         <span style="font-weight: bold; display: none;" id="usernameDisplay"></span>
+      </div>
+      <div class="navi-header">
+        <a href="/profile">
+          <img
+            id="userPhoto"
+            style="
+              width: 40px;
+              height: 40px;
+              border-radius: 50%;
+              object-fit: cover;  
+              border: 2px solid #0F9894;
+            "
+          />
+        </a>
+        <!-- <a href="/profile" style="background-color: #006400">Profile</a> -->
+        <!-- <a href="/logout" style="background-color: red">Logout</a> -->
+      </div>
+    </div>
+
+    <div class="row-details">
+        <h3>Posture Alerts</h2>
+        <p>Immediate feedback on posture</p>
+        <div class="datas2 ">
+            <div class="datas1">
+                <img src="/Images/poor posture icon.png" alt="">
+                <div>
+                  <h5>Posture Data</h5> 
+                  <p>Correct your posture to avoid strain</p> 
+                </div>
+                
+            </div>
+
+            <div class="datas1">
+                <img src="/Images/good posture icon.png" alt="">
+                <div>
+                  <h5>Good Posture</h5> 
+                  <p>Keep it up!</p> 
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row-details">
+        <h3>Corrective Actions</h2>
+        <div class="datas2 ">
+            <div class="datas1 ">
+                <img src="/Images/poor posture icon.png" alt="">
+                <div>
+                  <h5>Adjust Your Head Position</h5> 
+                  <p>Keep your head aligned with your spine to prevent strain.</p> 
+                </div>
+                
+            </div>
+
+            <div class="datas1">
+                <img src="/Images/good posture icon.png" alt="">
+                <div>
+                  <h5>Sit Upright</h5> 
+                  <p>Maintain good posture by sitting straight with your shoulders back.</p> 
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="alert-btn">
+        <button class="btn-outline2">Snooze Alert</button>
+        <button class="btn-outline2">Dismiss Alert</button>
+    </div>
+    <button>View Exercise</button>
+
+        <div>
+        <div class="habit">
+            <div>
+                <h3>Weekly Progress</h3>
+                <p>Track your posture improvement</p>
+            </div>
+            <button class="btn-outline">View Details &gt;</button>
+
+        </div>
+            <div class="posture2">
+                <div class="post2">
+                    <p>Current Posture Score</p>
+                    <h3>75</h3>
+                    <p>+10%</p>
+                </div>
+
+                <div class="post2">
+                    <p>Average Daily Improvement</p>
+                    <h3>2</h3>
+                    <p>+1%</p>
+                </div>
+            </div> 
+    </div>
+
+        <!-- 🌐 Bottom Navigation -->
+    <nav class="bottom-nav">
+      <a href="index2.html" class="nav-item">
+        <img src="Images/home.png" alt="Home" />
+        <span>Home</span>
+      </a>
+      <a href="userdata2.html" class="nav-item">
+        <img src="Images/data.png" alt="Data" />
+        <span>Data Analytics</span>
+      </a>
+      <a href="Exercise.html" class="nav-item">
+        <img src="Images/exercise.png" alt="Excercise" />
+        <span>Exercise</span>
+      </a>
+      <a href="profile.html" class="nav-item active">
+        <img src="Images/profile.png" alt="Profile" />
+        <span>Profile</span>
+      </a>
+    </nav>
+
+    <script>
+      const currentPage = location.pathname.split("/").pop();
+      document.querySelectorAll(".bottom-nav .nav-item").forEach((item) => {
+        if (item.getAttribute("href") === currentPage) {
+          item.classList.add("active");
+        }
+      });
+    </script>
+
+
+    <script>
+        fetch("/getProfile", {
+        method: "GET",
+        credentials: "include", // <-- This tells the browser to send cookies
+      })
+        .then((res) => {
+          if (!res.ok) throw new Error("User not logged in");
+          return res.json();
+        })
+        .then((user) => {
+          document.getElementById("usernameDisplay").innerText = "Hello " + user.username;
+          if (user.profile_picture) {
+            // document.getElementById('userPhoto').src = '/uploads/' + user.profile_picture;
+            document.getElementById("userPhoto").src = user.profile_picture;
+          }
+        })
+        .catch((err) => {
+          console.error("Profile fetch error:", err);
+        });
+    </script>
+</body>
+</html>

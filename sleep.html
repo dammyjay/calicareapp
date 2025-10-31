@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <img class="mask" src="/Images/mask.png" alt="" />
+    <img
+      src="/Images/necktrans.png"
+      class="background-image"
+      alt="Background"
+    />
+    
+    <div class="navi">
+      <div class="navi-header">
+           <h3 class="header">Sleep Posture Tracking</h3> 
+         <span style="font-weight: bold; display: none;" id="usernameDisplay"></span>
+      </div>
+      <div class="navi-header">
+        <a href="/profile">
+          <img
+            id="userPhoto"
+            style="
+              width: 40px;
+              height: 40px;
+              border-radius: 50%;
+              object-fit: cover;  
+              border: 2px solid #0F9894;
+            "
+          />
+        </a>
+        <!-- <a href="/profile" style="background-color: #006400">Profile</a> -->
+        <!-- <a href="/logout" style="background-color: red">Logout</a> -->
+      </div>
+    </div>
+
+    <div>
+        <div class="habit">
+            <div style="width: 70%;">
+                <h4>Sleep Position Monitoring</h4>
+                <p>Track your sleep positions to improve neck health</p>
+            </div>
+            <button class="btn-outline">View Details &gt;</button>
+
+        </div>
+
+        <div class="datas1">
+            <img class="article-img" src="" alt="">
+            <div>
+                <h5>Position Analysis</h5> 
+                <p>Correct your posture to avoid strain</p> 
+            </div>
+                
+        </div>
+    </div>
+
+    <div>
+        <div class="habit">
+            <div style="width: 70%;">
+                <h4>Optimal Sleeping Positions</h4>
+                <p>Suggested positions to reduce neck strain</p>
+            </div>
+            <button class="btn-outline">Explore &gt;</button>
+
+        </div>
+
+        <div class="datas1">
+            <img class="article-img" src="" alt="">
+            <div>
+                <h5>Best Sleeping Positions</h5> 
+                <p>Discover the optimal sleep positions recommended for a healthy neck alignment.</p> 
+            </div>
+                
+        </div>
+    </div>
+
+    <div class="row-details">
+        <h3>Sleep Posture Tips</h2>
+        <div class="datas2 ">
+            <div class="datas1">
+                <img src="/Images/avoid sleep icon.png" alt="">
+                <div>
+                  <p style="font-weight: bold;">Avoid Sleeping on Your Stomach</p> 
+                  <p>Sleeping on your stomach can strain your neck. Opt for side or back sleeping positions instead.</p> 
+                </div>
+                
+            </div>
+
+            <div class="datas1">
+                <img src="/Images/pillow icon.png" alt="">
+                <div>
+                  <p style="font-weight: bold;">Avoid Sleeping on Your Stomach</p> 
+                  <p>Sleeping on your stomach can strain your neck. Opt for side or back sleeping positions instead.</p> 
+                </div>
+            </div>
+        </div>
+    </div>
+
+        <!-- 🌐 Bottom Navigation -->
+    <nav class="bottom-nav">
+      <a href="index2.html" class="nav-item">
+        <img src="Images/home.png" alt="Home" />
+        <span>Home</span>
+      </a>
+      <a href="userdata2.html" class="nav-item">
+        <img src="Images/data.png" alt="Data" />
+        <span>Data Analytics</span>
+      </a>
+      <a href="Exercise.html" class="nav-item">
+        <img src="Images/exercise.png" alt="Excercise" />
+        <span>Exercise</span>
+      </a>
+      <a href="profile.html" class="nav-item active">
+        <img src="Images/profile.png" alt="Profile" />
+        <span>Profile</span>
+      </a>
+    </nav>
+
+    <script>
+      const currentPage = location.pathname.split("/").pop();
+      document.querySelectorAll(".bottom-nav .nav-item").forEach((item) => {
+        if (item.getAttribute("href") === currentPage) {
+          item.classList.add("active");
+        }
+      });
+    </script>
+
+
+    <script>
+        fetch("/getProfile", {
+        method: "GET",
+        credentials: "include", // <-- This tells the browser to send cookies
+      })
+        .then((res) => {
+          if (!res.ok) throw new Error("User not logged in");
+          return res.json();
+        })
+        .then((user) => {
+          document.getElementById("usernameDisplay").innerText = "Hello " + user.username;
+          if (user.profile_picture) {
+            // document.getElementById('userPhoto').src = '/uploads/' + user.profile_picture;
+            document.getElementById("userPhoto").src = user.profile_picture;
+          }
+        })
+        .catch((err) => {
+          console.error("Profile fetch error:", err);
+        });
+    </script>
+</body>
+</html>
