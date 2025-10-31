@@ -62,27 +62,205 @@
             </div>
         </div>
     </div>
-
-     <div class="row-details">
-        <h3>Select Format</h2>
-        <div class="datas format">
-            <div class="datas1 formatting">
-                <img src="/Images/pdf icon.png" alt="">
-                <p>PDF</p>
-            </div>
-
-            <div class="datas1 formatting">
-                <img src="/Images/csv icon.png" alt="">
-                <p>CSV</p>
-            </div>
+    <div class="row-details">
+      <h3>Select Format</h3>
+      <div class="datas format" id="formatSelector">
+        <div class="datas1 formatting" data-format="pdf" style="cursor:pointer; border:1px solid transparent; padding:8px; border-radius:8px;">
+          <img src="/Images/pdf icon.png" alt="" />
+          <p>PDF</p>
         </div>
+
+        <div class="datas1 formatting" data-format="csv" style="cursor:pointer; border:1px solid transparent; padding:8px; border-radius:8px;">
+          <img src="/Images/csv icon.png" alt="" />
+          <p>CSV</p>
+        </div>
+      </div>
     </div>
 
-    <button>Export Data</button>
+    <button id="exportDataBtn" class="btn-export">Export Data</button>
 
-    <button onclick="downloadCSV()">📄 Export Data</button>
-    <!-- <button onclick="exportPDF()">🧾 Export PDF</button> -->
-    <button onclick="downloadPDF()">🧾 Export PDF</button>
+    <!-- Overlay UI -->
+    <div id="exportOverlay">
+      <div class="overlay-box">
+        <div style="display:flex;justify-content:space-between;align-items:center;">
+          <strong id="overlayTitle">Exporting</strong>
+          <div>
+            <button id="minimizeOverlay" title="Minimize" style="margin-right:8px">_</button>
+            <button id="cancelOverlay" title="Close">×</button>
+          </div>
+        </div>
+
+        <p id="overlayStatus" style="margin:8px 0 4px;">Preparing...</p>
+
+        <div class="progress" aria-hidden="false">
+          <div id="progressBar"></div>
+        </div>
+
+        <p style="font-size:12px;color:#666;margin:6px 0;">
+          <span id="progressPercent">0%</span>
+        </p>
+      </div>
+    </div>
+
+    <button id="minimizedExportBtn" title="Restore export window">
+      Export running… <span id="minimizedProgress">0%</span>
+    </button>
+
+    <script>
+      // format selection UI
+      (function(){
+        const items = document.querySelectorAll('#formatSelector .formatting');
+        items.forEach(el=>{
+          el.addEventListener('click', ()=> {
+            items.forEach(i=>i.classList.remove('active'));
+            el.classList.add('active');
+          });
+        });
+
+        const overlay = document.getElementById('exportOverlay');
+        const progressBar = document.getElementById('progressBar');
+        const progressPercent = document.getElementById('progressPercent');
+        const overlayStatus = document.getElementById('overlayStatus');
+        const exportBtn = document.getElementById('exportDataBtn');
+        const minimizeBtn = document.getElementById('minimizeOverlay');
+        const cancelBtn = document.getElementById('cancelOverlay');
+        const minimizedExportBtn = document.getElementById('minimizedExportBtn');
+        const minimizedProgress = document.getElementById('minimizedProgress');
+
+        let progress = 0;
+        let progressInterval = null;
+        let exportInProgress = false;
+
+        function showOverlay() {
+          overlay.style.display = 'flex';
+        }
+        function hideOverlay() {
+          overlay.style.display = 'none';
+        }
+        function showMinimized() {
+          minimizedExportBtn.style.display = 'block';
+        }
+        function hideMinimized() {
+          minimizedExportBtn.style.display = 'none';
+        }
+        function startFakeProgress() {
+          progress = 0;
+          updateProgress(2);
+          progressInterval = setInterval(()=> {
+            // slowly increment until 95% while export runs
+            if (progress < 95) updateProgress(progress + (Math.random()*6));
+          }, 400);
+        }
+        function stopFakeProgress() {
+          clearInterval(progressInterval);
+          progressInterval = null;
+        }
+        function updateProgress(value) {
+          progress = Math.min(100, Math.round(value));
+          progressBar.style.width = progress + '%';
+          progressPercent.textContent = progress + '%';
+          minimizedProgress.textContent = progress + '%';
+          // Update export status row
+          document.getElementById('exportProgressText').textContent = progress + '% Complete';
+          document.getElementById('exportStatusText').textContent = progress === 100 ? 'Completed' : 'In Progress';
+          document.getElementById('exportStatusSubtext').textContent = progress === 100 ? 'Data exported successfully' : 'Exporting data...';
+        }
+
+        async function performExport(format) {
+          // attempt to call existing functions defined on page
+          try {
+            if (format === 'pdf') {
+              if (typeof downloadPDF === 'function') {
+                await downloadPDF();
+                return;
+              }
+            } else {
+              if (typeof downloadCSV === 'function') {
+                // downloadCSV() in this page uses fetch -> .then chains and does not return promise.
+                // Try to call it and wait a short time to allow it to complete.
+                const possibleReturn = downloadCSV();
+                if (possibleReturn && typeof possibleReturn.then === 'function') {
+                  await possibleReturn;
+                } else {
+                  // best-effort wait for the fetch+download to happen
+                  await new Promise(r => setTimeout(r, 1200));
+                }
+                return;
+              }
+            }
+            // fallback: if functions not found, simulate a delay
+            await new Promise(r => setTimeout(r, 800));
+          } catch (err) {
+            console.error('Export failed', err);
+            throw err;
+          }
+        }
+
+        exportBtn.addEventListener('click', async () => {
+          if (exportInProgress) return;
+          const selected = document.querySelector('#formatSelector .formatting.active');
+          if (!selected) {
+            alert('Please select a format (PDF or CSV) before exporting.');
+            return;
+          }
+          const format = selected.dataset.format;
+          exportInProgress = true;
+          overlayStatus.textContent = `Exporting as ${format.toUpperCase()}...`;
+          showOverlay();
+          hideMinimized();
+          startFakeProgress();
+
+          try {
+            await performExport(format);
+
+            // finish progress
+            stopFakeProgress();
+            updateProgress(100);
+            overlayStatus.textContent = 'Export completed.';
+            // auto hide overlay unless minimized
+            setTimeout(() => {
+              if (!overlay.style.display || overlay.style.display === 'flex') {
+                hideOverlay();
+                hideMinimized();
+              }
+              exportInProgress = false;
+              updateProgress(0);
+            }, 1400);
+          } catch (err) {
+            stopFakeProgress();
+            overlayStatus.textContent = 'Export failed. See console.';
+            exportInProgress = false;
+          }
+        });
+
+        minimizeBtn.addEventListener('click', ()=> {
+          hideOverlay();
+          showMinimized();
+        });
+
+        minimizedExportBtn.addEventListener('click', ()=> {
+          showOverlay();
+          hideMinimized();
+        });
+
+        cancelBtn.addEventListener('click', ()=> {
+          // user closes overlay UI — export continues in background
+          hideOverlay();
+          showMinimized();
+        });
+
+        // Ensure minimized progress keeps updating visually while running
+        setInterval(()=> {
+          if (exportInProgress) {
+            // keep the minimized text in sync
+            minimizedProgress.textContent = progress + '%';
+          }
+        }, 400);
+      })();
+    </script>
+
+    <!-- <button onclick="downloadCSV()">📄 Export Data</button>
+    <button onclick="downloadPDF()">🧾 Export PDF</button> -->
 
     <table
       id="dataTable"
@@ -108,49 +286,126 @@
     </table>
 
         <div class="row-details">
-        <h3>Export Status</h2>
-        <div class="datas">
-            <div class="datas1 datee">
+          <h3>Export Status</h2>
+          <div class="datas">
+              <div class="datas1 datee" id="exportProgressRow">
                 <div class="data-date">
-                    <img src="/Images/In progress icon.png" alt="">
-                    <div>
-                        <p style="font-weight: bold;">In Progress</p>
-                        <p style="color: #848484;">Exporting data...</p>
-                    </div>
+                  <img src="/Images/In progress icon.png" alt="">
+                  <div>
+                    <p style="font-weight: bold;" id="exportStatusText">In Progress</p>
+                    <p style="color: #848484;" id="exportStatusSubtext">Exporting data...</p>
+                  </div>
                 </div>
 
                 <div class="data-date" style="text-align: right;">
-                    <h4>12% Complete</h4>
+                  <h4 id="exportProgressText">0% Complete</h4>
                 </div>
-            </div>
+              </div>
 
-            <div class="datas1 datee">
-                <div class="data-date">
+              <div class="datas1 datee">
+                  <div class="data-date">
                     <img src="/Images/Failed icon.png" alt="">
                     <div>
-                        <p style="font-weight: bold;">Failed</p>
-                        <p style="color: #848484;">Data Export Failed.</p>
+                      <p style="font-weight: bold;">Failed</p>
+                      <p style="color: #848484;">Data Export Failed.</p>
                     </div>
-                </div>
+                  </div>
 
-                <div class="data-date" style="text-align: right;">
-                    <h4>2 files failed</h4>
-                </div>
-            </div>
+                  <div class="data-date" style="text-align: right;">
+                  <h4 id="failedCount">0 files failed</h4>
+                  </div>
+              </div>
 
-            <div class="datas1 datee">
-                <div class="data-date">
-                    <img src="/Images/completed icon.png" alt="">
-                    <div>
+                  <div class="datas1 datee">
+                    <div class="data-date">
+                      <img src="/Images/completed icon.png" alt="">
+                      <div>
                         <p style="font-weight: bold;">Completed</p>
                         <p style="color: #848484;">Data exported successfully</p>
+                      </div>
                     </div>
-                </div>
 
-                <div class="data-date" style="text-align: right;">
-                    <h4>10 files exported</h4>
-                </div>
-            </div>
+                    <div class="data-date" style="text-align: right;">
+                      <h4 id="completedCount">0 files exported</h4>
+                    </div>
+                  </div>
+          </div>
+        <div>
+
+<script>
+                let failedExports = 0;
+                let completedExports = 0;
+
+                // Load initial counts from database when page loads
+                async function loadExportCounts() {
+                  try {
+                  const response = await fetch(`/getExportCounts?email=${encodeURIComponent(userEmail)}`);
+                  const data = await response.json();
+                  failedExports = data.failed || 0;
+                  completedExports = data.completed || 0;
+                  updateCountDisplay();
+                  } catch (err) {
+                  console.error('Failed to load export counts:', err);
+                  }
+                }
+
+                // Update display of counts
+                function updateCountDisplay() {
+                  document.getElementById('completedCount').textContent = `${completedExports} files exported`;
+                  document.getElementById('failedCount').textContent = `${failedExports} files failed`;
+                }
+
+                // Update counters and save to database
+                async function updateExportStatus(success) {
+                  if (success) {
+                  completedExports++;
+                  } else {
+                  failedExports++;
+                  }
+                  
+                  updateCountDisplay();
+
+                  // Save to database
+                  try {
+                  await fetch('/updateExportCounts', {
+                    method: 'POST',
+                    headers: {
+                    'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                    email: userEmail,
+                    completed: completedExports,
+                    failed: failedExports
+                    })
+                  });
+                  } catch (err) {
+                  console.error('Failed to save export counts:', err);
+                  }
+                }
+
+                // Listen for changes in export status
+                const statusObserver = new MutationObserver((mutations) => {
+                  mutations.forEach((mutation) => {
+                  const status = document.getElementById('overlayStatus').textContent;
+                  if (status === 'Export completed.') {
+                    updateExportStatus(true);
+                  } else if (status === 'Export failed. See console.') {
+                    updateExportStatus(false);
+                  }
+                  });
+                });
+
+                // Start observing export status
+                const overlayStatus = document.getElementById('overlayStatus');
+                statusObserver.observe(overlayStatus, {
+                  childList: true,
+                  characterData: true,
+                  subtree: true
+                });
+
+                // Load counts when page loads
+                loadExportCounts();
+                </script>
         </div>
     </div>
 

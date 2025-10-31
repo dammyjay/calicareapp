@@ -14,23 +14,225 @@
       alt="Background"
     />
     <h2 class="header">Reminders</h2>
+    <div>
+        <h3>Select Reminder Type</h3>
+        <div class="remind-row">
+        
+            <div style="cursor: pointer;" class="reminder">
+                <p >Take Break</p>
+            </div>
 
-    <div class="remind-row">
-        <div class="reminder">
-            <p >Take Break</p>
+            <div style="cursor: pointer;"  class="reminder">
+                <p >Stretch</p>
+            </div>
+
+            <div style="cursor: pointer;"  class="reminder">
+                <p >Adjust Posture</p>
+            </div>
+
+
         </div>
-
-         <div class="reminder">
-            <p >Stretch</p>
-        </div>
-
-        <div class="reminder">
-            <p >Adjust Posture</p>
-        </div>
-
-
     </div>
 
+    <div>
+        <h3>Select Frequency</h3>
+        <div  class="remind-row">
+        
+            <div style="cursor: pointer;" class="reminder">
+                <p >Every 30 minutes</p>
+            </div>
+
+            <div style="cursor: pointer;" class="reminder">
+                <p >Every 1 hour</p>
+            </div>
+
+            <div style="cursor: pointer;" class="reminder">
+                <p >Every 2 hours</p>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="custom-time-container">
+        <button class="btn-outline2" onclick="toggleTimeOverlay()">Custom Time</button>
+        
+        <div id="timeOverlay" class="time-overlay">
+            <div class="time-selector">
+                <h3>Select Custom Time</h3>
+                <input type="time" id="customTime" class="time-input">
+                <div class="overlay-buttons">
+                    <button onclick="confirmTime()">Confirm</button>
+                    <button onclick="toggleTimeOverlay()">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+ 
+
+    <script>
+    function toggleTimeOverlay() {
+        const overlay = document.getElementById('timeOverlay');
+        overlay.style.display = overlay.style.display === 'none' ? 'block' : 'none';
+    }
+
+    function confirmTime() {
+        const time = document.getElementById('customTime').value;
+        if(time) {
+            console.log('Selected time:', time);
+            toggleTimeOverlay();
+        }
+    }
+    </script>
+    </div>
+    <button>Set Reminder</button>
+
+
+    <div class="row-details">
+      <h3>Customize Your Reminders</h3>
+      <div class="datas" id="customReminders">
+        <!-- dynamically populated -->
+      </div>
+    </div>
+
+    <script>
+      (function(){
+        const remindRows = document.querySelectorAll('.remind-row');
+        if (remindRows.length < 2) return;
+
+        const typeRow = remindRows[0];
+        const freqRow = remindRows[1];
+
+        const typeItems = typeRow.querySelectorAll('.reminder');
+        const freqItems = freqRow.querySelectorAll('.reminder');
+        const container = document.getElementById('customReminders');
+
+        let selectedType = null;
+        let selectedFreq = null;
+
+        const iconMap = {
+          'Take Break': '/Images/clock icon.png',
+          'Stretch': '/Images/stretch icon.png',
+          'Adjust Posture': '/Images/adjust icon.png'
+        };
+
+        function clearSelection(nodes){
+          nodes.forEach(n => n.classList.remove('selected'));
+        }
+
+        function createOrUpdateReminder(type, freq){
+          if(!type || !freq) return;
+          const existing = container.querySelector(`[data-name="${type}"]`);
+          if(existing){
+            existing.querySelector('.freq-text').textContent = freq;
+            return;
+          }
+
+          const wrap = document.createElement('div');
+          wrap.className = 'datas1 datee';
+          wrap.setAttribute('data-name', type);
+
+          const left = document.createElement('div');
+          left.className = 'data-date';
+          const img = document.createElement('img');
+          img.src = iconMap[type] || '/Images/In progress icon.png';
+          img.alt = '';
+          const textWrap = document.createElement('div');
+          const title = document.createElement('p');
+          title.style.fontWeight = 'bold';
+          title.textContent = type;
+          const sub = document.createElement('p');
+          sub.style.color = '#848484';
+          sub.className = 'freq-text';
+          sub.textContent = freq;
+
+          textWrap.appendChild(title);
+          textWrap.appendChild(sub);
+          left.appendChild(img);
+          left.appendChild(textWrap);
+
+          const right = document.createElement('div');
+          right.className = 'data-date';
+          right.style.textAlign = 'right';
+          const checkbox = document.createElement('input');
+          checkbox.type = 'checkbox';
+          checkbox.checked = true;
+          checkbox.style.width = '30px';
+          checkbox.style.height = '30px';
+          checkbox.style.boxShadow = '0 4px 6px rgba(0,0,0,0.2)';
+          checkbox.style.borderRadius = '4px';
+          checkbox.style.border = 'none';
+          checkbox.className = 'reminder-checkbox';
+
+          right.appendChild(checkbox);
+
+          wrap.appendChild(left);
+          wrap.appendChild(right);
+
+          container.appendChild(wrap);
+        }
+
+        typeItems.forEach(item => {
+          item.addEventListener('click', () => {
+            clearSelection(typeItems);
+            item.classList.add('selected');
+            selectedType = item.innerText.trim();
+            // if a frequency already selected, create/update immediately
+            if(selectedFreq) createOrUpdateReminder(selectedType, selectedFreq);
+          });
+        });
+
+        freqItems.forEach(item => {
+          item.addEventListener('click', () => {
+            clearSelection(freqItems);
+            item.classList.add('selected');
+            selectedFreq = item.innerText.trim();
+            // if a type already selected, create/update immediately
+            if(selectedType) createOrUpdateReminder(selectedType, selectedFreq);
+          });
+        });
+
+        // Optional: allow clicking checkbox to remove the reminder from list
+        container.addEventListener('change', (e) => {
+          if(e.target && e.target.classList.contains('reminder-checkbox')){
+            const row = e.target.closest('.datas1.datee');
+            if(row && !e.target.checked){
+              // uncheck = remove from list
+              row.remove();
+            }
+          }
+        });
+
+        // Pre-populate with nothing (the UX is: click type + frequency to add)
+      })();
+    </script>
+        <button class="btn-outline2" onclick="deleteSelectedReminders()">Delete</button>
+        <script>
+        function deleteSelectedReminders() {
+            const checkedBoxes = document.querySelectorAll('.reminder-checkbox:checked');
+            checkedBoxes.forEach(checkbox => {
+                const reminderDiv = checkbox.closest('.datas1.datee');
+                if (reminderDiv) {
+                    reminderDiv.remove();
+                }
+            });
+        }
+        </script>
+        <button onclick="saveReminder()">Save Reminder</button>
+
+        <script>
+        function saveReminder() {
+            const reminders = [];
+            const reminderElements = document.querySelectorAll('.datas1.datee');
+            reminderElements.forEach(reminder => {
+            const type = reminder.getAttribute('data-name');
+            const freq = reminder.querySelector('.freq-text').textContent;
+            reminders.push({ type, freq });
+            });
+            console.log('Saved Reminders:', reminders);
+            // Here you can add code to save reminders to a database or local storage
+        }
+        </script>
 
 <!-- 🌐 Bottom Navigation -->
     <nav class="bottom-nav">
