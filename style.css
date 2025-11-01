@@ -158,10 +158,22 @@ body {
     scroll-snap-align: start;
 }
 
+.product-card2 {
+    /* background-color: #fff; */
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: left;
+    transition: transform 0.2s;
+    scroll-snap-align: start;
+}
+
 .product-card2:hover {
     transform: translateY(-5px);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
+
+
 
 /* .product-card img {
     max-width: 100%;
@@ -802,6 +814,14 @@ button:hover {
       color: gold;
       margin: 10px 0;
     }
+
+
+.device{
+    border: #aaaaaa 1px solid;
+    border-radius: 10px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
 @keyframes fadeIn {
     from {
         opacity: 0;
