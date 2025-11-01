@@ -19,66 +19,412 @@
     </div>
 
     <div class="product-section">
-    <h2>What is CaliCare NeckGuard?</h2>
-    <div class="product-row">
-      <div class="product-card2">
-        <div class="product-image2">
-          <img src="/Images/realtime.png" alt="">
-          <p>Key Features</p>
-        </div>
-        <div class="product-text">
-          <h3>Neck Traction Device</h3>
-          <!-- <p>Experience relief from neck pain with our adjustable neck traction device, designed to improve posture and alleviate discomfort.</p>
-          <p class="price">$49.99</p> 
-          <button class="buy-button">Buy Now</button> -->
+      <h2>What is CaliCare NeckGuard?</h2>
+      <div class="product-row">
+        <div class="product-card2">
+          <div class="product-image2">
+            <img src="/Images/realtime.png" alt="">
+            <p>Key Features</p>
+          </div>
+          <div class="product-text">
+            <h3>Neck Traction Device</h3>
+          </div>
+
         </div>
 
+        <div class="product-card2">
+          <div class="product-image2">
+            <img src="/Images/ergonomical.png" alt="">
+            <p>Key Features</p>
+          </div>
+          <div class="product-text">
+            <h3>Neck Traction Device</h3>
+          </div>
+
+        </div>
+
+        <div class="product-card2">
+          <div class="product-image2">
+            <img src="/Images/wifi.png" alt="">
+            <p>Key Features</p>
+          </div>
+          <div class="product-text">
+            <h3>Neck Traction Device</h3>
+          </div>
+
+        </div>
+
+        <div class="product-card2">
+          <div class="product-image2">
+            <img src="bluetooth.png" alt="Bluetooth">
+            <p>Bluetooth Connection</p>
+          </div>
+        </div>
+
+        <div class="product-card2">
+          <div class="product-image2">
+            <img src="temperature.png" alt="Temperature Sensor">
+            <p>Temperature Monitoring</p>
+          </div>
+        </div>
+
+        <div class="product-card2">
+          <div class="product-image2">
+            <img src="humidity.png" alt="Humidity Sensor">
+            <p>Humidity Detection</p>
+          </div>
+        </div>
       </div>
-
-      <div class="product-card2">
-        <div class="product-image2">
-          <img src="/Images/ergonomical.png" alt="">
-          <p>Key Features</p>
-        </div>
-        <div class="product-text">
-          <h3>Neck Traction Device</h3>
-          <!-- <p>Experience relief from neck pain with our adjustable neck traction device, designed to improve posture and alleviate discomfort.</p>
-          <p class="price">$49.99</p> 
-          <button class="buy-button">Buy Now</button> -->
-        </div>
-
-      </div>
-
-      <div class="product-card2">
-        <div class="product-image2">
-          <img src="/Images/wifi.png" alt="">
-          <p>Key Features</p>
-        </div>
-        <div class="product-text">
-          <h3>Neck Traction Device</h3>
-          <!-- <p>Experience relief from neck pain with our adjustable neck traction device, designed to improve posture and alleviate discomfort.</p>
-          <p class="price">$49.99</p> 
-          <button class="buy-button">Buy Now</button> -->
-        </div>
-
-      </div>
-
-      <!-- <div class="product-card2">
-        <div class="product-image2">
-          <img src="/Images/product2.png" alt="">
-          <p>Key Features</p>
-        </div>
-        <div class="product-text">
-          <h3>Neck Traction Device</h3>
-          <p>Experience relief from neck pain with our adjustable neck traction device, designed to improve posture and alleviate discomfort.</p>
-          <p class="price">$49.99</p> 
-          <button class="buy-button">Buy Now</button>
-        </div>
-
-      </div> -->
-
-      
     </div>
-  </div>
-</body>
+
+    <!-- APP INTEGRATION -->
+    <div class="app-integration">
+      <h3>App Integrations</h3>
+      <div class="app-carousel" id="carousel">
+        <div class="app-card">
+          <img src="/Images/wifi.png" alt="Mobile App">
+          <p>Mobile App</p>
+        </div>
+        <div class="app-card">
+          <img src="/Images/export.png" alt="Data Export">
+          <p>Data Export</p>
+        </div>
+        <div class="app-card">
+          <img src="/Images/wifi.png" alt="Alert System">
+          <p>Alert System</p>
+        </div>
+        <div class="app-card">
+          <img src="/Images/health insurance.png" alt="Health Stats">
+          <p>Health Stats</p>
+        </div>
+      </div>
+
+      <div class="pagination-controls">
+        <button onclick="scrollCarousel(-1)">◀</button>
+        <button onclick="scrollCarousel(1)">▶</button>
+      </div>
+    </div>
+
+    <!-- User Reviews Section -->
+    <div class="reviews-section">
+      <div class="reviews-header" onclick="toggleReviews()">
+        <img src="/Images/positive.png" alt="">
+        <div>
+          <h3>User Reviews</h3>
+          <p>Testimonials from recovery patients.</p>
+        </div>
+        <span class="toggle-icon">▾</span>
+      </div>
+      
+      <div class="reviews-container" id="reviewsContainer">
+          <h3>User Recommendations</h3>
+          <spa>Hear What Users Have to Say</span>
+        <div class="review-card">
+          <div class="user-info">
+            <img src="/Images/profile.webp" alt="User" class="user-icon">
+            <h4>John Smith</h4>
+          </div>
+          <div class="star-rating">
+            ★★★★★
+          </div>
+          <p>"Great product! Really helped with my neck pain after long hours at work."</p>
+        </div>
+
+        <div class="review-card">
+          <div class="user-info">
+            <img src="/Images/profile.webp" alt="User" class="user-icon">
+            <h4>Sarah Johnson</h4>
+          </div>
+          <div class="star-rating">
+            ★★★★☆
+          </div>
+          <p>"The app integration is fantastic. Easy to track my progress."</p>
+        </div>
+
+        <div class="review-card">
+          <div class="user-info">
+            <img src="/Images/profile.webp" alt="User" class="user-icon">
+            <h4>Mike Chen</h4>
+          </div>
+          <div class="star-rating">
+            ★★★★★
+          </div>
+          <p>"Comfortable fit and great customer support when I needed help."</p>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      function toggleReviews() {
+        const container = document.getElementById('reviewsContainer');
+        container.style.display = container.style.display === 'grid' ? 'none' : 'grid';
+      }
+    </script>
+
+    <div class="product-section">
+      <h3>About the device</h3>
+      <div class="product-row">
+        <div class="product-card2">
+            <p>Materials</p>
+            <h3>Hypoallergenic, breathable fabric</h3>
+        </div>
+
+        <div class="product-card2">
+            <p>Battery Life</p>
+            <h3>48 hours per charge</h3>
+        </div>
+
+        <div class="product-card2">
+            <p>Compatibility</p>
+            <h3>iOS/Android versions</h3>
+        </div>
+
+        <div class="product-card2">
+            <p>Key Features</p>
+            <h3>Neck Traction Device</h3>
+        </div>
+
+      </div>
+    </div>
+
+
+    <div class="contact">
+      <h3>Support/Contact</h3>
+      <div class="poster">
+        <div class="poster-card">
+          <img src="/Images/female contact.png" alt="">
+          <p>Contact us via email or chat for assistance.</p>
+          <div class="poster-icon">
+            <img style="background-color: #ccc; border-radius: 50%;" src="/Images/bell.png" alt="">
+            <p>Customer care</p>
+          </div>
+        </div>
+
+        <div class="poster-card">
+          <img style="width:100%; height: auto;" src="/Images/health insurance.png" alt="">
+          <p>Find information regarding warranty and returns.</p>
+          <div class="poster-icon">
+            <img style="background-color: #ccc; border-radius: 50%;" src="/Images/bell.png" alt="">
+            <p>Warranty & Return Policy</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- HELP SECTION -->
+
+      <button class="btn-outline2" onclick="openHelpModal()">Help Center</button>
+      <div id="helpModal" class="modal">
+        <div class="modal-content" style="padding: 20px;">
+          <span class="close" onclick="closeHelpModal()">&times;</span>
+          <h2>Help Center</h2>
+          <div class="help-options">
+            <a href="tel:+1234567890" class="help-button">
+              <img src="/Images/call.png" alt="Call">
+              <span>Call Support</span>
+            </a>
+            <a href="mailto:support@calicare.com" class="help-button">
+              <img src="/Images/mail.png" alt="Email">
+              <span>Email Us</span>
+            </a>
+            <a href="#" onclick="openChat()" class="help-button">
+              <img src="/Images/chat.png" alt="Chat">
+              <span>Live Chat</span>
+            </a>
+          </div>
+        </div>
+      </div>
+      <script>
+        function openHelpModal() {
+          document.getElementById("helpModal").style.display = "block";
+        }
+        function closeHelpModal() {
+          document.getElementById("helpModal").style.display = "none";
+        }
+        function openChat() {
+          // Add your chat functionality here
+          alert("Opening chat support...");
+        }
+      </script>
+      <br>
+
+      <button class="btn-outline2" onclick="openTermsModal()">Terms & Conditions</button>
+      <div id="termsModal" class="modal">
+        <div class="modal-content">
+          <iframe src="terms.html" style="width:100%; height:90vh; border:none;"></iframe>
+        </div>
+      </div>
+      <style>
+        .modal {
+          display: none;
+          position: fixed;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          width: 100%;
+          height: 100%;
+          background-color: rgba(0,0,0,0.7);
+          z-index: 1000;
+        }
+        .modal-content {
+          background-color: #EBFAFB;
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          width: 90%;
+          max-width: 800px;
+          border-radius: 10px;
+          overflow: auto;
+        }
+      </style>
+      <script>
+        function openTermsModal() {
+          document.getElementById("termsModal").style.display = "block";
+        }
+        window.onclick = function(event) {
+          if (event.target == document.getElementById("termsModal")) {
+        document.getElementById("termsModal").style.display = "none";
+          }
+        }
+      </script>
+    
+    <!-- FAQ SECTION -->    
+    <div style="display: flex; justify-content: space-between; gap: 10px; align-items: center; padding: 0 20px;">
+      <h3 class="faq-title">FAQ</h3>
+      <div style="position: relative; width: 100%;">
+        <input type="search" id="faqSearch" placeholder="Search FAQ..." style="padding: 8px 35px 8px 8px; border-radius: 10px; border: 1px solid #ccc; width: 100%;">
+        <svg style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); width: 18px; height: 18px;" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"></circle>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+        </svg>
+      </div>
+    </div>
+
+    <div class="faq">
+      <div class="faq-item">
+        <h4>How do I set up my NeckGuard? <span>▾</span></h4>
+        <p>Charge your device for 2 hours, install the CaliCare App, and pair via Bluetooth.</p>
+      </div>
+
+      <div class="faq-item">
+        <h4>Is there a mobile app? <span>▾</span></h4>
+        <p>Yes! Download the CaliCare App on Android or iOS to monitor your device.</p>
+      </div>
+
+      <div class="faq-item">
+        <h4>Can I export my health data? <span>▾</span></h4>
+        <p>Absolutely. You can export data as PDF or CSV from the app dashboard.</p>
+      </div>
+
+      <div class="faq-item">
+        <h4>Does it work offline? <span>▾</span></h4>
+        <p>Yes. Data syncs locally and updates online when a connection is available.</p>
+      </div>
+
+      <div class="faq-item">
+        <h4>How often should I wear it? <span>▾</span></h4>
+        <p>Office workers: 4-6 hrs/day, Sleep tracking: full night, Recovery patients: As prescribed</p>
+      </div>
+
+      <div class="faq-item">
+        <h4>Can I shower with it? <span>▾</span></h4>
+        <p>❌ No - IP54 splash-resistant only</p>
+      </div>
+
+      <div class="faq-item">
+        <h4>How does sleep tracking work?<span>▾</span></h4>
+        <p>3D motion sensors detect: Head position, Neck angle, Position changes</p>
+      </div>
+
+      <div class="faq-item">
+        <h4>Why won't my device connect? <span>▾</span></h4>
+        <p>YTry: Restart Bluetooth, Reboot device, Update App</p>
+      </div>
+
+      <div class="faq-item">
+        <h4>Vibration alerts stopped working <span>▾</span></h4>
+        <p>Check battery (under 10% disables alerts), Verify alert settings</p>
+      </div>
+
+      <div class="faq-item">
+        <h4>Is it safe post-surgery? <span>▾</span></h4>
+        <p>Consult surgeon first - vibrations may affect: Spinal implants, Recent fusions, Healing tissues</p>
+      </div>
+
+      <div class="faq-item">
+        <h4>Can it cause neck pain?<span>▾</span></h4>
+        <p>Normal: Mild 1-2 day adjustment, Concerning: Persistent pain → Discontinue use</p>
+      </div>
+
+      <div class="faq-item">
+        <h4>Does it work offline? <span>▾</span></h4>
+        <p>Yes. Data syncs locally and updates online when a connection is available.</p>
+      </div>
+    </div>
+
+    <!-- SCRIPTS -->
+    <script>
+      // FAQ accordion toggle
+      document.querySelectorAll(".faq-item").forEach(item => {
+        item.addEventListener("click", () => {
+          item.classList.toggle("active");
+        });
+      });
+
+          document.querySelectorAll(".faq-item").forEach(item => {
+          item.addEventListener("click", () => {
+            item.classList.toggle("active");
+          });
+        });
+
+      // Live search functionality
+      document.getElementById('faqSearch').addEventListener('input', function(e) {
+        const searchTerm = e.target.value.toLowerCase();
+        document.querySelectorAll('.faq-item').forEach(item => {
+          const text = item.textContent.toLowerCase();
+          if (text.includes(searchTerm)) {
+            item.style.display = 'block';
+          } else {
+            item.style.display = 'none';
+          }
+        });
+      });
+
+      // Carousel scroll buttons
+      function scrollCarousel(direction) {
+        const carousel = document.getElementById("carousel");
+        const scrollAmount = 200;
+        carousel.scrollBy({
+          left: direction * scrollAmount,
+          behavior: "smooth"
+        });
+      }
+    </script>
+
+    
+    <script>
+      // FAQ accordion toggle
+      document.querySelectorAll(".faq-item").forEach(item => {
+        item.addEventListener("click", () => {
+          item.classList.toggle("active");
+        });
+      });
+
+      // Carousel scroll buttons
+      function scrollCarousel(direction) {
+        const carousel = document.getElementById("carousel");
+        const scrollAmount = 200;
+        carousel.scrollBy({
+          left: direction * scrollAmount,
+          behavior: "smooth"
+        });
+      }
+    </script>
+  </body>
+
 </html>
+
+
+
