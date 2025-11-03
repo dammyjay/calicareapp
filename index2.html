@@ -9,7 +9,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <link rel="icon" href="/Images/calicare logo.png" type="image/x-icon" />
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="style.css" />
     <link
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"
@@ -19,7 +19,7 @@
     <style>
       body {
         font-family: Arial, sans-serif;
-        background-color: #EBFAFB;
+        background-color: #ebfafb;
         /* background-image: url(/Images/Background.png); */
         background-size: auto;
         background-repeat: no-repeat;
@@ -33,13 +33,13 @@
         align-items: center;
         gap: 10px;
       }
-      .header img{
+      .header img {
         width: 40px;
         height: 40px;
       }
-        .header h1 {
-          font-size: 24px;
-        }
+      .header h1 {
+        font-size: 24px;
+      }
       .btn {
         padding: 5px 20px;
         border: none;
@@ -50,14 +50,14 @@
         transition: background-color 0.3s ease;
       }
 
-      .mask{
-        position: fixed;    
+      .mask {
+        position: fixed;
         top: 0;
         left: 0;
         z-index: -1;
         width: 100px;
-        height:150px;
-    }
+        height: 150px;
+      }
 
       .btn-dark-green {
         background-color: #006400;
@@ -218,9 +218,9 @@
       }
       @media (max-width: 600px) {
         .background-image {
-        width: 500vw; /* Full width on small screens */
-        height: auto; /* Maintain aspect ratio */
-      }
+          width: 500vw; /* Full width on small screens */
+          height: auto; /* Maintain aspect ratio */
+        }
         .navi-button {
           display: flex;
           justify-content: space-around;
@@ -240,14 +240,14 @@
           height: 10px;
         }
         .header {
-        display: inline-flex;
-        align-items: center;
-        gap: 10px;
-      }
-      .header img{
-        width: 20px;
-        height: 20px;
-      }
+          display: inline-flex;
+          align-items: center;
+          gap: 10px;
+        }
+        .header img {
+          width: 20px;
+          height: 20px;
+        }
         .header h1 {
           font-size: 16px;
         }
@@ -262,19 +262,13 @@
       alt="Background"
     />
     <div class="header">
-      <img
-
-        src="/Images/calicare logo.png"
-        alt="Site Logo"
-        
-      />
+      <img src="/Images/calicare logo.png" alt="Site Logo" />
       <h1>EMG Live Data Table & Sensor Graph</h1>
     </div>
 
     <div class="navi">
       <div class="navi-header">
-        
-         <span style="font-weight: bold" id="usernameDisplay"></span>
+        <span style="font-weight: bold" id="usernameDisplay"></span>
       </div>
       <div class="navi-header">
         <a href="/profile">
@@ -284,8 +278,8 @@
               width: 40px;
               height: 40px;
               border-radius: 50%;
-              object-fit: cover;  
-              border: 2px solid #0F9894;
+              object-fit: cover;
+              border: 2px solid #0f9894;
             "
           />
         </a>
@@ -295,7 +289,7 @@
     </div>
 
     <div id="chart"></div>
-    <div style="width: 100%; text-align: center; margin-bottom: 20px;">
+    <div style="width: 100%; text-align: center; margin-bottom: 20px">
       <img id="posture" src="" alt="" />
     </div>
 
@@ -315,34 +309,10 @@
         <img src="/Images/Exercise.png" alt="" />
       </div>
     </div>
- 
-    <button class="btn-outline2" onclick="window.location.href='demo.html'">View Demo</button>
 
-    <!-- <div style="margin-top: 20px;">
-        <label for="startDate">Start Date:</label>
-        <input type="date" id="startDate">
-        <br><br>
-        <label for="endDate">Start Time:</label>
-        <input type="time" id="startTime">
-        <br><br>
-    
-        <label for="endDate">End Date:</label>
-        <input type="date" id="endDate">
-        <br><br>
-        <label for="endDate">End Time:</label>
-        <input type="time" id="endTime">
-        <br><br> /
-        <div class="btn-below">
-            <button class="btn btn-light-green" onclick="applyDateFilter()">Filter</button>
-            <button class="btn btn-dark-green" onclick="resetFilter()">Reset</button>
-        </div>
-        
-    </div>     -->
-
-    <!-- <div class="btn-below" style="margin-top: 20px;">
-        <button class="btn btn-dark-green" onclick="exportToExcel()">Export to Excel</button>
-        <button class="btn btn-light-green" onclick="exportToPDF()">Export to PDF</button>
-    </div> -->
+    <button class="btn-outline2" onclick="window.location.href='demo.html'">
+      View Demo
+    </button>
 
     <table style="visibility: hidden">
       <thead>
@@ -361,36 +331,36 @@
       </tbody>
     </table>
 
-        <!-- 🌐 Bottom Navigation -->
-<nav class="bottom-nav">
-  <a href="index2.html" class="nav-item">
-    <img src="Images/home.png" alt="Home" />
-    <span>Home</span>
-  </a>
-  <a href="userdata2.html" class="nav-item">
-    <img src="Images/data.png" alt="Live" />
-    <span>Data Analytics</span>
-  </a>
-  <a href="Exercise.html" class="nav-item">
-    <img src="Images/exercise.png" alt="Profile" />
-    <span>Exercise</span>
-  </a>
-  <a href="profile.html" class="nav-item">
-    <img src="Images/profile.png" alt="Settings" />
-    <span>Profile</span>
-  </a>
-</nav>
+    <!-- 🌐 Bottom Navigation -->
+    <nav class="bottom-nav">
+      <a href="index2.html" class="nav-item">
+        <img src="Images/home.png" alt="Home" />
+        <span>Home</span>
+      </a>
+      <a href="userdata2.html" class="nav-item">
+        <img src="Images/data.png" alt="Live" />
+        <span>Data Analytics</span>
+      </a>
+      <a href="Exercise.html" class="nav-item">
+        <img src="Images/exercise.png" alt="Profile" />
+        <span>Exercise</span>
+      </a>
+      <a href="profile.html" class="nav-item">
+        <img src="Images/profile.png" alt="Settings" />
+        <span>Profile</span>
+      </a>
+    </nav>
 
-
-<script>
-  const currentPage = location.pathname.split("/").pop();
-  document.querySelectorAll(".bottom-nav .nav-item").forEach((item) => {
-    if (item.getAttribute("href") === currentPage) {
-      item.classList.add("active");
-    }
-  });
-</script>
     <script>
+      const currentPage = location.pathname.split("/").pop();
+      document.querySelectorAll(".bottom-nav .nav-item").forEach((item) => {
+        if (item.getAttribute("href") === currentPage) {
+          item.classList.add("active");
+        }
+      });
+    </script>
+
+    <!-- <script>
       // fetch('/getProfile')
       //   .then(res => res.json())
       //   .then(user => {
@@ -485,11 +455,11 @@
           {
             title: " ",
             margin: { t: 50, b: 0, l: 0, r: 0 },
-            paper_bgcolor: 'rgba(0,0,0,0)',  // Makes outer background transparent
-            plot_bgcolor: 'rgba(0,0,0,0)',   // Makes inner plot area transparent
-            responsive: true
+            paper_bgcolor: "rgba(0,0,0,0)", // Makes outer background transparent
+            plot_bgcolor: "rgba(0,0,0,0)", // Makes inner plot area transparent
+            responsive: true,
           },
-          {responsive: true}
+          { responsive: true }
         );
       }
 
@@ -515,7 +485,8 @@
           return res.json();
         })
         .then((user) => {
-          document.getElementById("usernameDisplay").innerText = "Hello " + user.username;
+          document.getElementById("usernameDisplay").innerText =
+            "Hello " + user.username;
           if (user.profile_picture) {
             // document.getElementById('userPhoto').src = '/uploads/' + user.profile_picture;
             document.getElementById("userPhoto").src = user.profile_picture;
@@ -539,241 +510,211 @@
         console.error("WebSocket Error:", error);
         setInterval(fetchData, 5000); // Poll every 5 seconds if WebSocket fails
       };
- // Apply dark mode on page load
-    if (localStorage.getItem("darkmode") === "true") {
-      document.body.classList.add("dark-mode");
-    }
+      // Apply dark mode on page load
+      if (localStorage.getItem("darkmode") === "true") {
+        document.body.classList.add("dark-mode");
+      }
 
-        // Toggle dark mode on change
-        document.getElementById("darkToggle").onchange = e => {
-          localStorage.setItem("darkmode", e.target.checked);
-          document.body.classList.toggle("dark-mode", e.target.checked);
-        };
+      // Toggle dark mode on change
+      document.getElementById("darkToggle").onchange = (e) => {
+        localStorage.setItem("darkmode", e.target.checked);
+        document.body.classList.toggle("dark-mode", e.target.checked);
+      };
 
-        // Toggle dark mode on change
-        document.getElementById("darkToggle").onchange = e => {
-          localStorage.setItem("darkmode", e.target.checked);
-          document.body.classList.toggle("dark-mode", e.target.checked);
-        };
+      // Toggle dark mode on change
+      document.getElementById("darkToggle").onchange = (e) => {
+        localStorage.setItem("darkmode", e.target.checked);
+        document.body.classList.toggle("dark-mode", e.target.checked);
+      };
 
-        const languageMap = {
-      en: {
-        settings: "Settings",
-        notifications: "In-App Notifications",
-        notifyHelp: "Receive notifications",
-        reminder: "Reminder Alerts",
-        reminderHelp: "Set reminders",
-        dark: "Dark Mode",
-        darkHelp: "Set the Visuals of the App",
-        lang: "Language",
-        langHelp: "Set your preferred language",
-        connect: "Device Connection",
-        connectHelp: "Set your preferred language",
-        export: "Export Data",
-        exportHelp: "Share your data",
-        about: "About Calicare",
-        aboutHelp: "Learn more about us",
-        exportBtn: "Export health Data",
-        aboutBtn: "Learn More"
-      },
-      fr: {
-        settings: "Paramètres",
-        notifications: "Notifications intégrées",
-        notifyHelp: "Recevoir des notifications",
-        reminder: "Alertes de rappel",
-        reminderHelp: "Définir des rappels",
-        dark: "Mode sombre",
-        darkHelp: "Définir l'apparence de l'application",
-        lang: "Langue",
-        langHelp: "Définir votre langue préférée",
-        connect: "Connexion de l'appareil",
-        connectHelp: "Définir votre langue préférée",
-        export: "Exporter les données",
-        exportHelp: "Partager vos données",
-        about: "À propos de Calicare",
-        aboutHelp: "En savoir plus sur nous",
-        exportBtn: "Exporter les données",
-        aboutBtn: "En savoir plus"
-      },
-      // Add Yoruba, Hausa, Igbo similarly...
+      
+      const lang = localStorage.getItem("lang") || "en";
+      applyLanguage(lang);
 
-      zh: {
-      settings: "设置",
-      notifications: "内置通知",
-      notifyHelp: "接收通知提醒",
-      reminder: "提醒警报",
-      reminderHelp: "设置提醒",
-      dark: "深色模式",
-      darkHelp: "设置应用外观",
-      lang: "语言",
-      langHelp: "设置您的首选语言",
-      connect: "设备连接",
-      connectHelp: "连接您的设备",
-      export: "导出数据",
-      exportHelp: "共享您的数据",
-      about: "关于 Calicare",
-      aboutHelp: "了解更多信息",
-      exportBtn: "导出数据",
-      aboutBtn: "了解更多"
-    }
-    ,
-      yo: {
-        settings: "Eto",
-        notifications: "Ifohunsafẹfẹ inu",
-        notifyHelp: "Gba awọn ifitonileti",
-        reminder: "Ikilọ Ikilọ",
-        reminderHelp: "Ṣeto awọn ikilọ",
-        dark: "Ipo Dudu",
-        darkHelp: "Ṣeto awọn iwo ti ohun elo",
-        lang: "Ede",
-        langHelp: "Ṣeto ede ti o fẹ",
-        connect: "Asopọ Ẹrọ",
-        connectHelp: "Ṣeto asopọ ẹrọ rẹ",
-        export: "Gbejade Data",
-        exportHelp: "Pin data rẹ",
-        about: "Nipa Calicare",
-        aboutHelp: "Kọ ẹkọ diẹ sii nipa wa",
-        exportBtn: "Gbejade data ilera",
-        aboutBtn: "Kọ ẹkọ diẹ sii"
-      },
-      ha: {
-        settings: "Saitin",
-        notifications: "Sanarwa na ciki",
-        notifyHelp: "Karɓi sanarwa",
-        reminder: "Tuna sanarwa",
-        reminderHelp: "Saita tunatarwa",
-        dark: "Yanayin duhu",
-        darkHelp: "Saita kyan gani na aikace-aikacen",
-        lang: "Harshe",
-        langHelp: "Saita yaren da kake so",
-        connect: "Haɗin Na'ura",
-        connectHelp: "Saita haɗin na'urarka",
-        export: "Fitar da Bayanai",
-        exportHelp: "Raba bayananka",
-        about: "Game da Calicare",
-        aboutHelp: "Koyi ƙarin game da mu",
-        exportBtn: "Fitar da bayanan lafiya",
-        aboutBtn: "Koyi ƙarin"
-      },
-      ig:{
-          settings:"Ntọala", 
-          notifications:"Nkwupụta n'ime", 
-          notifyHelp:"Nnata nkwupụta", 
-          reminder:"Nkwupụta ncheta", 
-          reminderHelp:"Tọọ ncheta", 
-          dark:"Oge ọchịchịrị", 
-          darkHelp:"Tọọ anya nke ngwa", 
-          lang:"Asụsụ", 
-          langHelp:"Tọọ asụsụ ị chọrọ", 
-          connect:"Njikọ Ngwaọrụ", 
-          connectHelp:"Tọọ njikọ ngwaọrụ gị",
+      document.getElementById("languageSelect").onchange = (e) => {
+        const selectedLang = e.target.value;
+        localStorage.setItem("lang", selectedLang);
+        applyLanguage(selectedLang);
+      };
+    </script> -->
 
-    }
+    <script>
+      let userEmail = null;
+
+      // Step 1: Get logged-in user info
+      fetch("/getProfile")
+        .then((res) => res.json())
+        .then((user) => {
+          userEmail = user.email;
+          document.getElementById("usernameDisplay").innerText =
+            "Hello " + user.username;
+          if (user.profile_picture) {
+            document.getElementById("userPhoto").src = user.profile_picture;
+          }
+          fetchUserData(); // Start chart updates
+        })
+        .catch((err) => console.error("Profile fetch error:", err));
+
+      // Step 2: Fetch user-specific data
+      function fetchUserData() {
+        fetch(`/getUserDeviceData?email=${encodeURIComponent(userEmail)}`)
+          .then((res) => res.json())
+          .then((data) => {
+            updateGraph(data);
+            updateTable(data);
+          })
+          .catch((err) => console.error("Error loading user data:", err));
+      }
+
+      // Step 3: Update Plotly chart
+      function updateGraph(data) {
+        if (!data || data.length === 0) return;
+
+        const latestData = data.slice(0, 9).reverse(); // last 9 readings
+        const temperatureArray = latestData.map((row) => row.temperature);
+        const temperature = temperatureArray[temperatureArray.length - 1];
+
+        // Change chart color & posture image based on EMG value
+        let barColor, postureImg;
+        if (temperature > 80) {
+          barColor = "green";
+          postureImg = "/Images/mangreen.png";
+        } else if (temperature > 50) {
+          barColor = "yellow";
+          postureImg = "/Images/mangreen.png";
+        } else {
+          barColor = "red";
+          postureImg = "/Images/manred.png";
         }
 
+        document.getElementById("posture").src = postureImg;
 
-    // Function to apply translations
-    function applyLanguage(lang) {
-      const text = languageMap[lang];
-      if (!text) return;
+        Plotly.react(
+          "chart",
+          [
+            {
+              type: "indicator",
+              mode: "gauge+number",
+              value: temperature,
+              title: { text: "Live EMG Sensor Value (%)" },
+              gauge: {
+                axis: { range: [0, 100] },
+                bar: { color: barColor },
+                steps: [{ range: [0, 100], color: "#e0e0e0" }],
+              },
+            },
+          ],
+          {
+            margin: { t: 50, b: 0, l: 0, r: 0 },
+            paper_bgcolor: "rgba(0,0,0,0)",
+            plot_bgcolor: "rgba(0,0,0,0)",
+          }
+        );
+      }
 
-      document.querySelector("h2").innerText = text.settings;
-      document.querySelectorAll(".setting-item")[0].querySelector(".setting-label").innerText = text.notifications;
-      document.querySelectorAll(".setting-item")[0].querySelector(".setting-label2").innerText = text.notifyHelp;
+      // Step 4: Update table
+      function updateTable(data) {
+        const tbody = document.getElementById("dataTable");
+        tbody.innerHTML = "";
+        if (!data.length) {
+          tbody.innerHTML = "<tr><td colspan='4'>No Data Available</td></tr>";
+          return;
+        }
+        data.forEach((row) => {
+          const tr = document.createElement("tr");
+          tr.innerHTML = `
+        <td>${row.device_id}</td>
+        <td>${row.temperature}</td>
+        <td>${row.date.slice(0, 10)}</td>
+        <td>${row.time}</td>
+      `;
+          tbody.appendChild(tr);
+        });
+      }
 
-      document.querySelectorAll(".setting-item")[1].querySelector(".setting-label").innerText = text.reminder;
-      document.querySelectorAll(".setting-item")[1].querySelector(".setting-label2").innerText = text.reminderHelp;
+      // Step 5: Real-time Updates via WebSocket or polling
+      const protocol = window.location.protocol === "https:" ? "wss" : "ws";
+      const socket = new WebSocket(`${protocol}://${window.location.host}`);
 
-      document.querySelectorAll(".setting-item")[2].querySelector(".setting-label").innerText = text.dark;
-      document.querySelectorAll(".setting-item")[2].querySelector(".setting-label2").innerText = text.darkHelp;
+      socket.onopen = () => console.log("Connected to WebSocket");
+      socket.onmessage = () => fetchUserData();
+      socket.onclose = () => {
+        console.log("WebSocket closed, fallback to polling...");
+        setInterval(fetchUserData, 5000); // Poll every 5s if socket closed
+      };
 
-      document.querySelectorAll(".setting-item")[3].querySelector(".setting-label").innerText = text.lang;
-      document.querySelectorAll(".setting-item")[3].querySelector(".setting-label2").innerText = text.langHelp;
+      // Step 6: Apply language and dark mode from localStorage
+      const lang = localStorage.getItem("lang") || "en";
+      applyLanguage(lang);
 
-      document.querySelectorAll(".setting-item")[4].querySelector(".setting-label").innerText = text.connect;
-      document.querySelectorAll(".setting-item")[4].querySelector(".setting-label2").innerText = text.connectHelp;
-
-      document.querySelectorAll(".setting-item")[5].querySelector(".setting-label").innerText = text.export;
-      document.querySelectorAll(".setting-item")[5].querySelector(".setting-label2").innerText = text.exportHelp;
-      document.querySelectorAll(".setting-item")[5].querySelector("button").innerText = text.exportBtn;
-
-      document.querySelectorAll(".setting-item")[6].querySelector(".setting-label").innerText = text.about;
-      document.querySelectorAll(".setting-item")[6].querySelector(".setting-label2").innerText = text.aboutHelp;
-      document.querySelectorAll(".setting-item")[6].querySelector("button").innerText = text.aboutBtn;
-    }
-
-    const lang = localStorage.getItem("lang") || "en";
-    applyLanguage(lang);
-
-    document.getElementById("languageSelect").onchange = e => {
-      const selectedLang = e.target.value;
-      localStorage.setItem("lang", selectedLang);
-      applyLanguage(selectedLang);
-    };
-
-
+      if (localStorage.getItem("darkmode") === "true") {
+        document.body.classList.add("dark-mode");
+      }
     </script>
-      <script src="/app-setting.js"></script>
 
+    <script src="/app-setting.js"></script>
 
+    <!-- Google Translate Element -->
+    <!-- <div id="google_translate_element"></div> -->
 
-  <!-- Google Translate Element -->
-<!-- <div id="google_translate_element"></div> -->
-
-<script type="text/javascript">
-  function googleTranslateElementInit() {
-    new google.translate.TranslateElement(
-      {
-        pageLanguage: 'en',
-        includedLanguages:
-          'en,af,fr,es,yo,ha,ig,zh,zh-CN,ar,hi,pt,ru,ja,de,ko,it,vi,tr,id,sw,pl,nl,th,el,he,fa,ms,bn,ur,ta,te,mr,gu,pa,uk,ro,da,sv,no,fi,hu,cs,ca,hr,sr,bg,sk,zu,xh,am,so,om,mg,ne,si,ku,kk,uz,my,km,lo,bo,mn',
-        layout: google.translate.TranslateElement.InlineLayout.HORIZONTAL
-      },
-      'google_translate_element'
-    );
-  }
-</script>
-
-<script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-<script>
-  // Get cookie helper
-  function getCookie(name) {
-    const value = `; ${document.cookie}`;
-    const parts = value.split(`; ${name}=`);
-    if (parts.length === 2) return parts.pop().split(';').shift();
-  }
-
-  // Apply saved language after page load
-  function applySavedLanguage() {
-    const savedLang = localStorage.getItem('preferredLanguage');
-    if (savedLang) {
-      const cookieLang = getCookie('googtrans');
-      if (!cookieLang || !cookieLang.includes(savedLang)) {
-        document.cookie = `googtrans=/auto/${savedLang};path=/`;
-        document.cookie = `googtrans=/auto/${savedLang};domain=.${window.location.hostname};path=/`;
-        location.reload(); // reload page with translation applied
+    <script type="text/javascript">
+      function googleTranslateElementInit() {
+        new google.translate.TranslateElement(
+          {
+            pageLanguage: "en",
+            includedLanguages:
+              "en,af,fr,es,yo,ha,ig,zh,zh-CN,ar,hi,pt,ru,ja,de,ko,it,vi,tr,id,sw,pl,nl,th,el,he,fa,ms,bn,ur,ta,te,mr,gu,pa,uk,ro,da,sv,no,fi,hu,cs,ca,hr,sr,bg,sk,zu,xh,am,so,om,mg,ne,si,ku,kk,uz,my,km,lo,bo,mn",
+            layout: google.translate.TranslateElement.InlineLayout.HORIZONTAL,
+          },
+          "google_translate_element"
+        );
       }
-    }
-  }
+    </script>
 
-  // Save selected language when user changes it
-  function observeLanguageChange() {
-    const observer = new MutationObserver(() => {
-      const cookieLang = getCookie('googtrans');
-      if (cookieLang) {
-        const selectedLang = cookieLang.split('/').pop();
-        localStorage.setItem('preferredLanguage', selectedLang);
+    <script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    <script>
+      // Get cookie helper
+      function getCookie(name) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(";").shift();
       }
-    });
-    observer.observe(document.body, { attributes: true, childList: true, subtree: true });
-  }
 
-  window.addEventListener('load', () => {
-    setTimeout(() => {
-      applySavedLanguage();
-      observeLanguageChange();
-    }, 2000);
-  });
-</script>
+      // Apply saved language after page load
+      function applySavedLanguage() {
+        const savedLang = localStorage.getItem("preferredLanguage");
+        if (savedLang) {
+          const cookieLang = getCookie("googtrans");
+          if (!cookieLang || !cookieLang.includes(savedLang)) {
+            document.cookie = `googtrans=/auto/${savedLang};path=/`;
+            document.cookie = `googtrans=/auto/${savedLang};domain=.${window.location.hostname};path=/`;
+            location.reload(); // reload page with translation applied
+          }
+        }
+      }
+
+      // Save selected language when user changes it
+      function observeLanguageChange() {
+        const observer = new MutationObserver(() => {
+          const cookieLang = getCookie("googtrans");
+          if (cookieLang) {
+            const selectedLang = cookieLang.split("/").pop();
+            localStorage.setItem("preferredLanguage", selectedLang);
+          }
+        });
+        observer.observe(document.body, {
+          attributes: true,
+          childList: true,
+          subtree: true,
+        });
+      }
+
+      window.addEventListener("load", () => {
+        setTimeout(() => {
+          applySavedLanguage();
+          observeLanguageChange();
+        }, 2000);
+      });
+    </script>
   </body>
 </html>

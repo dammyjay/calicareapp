@@ -46,7 +46,7 @@
                 </div>
 
                 <div class="data-date">
-                    <input style="padding: 5px 2px; border-radius: 10px; border: #d2d2d2 1px solid;   background-color: #ebfafb;" type="date">
+                    <input id="startDate" style="padding: 5px 2px; border-radius: 10px; border: #d2d2d2 1px solid;   background-color: #ebfafb;" type="date">
                 </div>
             </div>
 
@@ -57,9 +57,11 @@
                 </div>
 
                 <div class="data-date">
-                    <input style="padding: 5px 2px; border-radius: 10px; border: #d2d2d2 1px solid;   background-color: #ebfafb;" type="date">
+                    <input id="endDate" style="padding: 5px 2px; border-radius: 10px; border: #d2d2d2 1px solid;   background-color: #ebfafb;" type="date">
                 </div>
             </div>
+
+            <button onclick="loadUserData(1)">Filter</button>
         </div>
     </div>
     <div class="row-details">
@@ -74,6 +76,8 @@
           <img src="/Images/csv icon.png" alt="" />
           <p>CSV</p>
         </div>
+
+        
       </div>
     </div>
 
@@ -271,7 +275,7 @@
         border-radius: 10px;
         overflow: hidden;
         box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        display: none;
+        /* display: none; */
       "
     >
       <thead >
@@ -284,6 +288,12 @@
       </thead>
       <tbody></tbody>
     </table>
+
+    <div style="margin-top: 10px;">
+      <button id="prevBtn" onclick="prevPage()">⬅ Previous</button>
+      <span id="pageIndicator">Page 1</span>
+      <button id="nextBtn" onclick="nextPage()">Next ➡</button>
+    </div>
 
         <div class="row-details">
           <h3>Export Status</h2>
@@ -431,9 +441,9 @@
     </nav>
 
     <script>
-      const currentPage = location.pathname.split("/").pop();
+      const currentPage2 = location.pathname.split("/").pop();
       document.querySelectorAll(".bottom-nav .nav-item").forEach((item) => {
-        if (item.getAttribute("href") === currentPage) {
+        if (item.getAttribute("href") === currentPage2) {
           item.classList.add("active");
         }
       });
@@ -500,24 +510,87 @@
         })
         .catch(() => alert("Failed to load user email"));
 
-      function loadUserData() {
-        fetch(`/getUserDeviceData?email=${encodeURIComponent(userEmail)}`)
-          .then((res) => res.json())
-          .then((data) => {
-            const tableBody = document.querySelector("#dataTable tbody");
-            tableBody.innerHTML = "";
-            data.forEach((row) => {
-              tableBody.innerHTML += `
-                        <tr>
-                            <td>${row.device_id}</td>
-                            <td>${row.temperature}</td>
-                            <td>${row.date.slice(0, 10)}</td>
-                            <td>${row.time}</td>
-                        </tr>
-                    `;
-            });
-          });
+      // function loadUserData() {
+      //   fetch(`/getUserDeviceData?email=${encodeURIComponent(userEmail)}`)
+      //     .then((res) => res.json())
+      //     .then((data) => {
+      //       const tableBody = document.querySelector("#dataTable tbody");
+      //       tableBody.innerHTML = "";
+      //       data.forEach((row) => {
+      //         tableBody.innerHTML += `
+      //                   <tr>
+      //                       <td>${row.device_id}</td>
+      //                       <td>${row.temperature}</td>
+      //                       <td>${row.date.slice(0, 10)}</td>
+      //                       <td>${row.time}</td>
+      //                   </tr>
+      //               `;
+      //       });
+      //     });
+      // }
+
+  let currentPage = 1;
+  const limit = 50;
+  // const userEmail = localStorage.getItem("userEmail"); // assuming you store user email
+
+  async function loadUserData(page = 1) {
+    const startDate = document.getElementById('startDate').value;
+    const endDate = document.getElementById('endDate').value;
+
+    let url = `/getUserDeviceData?email=${encodeURIComponent(userEmail)}&page=${page}&limit=${limit}`;
+    if (startDate && endDate) {
+      url += `&startDate=${encodeURIComponent(startDate)}&endDate=${encodeURIComponent(endDate)}`;
+    }
+
+    try {
+      const res = await fetch(url);
+      const data = await res.json();
+
+      const tableBody = document.querySelector("#dataTable tbody");
+      tableBody.innerHTML = "";
+
+      if (data.length === 0 && page > 1) {
+        alert("No more data available");
+        currentPage--;
+        return;
       }
+
+      data.forEach(row => {
+        const tr = document.createElement("tr");
+        tr.innerHTML = `
+          <td>${row.device_id}</td>
+          <td>${row.temperature ?? "-"}</td>
+          <td>${row.humidity ?? "-"}</td>
+          <td>${row.date ? row.date.slice(0, 10) : "-"}</td>
+          <td>${row.time ?? "-"}</td>
+        `;
+        tableBody.appendChild(tr);
+      });
+
+      document.getElementById("pageIndicator").textContent = `Page ${page}`;
+      currentPage = page;
+    } catch (err) {
+      console.error("Error loading data:", err);
+    }
+  }
+
+  function nextPage() {
+    loadUserData(currentPage + 1);
+  }
+
+  function prevPage() {
+    if (currentPage > 1) {
+      loadUserData(currentPage - 1);
+    }
+  }
+
+  // Load first page by default
+  window.onload = () => loadUserData(1);
+
+      document.getElementById('startDate').addEventListener('change', loadUserData);
+      document.getElementById('endDate').addEventListener('change', loadUserData);
+
+
 
       setTimeout(loadUserData, 2000); // Wait for userEmail to load
 
@@ -596,42 +669,87 @@
         }
       }
 
+      // function downloadCSV() {
+      //   const startDate = document.getElementById('startDate').value;
+      //   const endDate = document.getElementById('endDate').value;
+
+      //   let url = `/getUserDeviceData?email=${encodeURIComponent(userEmail)}`;
+      //   if (startDate && endDate) {
+      //     url += `&startDate=${encodeURIComponent(startDate)}&endDate=${encodeURIComponent(endDate)}`;
+      //   }
+
+      //   fetch(`/getUserDeviceData?email=${encodeURIComponent(userEmail)}`)
+      //     .then((res) => res.json())
+      //     .then((data) => {
+      //       const header = `Username: ${userName}\n`;
+      //       const header2 = `Email: ${userEmail}\n\n`;
+      //       const timestamp = new Date()
+      //         .toISOString()
+      //         .slice(0, 19)
+      //         .replace(/[:T]/g, "-");
+      //       const fileName = `${userName}_Calicare_EMG_Readings_${timestamp}.csv`;
+      //       const csvHeader = "Device ID,EMG Readings,Date,Time\n";
+      //       const csvRows = data.map(
+      //         (row) =>
+      //           `${row.device_id},${row.temperature},${row.date.slice(0, 10)},${
+      //             row.time
+      //           }`
+      //       );
+      //       const csvContent =
+      //         header + header2 + csvHeader + csvRows.join("\n");
+
+      //       const blob = new Blob([csvContent], { type: "text/csv" });
+      //       const url = window.URL.createObjectURL(blob);
+
+      //       const a = document.createElement("a");
+      //       a.setAttribute("hidden", "");
+      //       a.setAttribute("href", url);
+      //       a.setAttribute(
+      //         "download",
+      //         `${userName}_Calicare_EMG_Readings_${timestamp}.csv`
+      //       );
+      //       document.body.appendChild(a);
+      //       a.click();
+      //       document.body.removeChild(a);
+      //     });
+      // }
+
       function downloadCSV() {
-        fetch(`/getUserDeviceData?email=${encodeURIComponent(userEmail)}`)
-          .then((res) => res.json())
-          .then((data) => {
-            const header = `Username: ${userName}\n`;
-            const header2 = `Email: ${userEmail}\n\n`;
-            const timestamp = new Date()
-              .toISOString()
-              .slice(0, 19)
-              .replace(/[:T]/g, "-");
-            const fileName = `${userName}_Calicare_EMG_Readings_${timestamp}.csv`;
-            const csvHeader = "Device ID,EMG Readings,Date,Time\n";
-            const csvRows = data.map(
-              (row) =>
-                `${row.device_id},${row.temperature},${row.date.slice(0, 10)},${
-                  row.time
-                }`
-            );
-            const csvContent =
-              header + header2 + csvHeader + csvRows.join("\n");
+  const startDate = document.getElementById('startDate').value;
+  const endDate = document.getElementById('endDate').value;
 
-            const blob = new Blob([csvContent], { type: "text/csv" });
-            const url = window.URL.createObjectURL(blob);
+  let url = `/getUserDeviceData?email=${encodeURIComponent(userEmail)}`;
+  if (startDate && endDate) {
+    url += `&startDate=${encodeURIComponent(startDate)}&endDate=${encodeURIComponent(endDate)}`;
+  }
 
-            const a = document.createElement("a");
-            a.setAttribute("hidden", "");
-            a.setAttribute("href", url);
-            a.setAttribute(
-              "download",
-              `${userName}_Calicare_EMG_Readings_${timestamp}.csv`
-            );
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-          });
-      }
+  fetch(url)
+    .then((res) => res.json())
+    .then((data) => {
+      const header = `Username: ${userName}\n`;
+      const header2 = `Email: ${userEmail}\n\n`;
+      const timestamp = new Date().toISOString().slice(0, 19).replace(/[:T]/g, "-");
+      const fileName = `${userName}_Calicare_EMG_Readings_${timestamp}.csv`;
+
+      const csvHeader = "Device ID,EMG Value,Date,Time\n";
+      const csvRows = data.map(row =>
+        `${row.device_id},${row.temperature ?? "-"},${row.date ? row.date.slice(0, 10) : "-"},${row.time ?? "-"}`
+      );
+
+      const csvContent = header + header2 + csvHeader + csvRows.join("\n");
+
+      const blob = new Blob([csvContent], { type: "text/csv" });
+      const urlObject = window.URL.createObjectURL(blob);
+
+      const a = document.createElement("a");
+      a.href = urlObject;
+      a.download = fileName;
+      a.click();
+      window.URL.revokeObjectURL(urlObject);
+    })
+    .catch(err => console.error("Error exporting CSV:", err));
+}
+
 
       async function downloadPDF() {
         const { jsPDF } = window.jspdf;
@@ -639,9 +757,20 @@
 
         const profileRes = await fetch("/getProfile");
         const user = await profileRes.json();
-        const dataRes = await fetch(
-          `/getUserDeviceData?email=${encodeURIComponent(user.email)}`
-        );
+        // const dataRes = await fetch(
+        //   `/getUserDeviceData?email=${encodeURIComponent(user.email)}`
+        // );
+
+        const startDate = document.getElementById('startDate').value;
+        const endDate = document.getElementById('endDate').value;
+
+        let dataUrl = `/getUserDeviceData?email=${encodeURIComponent(user.email)}`;
+        if (startDate && endDate) {
+          dataUrl += `&startDate=${encodeURIComponent(startDate)}&endDate=${encodeURIComponent(endDate)}`;
+        }
+
+        const dataRes = await fetch(dataUrl);
+
         const data = await dataRes.json();
 
         const userName = user.username;

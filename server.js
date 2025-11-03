@@ -285,15 +285,47 @@ app.put("/admin/users/:id", isAdmin, async (req, res) => {
   }
 });
 
+// app.get("/getUserDeviceData", async (req, res) => {
+//   const { email, page = 1, limit = 50 } = req.query;
+//   const offset = (page - 1) * limit;
+//   const result = await pool.query(
+//     "SELECT * FROM nodemcu2_data WHERE email = $1 ORDER BY date DESC, time DESC LIMIT $2 OFFSET $3",
+//     [email, limit, offset]
+//   );
+//   res.json(result.rows);
+// });
+
 app.get("/getUserDeviceData", async (req, res) => {
-  const { email, page = 1, limit = 50 } = req.query;
-  const offset = (page - 1) * limit;
-  const result = await pool.query(
-    "SELECT * FROM nodemcu2_data WHERE email = $1 ORDER BY date DESC, time DESC LIMIT $2 OFFSET $3",
-    [email, limit, offset]
-  );
-  res.json(result.rows);
+  try {
+    const { email, page = 1, limit = 50, startDate, endDate } = req.query;
+    const offset = (page - 1) * limit;
+
+    let query = `
+      SELECT * FROM nodemcu2_data 
+      WHERE email = $1
+    `;
+    const params = [email];
+    let paramIndex = 2;
+
+    if (startDate && endDate) {
+      query += ` AND date BETWEEN $${paramIndex} AND $${paramIndex + 1}`;
+      params.push(startDate, endDate);
+      paramIndex += 2;
+    }
+
+    query += ` ORDER BY date DESC, time DESC LIMIT $${paramIndex} OFFSET $${
+      paramIndex + 1
+    }`;
+    params.push(limit, offset);
+
+    const result = await pool.query(query, params);
+    res.json(result.rows);
+  } catch (err) {
+    console.error("Error fetching user device data:", err);
+    res.status(500).json({ error: "Internal server error" });
+  }
 });
+
 
 
 
