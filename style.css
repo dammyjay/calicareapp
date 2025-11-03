@@ -843,75 +843,78 @@ body {
 
 /* 🔹 Table Container */
 .table-container {
-    max-height: 400px;
-    /* adjust this as needed */
-    overflow-y: auto;
-    overflow-x: auto;
-    border: 1px solid #ddd;
-    border-radius: 10px;
-    background: #fff;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-    margin-top: 1rem;
+  max-height: 400px;          /* Limit height of the whole table box */
+  overflow-y: auto;           /* Enable vertical scroll inside */
+  overflow-x: auto;           /* Horizontal scroll if needed */
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  background: #fff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  margin-top: 1rem;
+  position: relative;
 }
 
 /* 🔹 Table Base */
 table {
-    width: 100%;
-    border-collapse: collapse;
-    /* min-width: 600px; */
-    /* helps keep columns readable */
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;        /* Keeps columns aligned */
 }
 
 /* 🔹 Header Styling */
 thead {
-    position: sticky;
-    top: 0;
-    background: #000000;
-    /* change to your theme color */
-    color: white;
-    z-index: 2;
+  position: sticky;
+  top: 0;
+  background: #000;           /* Header background color */
+  color: #fff;
+  z-index: 3;
 }
 
+/* 🔹 Table Cells */
 th,
 td {
-    padding: 10px 12px;
-    text-align: left;
-    border-bottom: 1px solid #e0e0e0;
-    font-size: 14px;
+  padding: 10px 12px;
+  text-align: left;
+  border-bottom: 1px solid #e0e0e0;
+  font-size: 14px;
+  white-space: nowrap;        /* Keeps text in one line */
 }
 
-/* 🔹 Hover effect */
+/* 🔹 Hover effect for rows */
 tbody tr:hover {
-    background-color: #f7faff;
+  background-color: #f7faff;
 }
 
 /* 🔹 Responsive tweaks */
 @media (max-width: 768px) {
-    table {
-        font-size: 13px;
-        /* min-width: 500px; */
-    }
-
-    th,
-    td {
-        padding: 8px;
-    }
+  .table-container {
+    max-height: 300px;
+  }
+  table {
+    font-size: 13px;
+  }
+  th,
+  td {
+    padding: 8px;
+  }
 }
 
 /* 🔹 Scrollbar styling (optional for modern browsers) */
 .table-container::-webkit-scrollbar {
-    height: 8px;
-    width: 8px;
+  height: 8px;
+  width: 8px;
 }
 
 .table-container::-webkit-scrollbar-thumb {
-    background: #ccc;
-    border-radius: 4px;
+  background: #ccc;
+  border-radius: 4px;
 }
 
 .table-container::-webkit-scrollbar-thumb:hover {
-    background: #999;
+  background: #999;
 }
+
+
 
 @keyframes fadeIn {
     from {
