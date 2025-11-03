@@ -62,6 +62,7 @@
             </div>
 
             <button onclick="loadUserData(1)">Filter</button>
+            <button onclick="resetDate()">Reset</button>
         </div>
     </div>
     <div class="row-details">
@@ -266,28 +267,22 @@
     <!-- <button onclick="downloadCSV()">📄 Export Data</button>
     <button onclick="downloadPDF()">🧾 Export PDF</button> -->
 
-    <table
-      id="dataTable"
-      class="table table-striped table-bordered"
-      style="
-        width: 100%;
-        margin-top: 20px;
-        border-radius: 10px;
-        overflow: hidden;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-        /* display: none; */
-      "
-    >
-      <thead >
-        <tr>
-          <th>Device ID</th>
-          <th>EMG Value</th>
-          <th>Date</th>
-          <th>Time</th>
-        </tr>
-      </thead>
-      <tbody></tbody>
-    </table>
+    <dib class="table container">
+      <table
+        id="dataTable"
+      >
+        <thead>
+          <tr>
+            <th>Device ID</th>
+            <th>EMG Value</th>
+            <th>Battery %</th>
+            <th>Date</th>
+            <th>Time</th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>  
 
     <div style="margin-top: 10px;">
       <button id="prevBtn" onclick="prevPage()">⬅ Previous</button>
@@ -612,6 +607,27 @@
       // Refresh every 5 seconds
       setInterval(pollLiveData, 5000);
 
+      function resetDate() {
+        document.getElementById("startDate").value = "";
+        document.getElementById("endDate").value = "";
+        currentPage = 1; // reset pagination if you use it
+        loadUserData(); // reload all data without filters
+      }
+
+      function updateResetButtonState() {
+        const start = document.getElementById("startDate").value;
+        const end = document.getElementById("endDate").value;
+        const resetBtn = document.querySelector("button[onclick='resetDate()']");
+        resetBtn.disabled = !(start || end);
+      }
+
+      document.getElementById("startDate").addEventListener("input", updateResetButtonState);
+      document.getElementById("endDate").addEventListener("input", updateResetButtonState);
+
+      updateResetButtonState();
+
+
+
       async function connectToDevice() {
         try {
           const device = await navigator.bluetooth.requestDevice({
@@ -715,40 +731,40 @@
       // }
 
       function downloadCSV() {
-  const startDate = document.getElementById('startDate').value;
-  const endDate = document.getElementById('endDate').value;
+        const startDate = document.getElementById('startDate').value;
+        const endDate = document.getElementById('endDate').value;
 
-  let url = `/getUserDeviceData?email=${encodeURIComponent(userEmail)}`;
-  if (startDate && endDate) {
-    url += `&startDate=${encodeURIComponent(startDate)}&endDate=${encodeURIComponent(endDate)}`;
-  }
+        let url = `/getUserDeviceData?email=${encodeURIComponent(userEmail)}`;
+        if (startDate && endDate) {
+          url += `&startDate=${encodeURIComponent(startDate)}&endDate=${encodeURIComponent(endDate)}`;
+        }
 
-  fetch(url)
-    .then((res) => res.json())
-    .then((data) => {
-      const header = `Username: ${userName}\n`;
-      const header2 = `Email: ${userEmail}\n\n`;
-      const timestamp = new Date().toISOString().slice(0, 19).replace(/[:T]/g, "-");
-      const fileName = `${userName}_Calicare_EMG_Readings_${timestamp}.csv`;
+        fetch(url)
+          .then((res) => res.json())
+          .then((data) => {
+            const header = `Username: ${userName}\n`;
+            const header2 = `Email: ${userEmail}\n\n`;
+            const timestamp = new Date().toISOString().slice(0, 19).replace(/[:T]/g, "-");
+            const fileName = `${userName}_Calicare_EMG_Readings_${timestamp}.csv`;
 
-      const csvHeader = "Device ID,EMG Value,Date,Time\n";
-      const csvRows = data.map(row =>
-        `${row.device_id},${row.temperature ?? "-"},${row.date ? row.date.slice(0, 10) : "-"},${row.time ?? "-"}`
-      );
+            const csvHeader = "Device ID,EMG Value,Date,Time\n";
+            const csvRows = data.map(row =>
+              `${row.device_id},${row.temperature ?? "-"},${row.date ? row.date.slice(0, 10) : "-"},${row.time ?? "-"}`
+            );
 
-      const csvContent = header + header2 + csvHeader + csvRows.join("\n");
+            const csvContent = header + header2 + csvHeader + csvRows.join("\n");
 
-      const blob = new Blob([csvContent], { type: "text/csv" });
-      const urlObject = window.URL.createObjectURL(blob);
+            const blob = new Blob([csvContent], { type: "text/csv" });
+            const urlObject = window.URL.createObjectURL(blob);
 
-      const a = document.createElement("a");
-      a.href = urlObject;
-      a.download = fileName;
-      a.click();
-      window.URL.revokeObjectURL(urlObject);
-    })
-    .catch(err => console.error("Error exporting CSV:", err));
-}
+            const a = document.createElement("a");
+            a.href = urlObject;
+            a.download = fileName;
+            a.click();
+            window.URL.revokeObjectURL(urlObject);
+          })
+          .catch(err => console.error("Error exporting CSV:", err));
+      }
 
 
       async function downloadPDF() {

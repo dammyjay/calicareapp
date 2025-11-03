@@ -840,6 +840,79 @@ body {
     top: 0px !important;
 }
 
+
+/* 🔹 Table Container */
+.table-container {
+    max-height: 400px;
+    /* adjust this as needed */
+    overflow-y: auto;
+    overflow-x: auto;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    background: #fff;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    margin-top: 1rem;
+}
+
+/* 🔹 Table Base */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    /* min-width: 600px; */
+    /* helps keep columns readable */
+}
+
+/* 🔹 Header Styling */
+thead {
+    position: sticky;
+    top: 0;
+    background: #000000;
+    /* change to your theme color */
+    color: white;
+    z-index: 2;
+}
+
+th,
+td {
+    padding: 10px 12px;
+    text-align: left;
+    border-bottom: 1px solid #e0e0e0;
+    font-size: 14px;
+}
+
+/* 🔹 Hover effect */
+tbody tr:hover {
+    background-color: #f7faff;
+}
+
+/* 🔹 Responsive tweaks */
+@media (max-width: 768px) {
+    table {
+        font-size: 13px;
+        /* min-width: 500px; */
+    }
+
+    th,
+    td {
+        padding: 8px;
+    }
+}
+
+/* 🔹 Scrollbar styling (optional for modern browsers) */
+.table-container::-webkit-scrollbar {
+    height: 8px;
+    width: 8px;
+}
+
+.table-container::-webkit-scrollbar-thumb {
+    background: #ccc;
+    border-radius: 4px;
+}
+
+.table-container::-webkit-scrollbar-thumb:hover {
+    background: #999;
+}
+
 @keyframes fadeIn {
     from {
         opacity: 0;
