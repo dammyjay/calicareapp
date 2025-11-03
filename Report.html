@@ -49,5 +49,65 @@
 </script>
 
       <script src="/app-setting.js"></script>
+
+
+  <!-- Google Translate Element -->
+<!-- <div id="google_translate_element"></div> -->
+
+<script type="text/javascript">
+  function googleTranslateElementInit() {
+    new google.translate.TranslateElement(
+      {
+        pageLanguage: 'en',
+        includedLanguages:
+          'en,af,fr,es,yo,ha,ig,zh,zh-CN,ar,hi,pt,ru,ja,de,ko,it,vi,tr,id,sw,pl,nl,th,el,he,fa,ms,bn,ur,ta,te,mr,gu,pa,uk,ro,da,sv,no,fi,hu,cs,ca,hr,sr,bg,sk,zu,xh,am,so,om,mg,ne,si,ku,kk,uz,my,km,lo,bo,mn',
+        layout: google.translate.TranslateElement.InlineLayout.HORIZONTAL
+      },
+      'google_translate_element'
+    );
+  }
+</script>
+
+<script src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+<script>
+  // Get cookie helper
+  function getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+  }
+
+  // Apply saved language after page load
+  function applySavedLanguage() {
+    const savedLang = localStorage.getItem('preferredLanguage');
+    if (savedLang) {
+      const cookieLang = getCookie('googtrans');
+      if (!cookieLang || !cookieLang.includes(savedLang)) {
+        document.cookie = `googtrans=/auto/${savedLang};path=/`;
+        document.cookie = `googtrans=/auto/${savedLang};domain=.${window.location.hostname};path=/`;
+        location.reload(); // reload page with translation applied
+      }
+    }
+  }
+
+  // Save selected language when user changes it
+  function observeLanguageChange() {
+    const observer = new MutationObserver(() => {
+      const cookieLang = getCookie('googtrans');
+      if (cookieLang) {
+        const selectedLang = cookieLang.split('/').pop();
+        localStorage.setItem('preferredLanguage', selectedLang);
+      }
+    });
+    observer.observe(document.body, { attributes: true, childList: true, subtree: true });
+  }
+
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      applySavedLanguage();
+      observeLanguageChange();
+    }, 2000);
+  });
+</script>
 </body>
 </html>

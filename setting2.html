@@ -1,263 +1,269 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <title>Settings</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <link rel="icon" href="/Images/calicare logo.png" type="image/x-icon" />
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
-  <link rel="stylesheet" href="style.css">
-  <style>
-    body {
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #f3fbfb;
-      margin: 0;
-      padding: 0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      min-height: 100vh;
-      margin-bottom: 90px;
-    }
+  <head>
+    <meta charset="UTF-8" />
+    <title>Settings</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" href="/Images/calicare logo.png" type="image/x-icon" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"
+    />
+    <link rel="stylesheet" href="style.css" />
+    <style>
+      body {
+        font-family: "Segoe UI", sans-serif;
+        background-color: #f3fbfb;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        margin-bottom: 150px;
+      }
 
-    .settings-card {
-      padding: 30px;
-      width: 90%;
-      max-width: 500px;
-      text-align: center;
-      /* background: white; */
-      /* border-radius: 10px; */
-      /* box-shadow: 0 0px 15px rgba(0,0,0,0.2); */
-    }
+      .settings-card {
+        padding: 30px;
+        width: 90%;
+        max-width: 500px;
+        text-align: center;
+        /* background: white; */
+        /* border-radius: 10px; */
+        /* box-shadow: 0 0px 15px rgba(0,0,0,0.2); */
+      }
 
-    h2 {
-      margin-bottom: 25px;
-      color: #024c12;
-    }
+      h2 {
+        margin-bottom: 25px;
+        color: #024c12;
+      }
 
-    .setting-item2 {
-      /* display: flex; */
-      justify-content: space-between;
-      align-items: center;
-      margin: 15px 0;
-      padding: 10px 15px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      background-color: #fff;
-    }
-    .setting-item {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      margin: 15px 0;
-      padding: 5px 15px;
-      border: 1px solid #ccc;
-      border-radius: 8px;
-      background-color: #fff;
-    }
+      .setting-item2 {
+        /* display: flex; */
+        justify-content: space-between;
+        align-items: center;
+        margin: 15px 0;
+        padding: 10px 15px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        background-color: #fff;
+      }
+      .setting-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 15px 0;
+        padding: 5px 15px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        background-color: #fff;
+      }
 
-    .setting-label {
-      font-weight: bold;
-      color: #24D0D6;
-      font-size: 14px;
-    }
-    .setting-label2 {
-      font-weight: bold;
-      color: #9a9a9a;
-      font-size: 12px;
-    }
+      .setting-label {
+        font-weight: bold;
+        color: #24d0d6;
+        font-size: 14px;
+      }
+      .setting-label2 {
+        font-weight: bold;
+        color: #9a9a9a;
+        font-size: 12px;
+      }
 
-    .toggle-switch {
-      position: relative;
-      width: 40px;
-      height: 20px;
-    }
+      .toggle-switch {
+        position: relative;
+        width: 40px;
+        height: 20px;
+      }
 
-    .toggle-switch input {
-      opacity: 0;
-      width: 0;
-      height: 0;
-    }
+      .toggle-switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+      }
 
-    .slider {
-      position: absolute;
-      cursor: pointer;
-      top: 0; left: 0;
-      right: 0; bottom: 0;
-      background-color: #ccc;
-      transition: .4s;
-      border-radius: 24px;
-    }
+      .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #ccc;
+        transition: 0.4s;
+        border-radius: 24px;
+      }
 
-    .slider:before {
-      position: absolute;
-      content: "";
-      height: 12px; width: 12px;
-      left: 3px; bottom: 3px;
-      background-color: white;
-      transition: .4s;
-      border-radius: 50%;
-    }
+      .slider:before {
+        position: absolute;
+        content: "";
+        height: 12px;
+        width: 12px;
+        left: 3px;
+        bottom: 3px;
+        background-color: white;
+        transition: 0.4s;
+        border-radius: 50%;
+      }
 
-    input:checked + .slider {
-      background-color: #28a745;
-    }
+      input:checked + .slider {
+        background-color: #28a745;
+      }
 
-    input:checked + .slider:before {
-      transform: translateX(26px);
-    }
+      input:checked + .slider:before {
+        transform: translateX(26px);
+      }
 
-    .device-status {
-      width: 20px;
-      height: 20px;
-    }
+      .device-status {
+        width: 20px;
+        height: 20px;
+      }
 
-    select {
-      padding: 6px;
-      border-radius: 5px;
-      border: 1px solid #ccc;
-    }
+      select {
+        padding: 6px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+      }
 
-    .btn {
-      margin-top: 20px;
-      padding: 12px 20px;
-      border: none;
-      border-radius: 6px;
-      font-weight: bold;
-      font-size: 14px;
-      cursor: pointer;
-    }
+      .btn {
+        margin-top: 20px;
+        padding: 12px 20px;
+        border: none;
+        border-radius: 6px;
+        font-weight: bold;
+        font-size: 14px;
+        cursor: pointer;
+      }
 
-    .btn-export {
-      background-color: #ffffff;
-      color: rgb(20, 20, 20);
-      padding: 5px 10px;
-      border: none;
-      box-shadow: 0 0px 10px rgba(0,0,0,0.2);
-      border-radius: 6px;
-      font-weight: bold;
-      font-size: 14px;
-      cursor: pointer;
-    }
+      .btn-export {
+        background-color: #ffffff;
+        color: rgb(20, 20, 20);
+        padding: 5px 10px;
+        border: none;
+        box-shadow: 0 0px 10px rgba(0, 0, 0, 0.2);
+        border-radius: 6px;
+        font-weight: bold;
+        font-size: 14px;
+        cursor: pointer;
+      }
 
-    .btn-learn {
-      background-color: #007bff;
-      color: white;
-    }
-    .node-status {
-      font-size: 10px;
-      color: #024c12;
-      margin-top: 10px;
-      font-weight: bold;
-    }
-    .icon-label {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    /* .setting-label-group {
+      .btn-learn {
+        background-color: #007bff;
+        color: white;
+      }
+      .node-status {
+        font-size: 10px;
+        color: #024c12;
+        margin-top: 10px;
+        font-weight: bold;
+      }
+      .icon-label {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+      /* .setting-label-group {
       display: flex;
       flex-direction: column;
     } */
-    .setting-label-group {
-      display: flex;
-      align-items: start; /* vertical alignment */
-      flex-direction: column;
-      line-height: 0.0; /* reduce vertical spacing */
-    }
-
-    .top1 {
-      display: flex;
-      justify-content: left;
-      align-items: center;
-      flex-direction: row;
-      gap: 10px;
-      width: 100%;
-    }
-
-    .background-image {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      z-index: -1; /* Puts it behind everything */
-      width: 50vw;  /* Or set specific width/height */
-      height: 50vh;
-      object-fit: cover;
-      opacity: 1;  /* Optional: Make it faint */
-    }
-
-    @media (max-width: 768px) {
-      .settings-card {
-        padding: 20px;
-        width: 90%;
-        max-width: 100%;
+      .setting-label-group {
+        display: flex;
+        align-items: start; /* vertical alignment */
+        flex-direction: column;
+        line-height: 0; /* reduce vertical spacing */
       }
 
-      .setting-item {
-        padding: 10px 15px;
-      }
-      .setting-item2 {
-        padding: 10px 15px;
-      }
-    }
-    @media (max-width: 600px) {
-      .settings-card {
-        padding: 20px;
-        width: 90%;
-        max-width: 100%;
+      .top1 {
+        display: flex;
+        justify-content: left;
+        align-items: center;
+        flex-direction: row;
+        gap: 10px;
+        width: 100%;
       }
 
-      .setting-item {
-        padding: 10px 15px;
-      }
-      .setting-item2 {
-        padding: 10px 15px;
-      }
-      .setting-label {
-        font-size: 12px;
-      }
-      .setting-label2 {
-        font-size: 10px;
-      }
-      .node-status {
-        font-size: 8px;
-      }
-      .btn-export {
-        font-size: 12px;
-      }
-      .btn-learn {
-        font-size: 12px;
-      }
-      .btn {
-        font-size: 12px;
-      }
       .background-image {
-        width: 500vw; /* Full width on small screens */
-        height: auto; /* Maintain aspect ratio */
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        z-index: -1; /* Puts it behind everything */
+        width: 50vw; /* Or set specific width/height */
+        height: 50vh;
+        object-fit: cover;
+        opacity: 1; /* Optional: Make it faint */
       }
-    }
 
-    .dark-mode {
-      background-color: #121212;
-      color: #ffffff;
-    }
+      @media (max-width: 768px) {
+        .settings-card {
+          padding: 20px;
+          width: 90%;
+          max-width: 100%;
+        }
 
-    .dark-mode .setting-item,
-    .dark-mode .setting-item2 {
-      background-color: #1e1e1e;
-      border-color: #333;
-    }
+        .setting-item {
+          padding: 10px 15px;
+        }
+        .setting-item2 {
+          padding: 10px 15px;
+        }
+      }
+      @media (max-width: 600px) {
+        .settings-card {
+          padding: 20px;
+          width: 90%;
+          max-width: 100%;
+        }
 
-    .dark-mode .setting-label,
-    .dark-mode .setting-label2 {
-      color: #ffffff;
-    }
+        .setting-item {
+          padding: 10px 15px;
+        }
+        .setting-item2 {
+          padding: 10px 15px;
+        }
+        .setting-label {
+          font-size: 12px;
+        }
+        .setting-label2 {
+          font-size: 10px;
+        }
+        .node-status {
+          font-size: 8px;
+        }
+        .btn-export {
+          font-size: 12px;
+        }
+        .btn-learn {
+          font-size: 12px;
+        }
+        .btn {
+          font-size: 12px;
+        }
+        .background-image {
+          width: 500vw; /* Full width on small screens */
+          height: auto; /* Maintain aspect ratio */
+        }
+      }
 
-  </style>
-</head>
-<body>
-  <!-- <div class="settings-card">
+      .dark-mode {
+        background-color: #121212;
+        color: #ffffff;
+      }
+
+      .dark-mode .setting-item,
+      .dark-mode .setting-item2 {
+        background-color: #1e1e1e;
+        border-color: #333;
+      }
+
+      .dark-mode .setting-label,
+      .dark-mode .setting-label2 {
+        color: #ffffff;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- <div class="settings-card">
     <div class="top1">
         <img id="goBack" src="/Images/Back.png" alt="logo" width="20" height="20"  style="cursor:pointer;"/>
         <img src="/Images/necktrans.png" class="background-image" alt="Background">
@@ -369,470 +375,645 @@
 
   </div> -->
 
-<img class="mask" src="/Images/mask.png" alt="" />
+    <img class="mask" src="/Images/mask.png" alt="" />
     <img
       src="/Images/necktrans.png"
       class="background-image"
       alt="Background"
     />
 
-  <div class="settings-card">
-  <div class="top1">
-    <img id="goBack" src="/Images/Back.png" alt="logo" width="20" height="20" style="cursor:pointer;"/>
-    <!-- <img src="/Images/necktrans.png" class="background-image" alt="Background"> -->
-    <h2 data-i18n="setting">Settings</h2>
-  </div>
-
-  <p data-i18n="loggedInAs">Logged in as: <span id="userEmail">Loading...</span></p>
-
-  <div class="setting-item2">
-    <img id="deviceStatus" class="device-status" src="/Images/offline.png" alt="status"/>
-    <p id="node-status" class="node-status"></p>
-  </div>
-
-  <div class="setting-item">
-    <div class="icon-label">
-      <img src="/Images/bell.png" alt="" width="20" height="20">
-      <div class="setting-label-group">
-        <p class="setting-label" data-i18n="notifications">In-App Notifications</p>
-        <p class="setting-label2" data-i18n="notifyHelp">Receive notifications</p>
+    <div class="settings-card">
+      <div class="top1">
+        <img
+          id="goBack"
+          src="/Images/Back.png"
+          alt="logo"
+          width="20"
+          height="20"
+          style="cursor: pointer"
+        />
+        <!-- <img src="/Images/necktrans.png" class="background-image" alt="Background"> -->
+        <h2 data-i18n="setting">Settings</h2>
       </div>
-    </div>
-    <label class="toggle-switch">
-      <input type="checkbox" id="notifToggle">
-      <span class="slider"></span>
-    </label>
-  </div>
 
-  <div class="setting-item">
-    <div class="icon-label">
-      <img src="/Images/reminder.png" alt="" width="20" height="20">
-      <div class="setting-label-group">
-        <p class="setting-label" data-i18n="reminders">Reminder Alerts</p>
-        <p class="setting-label2" data-i18n="reminderHelp">Set reminders</p>
+      <p data-i18n="loggedInAs">
+        Logged in as: <span id="userEmail">Loading...</span>
+      </p>
+
+      <div class="setting-item2">
+        <img
+          id="deviceStatus"
+          class="device-status"
+          src="/Images/offline.png"
+          alt="status"
+        />
+        <p id="node-status" class="node-status"></p>
       </div>
-    </div>
-    <label class="toggle-switch">
-      <input type="checkbox" id="reminderToggle">
-      <span class="slider"></span>
-    </label>
-  </div>
 
-  <div class="setting-item">
-    <div class="icon-label">
-      <img src="/Images/Darkmode.png" alt="" width="20" height="20">
-      <div class="setting-label-group">
-        <p class="setting-label" data-i18n="darkMode">Dark Mode</p>
-        <p class="setting-label2" data-i18n="darkModeHelp">Set the Visuals of the App</p>
+      <div class="setting-item">
+        <div class="icon-label">
+          <img src="/Images/bell.png" alt="" width="20" height="20" />
+          <div class="setting-label-group">
+            <p class="setting-label" data-i18n="notifications">
+              In-App Notifications
+            </p>
+            <p class="setting-label2" data-i18n="notifyHelp">
+              Receive notifications
+            </p>
+          </div>
+        </div>
+        <label class="toggle-switch">
+          <input type="checkbox" id="notifToggle" />
+          <span class="slider"></span>
+        </label>
       </div>
-    </div>
-    <label class="toggle-switch">
-      <input type="checkbox" id="darkToggle">
-      <span class="slider"></span>
-    </label>
-  </div>
 
-  <div class="setting-item">
-    <div class="icon-label">
-      <img src="/Images/language.png" alt="" width="20" height="20">
-      <div class="setting-label-group">
-        <p class="setting-label" data-i18n="language">Language</p>
-        <p class="setting-label2" data-i18n="langHelp">Set your preferred language</p>
+      <div class="setting-item">
+        <div class="icon-label">
+          <img src="/Images/reminder.png" alt="" width="20" height="20" />
+          <div class="setting-label-group">
+            <p class="setting-label" data-i18n="reminders">Reminder Alerts</p>
+            <p class="setting-label2" data-i18n="reminderHelp">Set reminders</p>
+          </div>
+        </div>
+        <label class="toggle-switch">
+          <input type="checkbox" id="reminderToggle" />
+          <span class="slider"></span>
+        </label>
       </div>
-    </div>
 
-      <select id="languageSelect">
-    <option value="af">Afrikaans</option>
-    <option value="am">Amharic</option>
-    <option value="ar">Arabic</option>
-    <option value="bn">Bengali</option>
-    <option value="bo">Tibetan</option>
-    <option value="bg">Bulgarian</option>
-    <option value="ca">Catalan</option>
-    <option value="zh">Chinese</option>
-    <option value="hr">Croatian</option>
-    <option value="cs">Czech</option>
-    <option value="da">Danish</option>
-    <option value="nl">Dutch</option>
-    <option value="en" selected>English</option>
-    <option value="fa">Farsi</option>
-    <option value="fi">Finnish</option>
-    <option value="fr">French</option>
-    <option value="de">German</option>
-    <option value="el">Greek</option>
-    <option value="gu">Gujarati</option>
-    <option value="ha">Hausa</option>
-    <option value="he">Hebrew</option>
-    <option value="hi">Hindi</option>
-    <option value="hu">Hungarian</option>
-    <option value="ig">Igbo</option>
-    <option value="id">Indonesian</option>
-    <option value="it">Italian</option>
-    <option value="ja">Japanese</option>
-    <option value="kk">Kazakh</option>
-    <option value="km">Khmer</option>
-    <option value="ko">Korean</option>
-    <option value="ku">Kurdish</option>
-    <option value="lo">Lao</option>
-    <option value="ms">Malay</option>
-    <option value="mr">Marathi</option>
-    <option value="mn">Mongolian</option>
-    <option value="my">Burmese</option>
-    <option value="ne">Nepali</option>
-    <option value="no">Norwegian</option>
-    <option value="om">Oromo</option>
-    <option value="pa">Punjabi</option>
-    <option value="pl">Polish</option>
-    <option value="pt">Portuguese</option>
-    <option value="ro">Romanian</option>
-    <option value="ru">Russian</option>
-    <option value="sr">Serbian</option>
-    <option value="si">Sinhala</option>
-    <option value="sk">Slovak</option>
-    <option value="so">Somali</option>
-    <option value="es">Spanish</option>
-    <option value="sw">Swahili</option>
-    <option value="sv">Swedish</option>
-    <option value="ta">Tamil</option>
-    <option value="te">Telugu</option>
-    <option value="th">Thai</option>
-    <option value="tr">Turkish</option>
-    <option value="uk">Ukrainian</option>
-    <option value="ur">Urdu</option>
-    <option value="uz">Uzbek</option>
-    <option value="vi">Vietnamese</option>
-    <option value="xh">Xhosa</option>
-    <option value="yo">Yoruba</option>
-    <option value="zu">Zulu</option>
-  </select>
-  </div>
-
-  <div class="setting-item">
-    <div class="icon-label">
-      <img src="/Images/connect.png" alt="" width="20" height="20">
-      <div class="setting-label-group">
-        <p class="setting-label" data-i18n="connect">Device Connection</p>
-        <p class="setting-label2" data-i18n="connectHelp">Connect your device</p>
+      <div class="setting-item">
+        <div class="icon-label">
+          <img src="/Images/Darkmode.png" alt="" width="20" height="20" />
+          <div class="setting-label-group">
+            <p class="setting-label" data-i18n="darkMode">Dark Mode</p>
+            <p class="setting-label2" data-i18n="darkModeHelp">
+              Set the Visuals of the App
+            </p>
+          </div>
+        </div>
+        <label class="toggle-switch">
+          <input type="checkbox" id="darkToggle" />
+          <span class="slider"></span>
+        </label>
       </div>
-    </div>
-    <button id="device-stat" class="btn-export" data-i18n="connectDevice" onclick="connectToDevice()">Connect</button>
-  </div>
 
-  <div class="setting-item">
-    <div class="icon-label">
-      <img src="/Images/export.png" alt="" width="20" height="20">
-      <div class="setting-label-group">
-        <p class="setting-label" data-i18n="export">Export Data</p>
-        <p class="setting-label2" data-i18n="exportHelp">Share your data</p>
+      <!-- <div class="setting-item">
+        <div class="icon-label">
+          <img src="/Images/language.png" alt="" width="20" height="20" />
+          <div class="setting-label-group">
+            <p class="setting-label" data-i18n="language">Language</p>
+            <p class="setting-label2" data-i18n="langHelp">
+              Set your preferred language
+            </p>
+          </div>
+        </div>
+
+        <select id="languageSelect">
+          <option value="af">Afrikaans</option>
+          <option value="am">Amharic</option>
+          <option value="ar">Arabic</option>
+          <option value="bn">Bengali</option>
+          <option value="bo">Tibetan</option>
+          <option value="bg">Bulgarian</option>
+          <option value="ca">Catalan</option>
+          <option value="zh">Chinese</option>
+          <option value="hr">Croatian</option>
+          <option value="cs">Czech</option>
+          <option value="da">Danish</option>
+          <option value="nl">Dutch</option>
+          <option value="en" selected>English</option>
+          <option value="fa">Farsi</option>
+          <option value="fi">Finnish</option>
+          <option value="fr">French</option>
+          <option value="de">German</option>
+          <option value="el">Greek</option>
+          <option value="gu">Gujarati</option>
+          <option value="ha">Hausa</option>
+          <option value="he">Hebrew</option>
+          <option value="hi">Hindi</option>
+          <option value="hu">Hungarian</option>
+          <option value="ig">Igbo</option>
+          <option value="id">Indonesian</option>
+          <option value="it">Italian</option>
+          <option value="ja">Japanese</option>
+          <option value="kk">Kazakh</option>
+          <option value="km">Khmer</option>
+          <option value="ko">Korean</option>
+          <option value="ku">Kurdish</option>
+          <option value="lo">Lao</option>
+          <option value="ms">Malay</option>
+          <option value="mr">Marathi</option>
+          <option value="mn">Mongolian</option>
+          <option value="my">Burmese</option>
+          <option value="ne">Nepali</option>
+          <option value="no">Norwegian</option>
+          <option value="om">Oromo</option>
+          <option value="pa">Punjabi</option>
+          <option value="pl">Polish</option>
+          <option value="pt">Portuguese</option>
+          <option value="ro">Romanian</option>
+          <option value="ru">Russian</option>
+          <option value="sr">Serbian</option>
+          <option value="si">Sinhala</option>
+          <option value="sk">Slovak</option>
+          <option value="so">Somali</option>
+          <option value="es">Spanish</option>
+          <option value="sw">Swahili</option>
+          <option value="sv">Swedish</option>
+          <option value="ta">Tamil</option>
+          <option value="te">Telugu</option>
+          <option value="th">Thai</option>
+          <option value="tr">Turkish</option>
+          <option value="uk">Ukrainian</option>
+          <option value="ur">Urdu</option>
+          <option value="uz">Uzbek</option>
+          <option value="vi">Vietnamese</option>
+          <option value="xh">Xhosa</option>
+          <option value="yo">Yoruba</option>
+          <option value="zu">Zulu</option>
+        </select>
+      </div> -->
+
+      <div class="setting-item">
+        <div class="icon-label">
+          <img src="/Images/language.png" alt="" width="20" height="20" />
+          <div class="setting-label-group">
+            <p class="setting-label">Language</p>
+            <p class="setting-label2">Translate this page</p>
+          </div>
+        </div>
+        <div id="google_translate_element"></div>
       </div>
-    </div>
-    <button class="btn-export" data-i18n="exportBtn" onclick="window.location.href='Export.html'">Export health Data</button>
-  </div>
 
-  <div class="setting-item">
-    <div class="icon-label">
-      <img src="/Images/export.png" alt="" width="20" height="20">
-      <div class="setting-label-group">
-        <p class="setting-label" data-i18n="about">About Calicare</p>
-        <p class="setting-label2" data-i18n="aboutHelp">Learn more about us</p>
+      <div class="setting-item">
+        <div class="icon-label">
+          <img src="/Images/connect.png" alt="" width="20" height="20" />
+          <div class="setting-label-group">
+            <p class="setting-label" data-i18n="connect">Device Connection</p>
+            <p class="setting-label2" data-i18n="connectHelp">
+              Connect your device
+            </p>
+          </div>
+        </div>
+        <button
+          id="device-stat"
+          class="btn-export"
+          data-i18n="connectDevice"
+          onclick="connectToDevice()"
+        >
+          Connect
+        </button>
       </div>
+
+      <div class="setting-item">
+        <div class="icon-label">
+          <img src="/Images/export.png" alt="" width="20" height="20" />
+          <div class="setting-label-group">
+            <p class="setting-label" data-i18n="export">Export Data</p>
+            <p class="setting-label2" data-i18n="exportHelp">Share your data</p>
+          </div>
+        </div>
+        <button
+          class="btn-export"
+          data-i18n="exportBtn"
+          onclick="window.location.href='Export.html'"
+        >
+          Export health Data
+        </button>
+      </div>
+
+      <div class="setting-item">
+        <div class="icon-label">
+          <img src="/Images/export.png" alt="" width="20" height="20" />
+          <div class="setting-label-group">
+            <p class="setting-label" data-i18n="about">About Calicare</p>
+            <p class="setting-label2" data-i18n="aboutHelp">
+              Learn more about us
+            </p>
+          </div>
+        </div>
+        <button
+          class="btn-export"
+          data-i18n="aboutBtn"
+          onclick="window.location.href='/learn-more'"
+        >
+          Learn More
+        </button>
+      </div>
+
+      
     </div>
-    <button class="btn-export" data-i18n="aboutBtn" onclick="window.location.href='/learn-more'">Learn More</button>
-  </div>
-</div>
 
-        <!-- 🌐 Bottom Navigation -->
-<nav class="bottom-nav">
-  <a href="index2.html" class="nav-item">
-    <img src="Images/home.png" alt="Home" />
-    <span>Home</span>
-  </a>
-  <a href="userdata2.html" class="nav-item">
-    <img src="Images/data.png" alt="Live" />
-    <span>Data Analytics</span>
-  </a>
-  <a href="Exercise.html" class="nav-item">
-    <img src="Images/exercise.png" alt="Profile" />
-    <span>Exercise</span>
-  </a>
-  <a href="profile.html" class="nav-item active">
-    <img src="Images/profile.png" alt="Settings" />
-    <span>Profile</span>
-  </a>
-</nav>
+    <!-- 🌐 Bottom Navigation -->
+    <nav class="bottom-nav">
+      <a href="index2.html" class="nav-item">
+        <img src="Images/home.png" alt="Home" />
+        <span>Home</span>
+      </a>
+      <a href="userdata2.html" class="nav-item">
+        <img src="Images/data.png" alt="Live" />
+        <span>Data Analytics</span>
+      </a>
+      <a href="Exercise.html" class="nav-item">
+        <img src="Images/exercise.png" alt="Profile" />
+        <span>Exercise</span>
+      </a>
+      <a href="profile.html" class="nav-item active">
+        <img src="Images/profile.png" alt="Settings" />
+        <span>Profile</span>
+      </a>
+    </nav>
 
+    <script>
+      const currentPage = location.pathname.split("/").pop();
+      document.querySelectorAll(".bottom-nav .nav-item").forEach((item) => {
+        if (item.getAttribute("href") === currentPage) {
+          item.classList.add("active");
+        }
+      });
+    </script>
 
-<script>
-  const currentPage = location.pathname.split("/").pop();
-  document.querySelectorAll(".bottom-nav .nav-item").forEach((item) => {
-    if (item.getAttribute("href") === currentPage) {
-      item.classList.add("active");
+    <script>
+      // --- Cleanup old keys ---
+
+      // --- Apply Theme ---
+      function applyTheme(theme) {
+        if (theme === "dark") {
+          document.body.classList.add("dark-mode");
+        } else {
+          document.body.classList.remove("dark-mode");
+        }
+      }
+
+      // --- Language Map ---
+      const languageMap = {
+        en: {
+          settings: "Settings",
+          notifications: "In-App Notifications",
+          notifyHelp: "Receive notifications",
+          reminder: "Reminder Alerts",
+          reminderHelp: "Set reminders",
+          dark: "Dark Mode",
+          darkHelp: "Set the Visuals of the App",
+          lang: "Language",
+          langHelp: "Set your preferred language",
+          connect: "Device Connection",
+          connectHelp: "Connect your device",
+          export: "Export Data",
+          exportHelp: "Share your data",
+          about: "About Calicare",
+          aboutHelp: "Learn more about us",
+          exportBtn: "Export health Data",
+          aboutBtn: "Learn More",
+        },
+        fr: {
+          settings: "Paramètres",
+          notifications: "Notifications intégrées",
+          notifyHelp: "Recevoir des notifications",
+          reminder: "Alertes de rappel",
+          reminderHelp: "Définir des rappels",
+          dark: "Mode sombre",
+          darkHelp: "Définir l'apparence de l'application",
+          lang: "Langue",
+          langHelp: "Définir votre langue préférée",
+          connect: "Connexion de l'appareil",
+          connectHelp: "Connectez votre appareil",
+          export: "Exporter les données",
+          exportHelp: "Partager vos données",
+          about: "À propos de Calicare",
+          aboutHelp: "En savoir plus sur nous",
+          exportBtn: "Exporter les données",
+          aboutBtn: "En savoir plus",
+        },
+        yo: {
+          settings: "Eto",
+          notifications: "Ifohunsafẹfẹ inu",
+          notifyHelp: "Gba awọn ifitonileti",
+          reminder: "Ikilọ Ikilọ",
+          reminderHelp: "Ṣeto awọn ikilọ",
+          dark: "Ipo Dudu",
+          darkHelp: "Ṣeto awọn iwo ti ohun elo",
+          lang: "Ede",
+          langHelp: "Ṣeto ede ti o fẹ",
+          connect: "Asopọ Ẹrọ",
+          connectHelp: "So ẹrọ pọ",
+          export: "Gbejade Data",
+          exportHelp: "Pin data rẹ",
+          about: "Nipa Calicare",
+          aboutHelp: "Kọ ẹkọ diẹ sii nipa wa",
+          exportBtn: "Gbejade data ilera",
+          aboutBtn: "Kọ ẹkọ diẹ sii",
+        },
+        ha: {
+          profile: "Bayanan mai amfani",
+          personalInfo: "Bayanan sirri",
+          username: "Sunan mai amfani",
+          email: "Imel",
+          phone: "Waya",
+          gender: "Jinsi",
+          setting: "Saituna",
+          back: "Koma zuwa Dashboard",
+          logout: "Fita",
+
+          login_title: "Shiga",
+          login_heading: "Barka da dawowa",
+          password: "Kalmar sirri",
+          login_button: "Shiga",
+          rememberMe: "Tuna ni",
+          forgotPassword: "Ka manta kalmar sirri?",
+          signup: "Yi rijista",
+
+          notifications: "Sanarwa na ciki",
+          notifyHelp: "Karɓi sanarwa",
+          reminders: "Tunatarwa",
+          reminderHelp: "Samu tunatarwa na yau da kullun",
+          darkMode: "Yanayin Duɗi",
+          darkModeHelp: "Canza haske zuwa duɗi",
+          language: "Harshe",
+        },
+        ig: {
+          profile: "Profaịlụ",
+          personalInfo: "Ozi nke onwe",
+          username: "Aha ojii",
+          email: "Email",
+          phone: "Ekwentị",
+          gender: "Okike",
+          setting: "Ntọala",
+          back: "Laghachi na Dashboard",
+          logout: "Pụọ",
+
+          login_title: "Banye",
+          login_heading: "Nnọọ na azụ",
+          password: "Okwuntughe",
+          login_button: "Banye",
+          rememberMe: "Cheta m",
+          forgotPassword: "Chefuru okwuntughe?",
+          signup: "Debanye aha",
+
+          notifications: "Nkwupụta n'ime",
+          notifyHelp: "Nnata nkwupụta",
+          reminders: "Ncheta",
+          reminderHelp: "Nweta ncheta kwa ụbọchị",
+          darkMode: "Ọnọdụ ọchịchịrị",
+          darkModeHelp: "Gbanwee ọkụ na ọchịchịrị",
+          language: "Asụsụ",
+        },
+        zh: {
+          profile: "个人资料",
+          personalInfo: "个人信息",
+          username: "用户名",
+          email: "电子邮件",
+          phone: "电话",
+          gender: "性别",
+          setting: "设置",
+          back: "返回仪表板",
+          logout: "退出登录",
+
+          login_title: "登录",
+          login_heading: "欢迎回来",
+          password: "密码",
+          login_button: "登录",
+          rememberMe: "记住我",
+          forgotPassword: "忘记密码？",
+          signup: "注册",
+
+          notifications: "内置通知",
+          notifyHelp: "接收通知提醒",
+          reminders: "提醒",
+          reminderHelp: "每天获取提醒",
+          darkMode: "深色模式",
+          darkModeHelp: "在明亮和深色主题之间切换",
+          language: "语言",
+        },
+      };
+
+      // --- Apply Translation ---
+      function applyLanguage(lang) {
+        const text = languageMap[lang];
+        if (!text) return;
+
+        document.querySelector("h2").innerText = text.settings;
+        document
+          .querySelectorAll(".setting-item")[0]
+          .querySelector(".setting-label").innerText = text.notifications;
+        document
+          .querySelectorAll(".setting-item")[0]
+          .querySelector(".setting-label2").innerText = text.notifyHelp;
+
+        document
+          .querySelectorAll(".setting-item")[1]
+          .querySelector(".setting-label").innerText = text.reminder;
+        document
+          .querySelectorAll(".setting-item")[1]
+          .querySelector(".setting-label2").innerText = text.reminderHelp;
+
+        document
+          .querySelectorAll(".setting-item")[2]
+          .querySelector(".setting-label").innerText = text.dark;
+        document
+          .querySelectorAll(".setting-item")[2]
+          .querySelector(".setting-label2").innerText = text.darkHelp;
+
+        document
+          .querySelectorAll(".setting-item")[3]
+          .querySelector(".setting-label").innerText = text.lang;
+        document
+          .querySelectorAll(".setting-item")[3]
+          .querySelector(".setting-label2").innerText = text.langHelp;
+
+        document
+          .querySelectorAll(".setting-item")[4]
+          .querySelector(".setting-label").innerText = text.connect;
+        document
+          .querySelectorAll(".setting-item")[4]
+          .querySelector(".setting-label2").innerText = text.connectHelp;
+
+        document
+          .querySelectorAll(".setting-item")[5]
+          .querySelector(".setting-label").innerText = text.export;
+        document
+          .querySelectorAll(".setting-item")[5]
+          .querySelector(".setting-label2").innerText = text.exportHelp;
+        document
+          .querySelectorAll(".setting-item")[5]
+          .querySelector("button").innerText = text.exportBtn;
+
+        document
+          .querySelectorAll(".setting-item")[6]
+          .querySelector(".setting-label").innerText = text.about;
+        document
+          .querySelectorAll(".setting-item")[6]
+          .querySelector(".setting-label2").innerText = text.aboutHelp;
+        document
+          .querySelectorAll(".setting-item")[6]
+          .querySelector("button").innerText = text.aboutBtn;
+      }
+
+      // --- Load saved settings ---
+      document.getElementById("notifToggle").checked =
+        localStorage.getItem("notif") === "true";
+      document.getElementById("reminderToggle").checked =
+        localStorage.getItem("reminder") === "true";
+
+      const savedTheme = localStorage.getItem("theme") || "light";
+      applyTheme(savedTheme);
+      document.getElementById("darkToggle").checked = savedTheme === "dark";
+
+      const savedLang = localStorage.getItem("lang") || "en";
+      document.getElementById("languageSelect").value = savedLang;
+      applyLanguage(savedLang);
+
+      // --- Save on change ---
+      document.getElementById("notifToggle").onchange = (e) =>
+        localStorage.setItem("notif", e.target.checked);
+
+      document.getElementById("reminderToggle").onchange = (e) =>
+        localStorage.setItem("reminder", e.target.checked);
+
+      document.getElementById("darkToggle").onchange = (e) => {
+        const newTheme = e.target.checked ? "dark" : "light";
+        localStorage.setItem("theme", newTheme);
+        applyTheme(newTheme);
+      };
+
+      document.getElementById("languageSelect").onchange = (e) => {
+        const newLang = e.target.value;
+        localStorage.setItem("lang", newLang);
+        applyLanguage(newLang);
+      };
+
+      // --- Go Back ---
+      document.getElementById("goBack").addEventListener("click", () => {
+        window.history.back();
+      });
+
+      // --- Simulated API check for NodeMCU ---
+      function checkDeviceStatus() {
+        fetch("/nodemcu-status")
+          .then((res) => res.json())
+          .then((data) => {
+            const statusImg = document.getElementById("deviceStatus");
+            statusImg.src = data.online
+              ? "/Images/online.png"
+              : "/Images/offline.png";
+            document.getElementById("node-status").innerText = data.online
+              ? "Online"
+              : "Offline";
+          })
+          .catch(() => {
+            document.getElementById("deviceStatus").src = "/Images/offline.png";
+            document.getElementById("node-status").innerText = "Offline";
+          });
+      }
+
+      // Check device status on load
+      checkDeviceStatus();
+
+      // --- Device connection (Bluetooth simulation) ---
+      async function connectDevice() {
+        try {
+          const device = await navigator.bluetooth.requestDevice({
+            acceptAllDevices: true,
+          });
+          alert("Connected to: " + device.name);
+        } catch (err) {
+          alert("Bluetooth connection failed: " + err.message);
+        }
+      }
+
+      // --- Go Back ---
+      document.getElementById("goBack").addEventListener("click", () => {
+        window.history.back();
+      });
+    </script>
+
+    <script src="/app-setting.js"></script>
+
+    <!-- Google Translate -->
+    <!-- <div id="google_translate_element"></div>
+
+    <script type="text/javascript">
+      function googleTranslateElementInit() {
+        new google.translate.TranslateElement(
+          {
+            pageLanguage: "en",
+            includedLanguages: "en,fr,yo,ha,ig,zh,es,de,ar,sw",
+            layout: google.translate.TranslateElement.InlineLayout.HORIZONTAL,
+          },
+          "google_translate_element"
+        );
+      }
+    </script>
+
+    <script
+      type="text/javascript"
+      src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
+    ></script> -->
+
+<div id="google_translate_element"></div>
+
+<script type="text/javascript">
+  function googleTranslateElementInit() {
+    new google.translate.TranslateElement(
+      {
+        pageLanguage: 'en',
+        includedLanguages:
+          'en,af,fr,es,yo,ha,ig,zh,zh-CN,ar,hi,pt,ru,ja,de,ko,it,vi,tr,id,sw,pl,nl,th,el,he,fa,ms,bn,ur,ta,te,mr,gu,pa,uk,ro,da,sv,no,fi,hu,cs,ca,hr,sr,bg,sk,zu,xh,am,so,om,mg,ne,si,ku,kk,uz,my,km,lo,bo,mn',
+        layout: google.translate.TranslateElement.InlineLayout.HORIZONTAL
+      },
+      'google_translate_element'
+    );
+  }
+
+  // Wait for the Google Translate iframe to load and then apply saved language
+  function restoreLanguagePreference() {
+    const savedLang = localStorage.getItem('language');
+    if (savedLang) {
+      const iframe = document.querySelector('iframe.goog-te-menu-frame');
+      if (!iframe) return;
+      const innerDoc = iframe.contentDocument || iframe.contentWindow.document;
+      const langElements = innerDoc.querySelectorAll('.goog-te-menu2-item span.text');
+      langElements.forEach(el => {
+        if (el.innerHTML.toLowerCase().indexOf(savedLang.toLowerCase()) > -1) {
+          el.click();
+        }
+      });
     }
+  }
+
+  // Observe changes and store selected language
+  function storeLanguagePreference() {
+    const observer = new MutationObserver(() => {
+      const cookieLang = getCookie('googtrans');
+      if (cookieLang) {
+        const selectedLang = cookieLang.split('/').pop();
+        localStorage.setItem('language', selectedLang);
+      }
+    });
+    observer.observe(document.body, { attributes: true, childList: true, subtree: true });
+  }
+
+  function getCookie(name) {
+    const value = `; ${document.cookie}`;
+    const parts = value.split(`; ${name}=`);
+    if (parts.length === 2) return parts.pop().split(';').shift();
+  }
+
+  // When Google Translate is loaded, restore the last language
+  window.addEventListener('load', () => {
+    setTimeout(() => {
+      restoreLanguagePreference();
+      storeLanguagePreference();
+    }, 2000);
   });
 </script>
 
-<script>
-  // --- Cleanup old keys ---
-
-  // --- Apply Theme ---
-  function applyTheme(theme) {
-    if (theme === "dark") {
-      document.body.classList.add("dark-mode");
-    } else {
-      document.body.classList.remove("dark-mode");
-    }
-  }
-
-  // --- Language Map ---
-  const languageMap = {
-    en: {
-      settings: "Settings",
-      notifications: "In-App Notifications",
-      notifyHelp: "Receive notifications",
-      reminder: "Reminder Alerts",
-      reminderHelp: "Set reminders",
-      dark: "Dark Mode",
-      darkHelp: "Set the Visuals of the App",
-      lang: "Language",
-      langHelp: "Set your preferred language",
-      connect: "Device Connection",
-      connectHelp: "Connect your device",
-      export: "Export Data",
-      exportHelp: "Share your data",
-      about: "About Calicare",
-      aboutHelp: "Learn more about us",
-      exportBtn: "Export health Data",
-      aboutBtn: "Learn More",
-    },
-    fr: {
-      settings: "Paramètres",
-      notifications: "Notifications intégrées",
-      notifyHelp: "Recevoir des notifications",
-      reminder: "Alertes de rappel",
-      reminderHelp: "Définir des rappels",
-      dark: "Mode sombre",
-      darkHelp: "Définir l'apparence de l'application",
-      lang: "Langue",
-      langHelp: "Définir votre langue préférée",
-      connect: "Connexion de l'appareil",
-      connectHelp: "Connectez votre appareil",
-      export: "Exporter les données",
-      exportHelp: "Partager vos données",
-      about: "À propos de Calicare",
-      aboutHelp: "En savoir plus sur nous",
-      exportBtn: "Exporter les données",
-      aboutBtn: "En savoir plus",
-    },
-    yo: {
-      settings: "Eto",
-      notifications: "Ifohunsafẹfẹ inu",
-      notifyHelp: "Gba awọn ifitonileti",
-      reminder: "Ikilọ Ikilọ",
-      reminderHelp: "Ṣeto awọn ikilọ",
-      dark: "Ipo Dudu",
-      darkHelp: "Ṣeto awọn iwo ti ohun elo",
-      lang: "Ede",
-      langHelp: "Ṣeto ede ti o fẹ",
-      connect: "Asopọ Ẹrọ",
-      connectHelp: "So ẹrọ pọ",
-      export: "Gbejade Data",
-      exportHelp: "Pin data rẹ",
-      about: "Nipa Calicare",
-      aboutHelp: "Kọ ẹkọ diẹ sii nipa wa",
-      exportBtn: "Gbejade data ilera",
-      aboutBtn: "Kọ ẹkọ diẹ sii",
-    },
-  ha: {
-    profile: "Bayanan mai amfani",
-    personalInfo: "Bayanan sirri",
-    username: "Sunan mai amfani",
-    email: "Imel",
-    phone: "Waya",
-    gender: "Jinsi",
-    setting: "Saituna",
-    back: "Koma zuwa Dashboard",
-    logout: "Fita",
-
-    login_title: "Shiga",
-    login_heading: "Barka da dawowa",
-    password: "Kalmar sirri",
-    login_button: "Shiga",
-    rememberMe: "Tuna ni",
-    forgotPassword: "Ka manta kalmar sirri?",
-    signup: "Yi rijista",
-
-    notifications: "Sanarwa na ciki",
-    notifyHelp: "Karɓi sanarwa",
-    reminders: "Tunatarwa",
-    reminderHelp: "Samu tunatarwa na yau da kullun",
-    darkMode: "Yanayin Duɗi",
-    darkModeHelp: "Canza haske zuwa duɗi",
-    language: "Harshe",
-  },
-  ig: {
-    profile: "Profaịlụ",
-    personalInfo: "Ozi nke onwe",
-    username: "Aha ojii",
-    email: "Email",
-    phone: "Ekwentị",
-    gender: "Okike",
-    setting: "Ntọala",
-    back: "Laghachi na Dashboard",
-    logout: "Pụọ",
-
-    login_title: "Banye",
-    login_heading: "Nnọọ na azụ",
-    password: "Okwuntughe",
-    login_button: "Banye",
-    rememberMe: "Cheta m",
-    forgotPassword: "Chefuru okwuntughe?",
-    signup: "Debanye aha",
-
-    notifications: "Nkwupụta n'ime",
-    notifyHelp: "Nnata nkwupụta",
-    reminders: "Ncheta",
-    reminderHelp: "Nweta ncheta kwa ụbọchị",
-    darkMode: "Ọnọdụ ọchịchịrị",
-    darkModeHelp: "Gbanwee ọkụ na ọchịchịrị",
-    language: "Asụsụ",
-  },
-  zh: {
-    profile: "个人资料",
-    personalInfo: "个人信息",
-    username: "用户名",
-    email: "电子邮件",
-    phone: "电话",
-    gender: "性别",
-    setting: "设置",
-    back: "返回仪表板",
-    logout: "退出登录",
-
-    login_title: "登录",
-    login_heading: "欢迎回来",
-    password: "密码",
-    login_button: "登录",
-    rememberMe: "记住我",
-    forgotPassword: "忘记密码？",
-    signup: "注册",
-
-    notifications: "内置通知",
-    notifyHelp: "接收通知提醒",
-    reminders: "提醒",
-    reminderHelp: "每天获取提醒",
-    darkMode: "深色模式",
-    darkModeHelp: "在明亮和深色主题之间切换",
-    language: "语言",
-  },
-  };
-
-  // --- Apply Translation ---
-  function applyLanguage(lang) {
-    const text = languageMap[lang];
-    if (!text) return;
-
-    document.querySelector("h2").innerText = text.settings;
-    document.querySelectorAll(".setting-item")[0].querySelector(".setting-label").innerText = text.notifications;
-    document.querySelectorAll(".setting-item")[0].querySelector(".setting-label2").innerText = text.notifyHelp;
-
-    document.querySelectorAll(".setting-item")[1].querySelector(".setting-label").innerText = text.reminder;
-    document.querySelectorAll(".setting-item")[1].querySelector(".setting-label2").innerText = text.reminderHelp;
-
-    document.querySelectorAll(".setting-item")[2].querySelector(".setting-label").innerText = text.dark;
-    document.querySelectorAll(".setting-item")[2].querySelector(".setting-label2").innerText = text.darkHelp;
-
-    document.querySelectorAll(".setting-item")[3].querySelector(".setting-label").innerText = text.lang;
-    document.querySelectorAll(".setting-item")[3].querySelector(".setting-label2").innerText = text.langHelp;
-
-    document.querySelectorAll(".setting-item")[4].querySelector(".setting-label").innerText = text.connect;
-    document.querySelectorAll(".setting-item")[4].querySelector(".setting-label2").innerText = text.connectHelp;
-
-    document.querySelectorAll(".setting-item")[5].querySelector(".setting-label").innerText = text.export;
-    document.querySelectorAll(".setting-item")[5].querySelector(".setting-label2").innerText = text.exportHelp;
-    document.querySelectorAll(".setting-item")[5].querySelector("button").innerText = text.exportBtn;
-
-    document.querySelectorAll(".setting-item")[6].querySelector(".setting-label").innerText = text.about;
-    document.querySelectorAll(".setting-item")[6].querySelector(".setting-label2").innerText = text.aboutHelp;
-    document.querySelectorAll(".setting-item")[6].querySelector("button").innerText = text.aboutBtn;
-  }
-
-  // --- Load saved settings ---
-  document.getElementById("notifToggle").checked =
-    localStorage.getItem("notif") === "true";
-  document.getElementById("reminderToggle").checked =
-    localStorage.getItem("reminder") === "true";
-
-  const savedTheme = localStorage.getItem("theme") || "light";
-  applyTheme(savedTheme);
-  document.getElementById("darkToggle").checked = savedTheme === "dark";
-
-  const savedLang = localStorage.getItem("lang") || "en";
-  document.getElementById("languageSelect").value = savedLang;
-  applyLanguage(savedLang);
-
-  // --- Save on change ---
-  document.getElementById("notifToggle").onchange = (e) =>
-    localStorage.setItem("notif", e.target.checked);
-
-  document.getElementById("reminderToggle").onchange = (e) =>
-    localStorage.setItem("reminder", e.target.checked);
-
-  document.getElementById("darkToggle").onchange = (e) => {
-    const newTheme = e.target.checked ? "dark" : "light";
-    localStorage.setItem("theme", newTheme);
-    applyTheme(newTheme);
-  };
-
-  document.getElementById("languageSelect").onchange = (e) => {
-    const newLang = e.target.value;
-    localStorage.setItem("lang", newLang);
-    applyLanguage(newLang);
-  };
-
-  // --- Go Back ---
-  document.getElementById("goBack").addEventListener("click", () => {
-    window.history.back();
-  });
-
-
-  // --- Simulated API check for NodeMCU ---
-  function checkDeviceStatus() {
-    fetch("/nodemcu-status")
-      .then((res) => res.json())
-      .then((data) => {
-        const statusImg = document.getElementById("deviceStatus");
-        statusImg.src = data.online ? "/Images/online.png" : "/Images/offline.png";
-        document.getElementById("node-status").innerText = data.online
-          ? "Online"
-          : "Offline";
-      })
-      .catch(() => {
-        document.getElementById("deviceStatus").src = "/Images/offline.png";
-        document.getElementById("node-status").innerText = "Offline";
-      });
-  }
-
-  // Check device status on load
-  checkDeviceStatus();
-
-  // --- Device connection (Bluetooth simulation) ---
-  async function connectDevice() {
-    try {
-      const device = await navigator.bluetooth.requestDevice({
-        acceptAllDevices: true,
-      });
-      alert("Connected to: " + device.name);
-    } catch (err) {
-      alert("Bluetooth connection failed: " + err.message);
-    }
-  }
-
-  // --- Go Back ---
-  document.getElementById("goBack").addEventListener("click", () => {
-    window.history.back();
-  });
+<script type="text/javascript" 
+  src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit">
 </script>
 
-<script src="/app-setting.js"></script>
-</body>
+
+
+  </body>
 </html>
-
