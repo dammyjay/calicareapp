@@ -147,6 +147,9 @@
         <p>🌡️ EMG Reading: <span id="liveTemp">--</span> %</p>
         <!-- <p>💧 Humidity: <span id="liveHum">--</span> %</p> -->
         <p>🆔 Device ID: <span id="liveDeviceId">--</span></p>
+        <p>🔋 Battery: <span id="batt">--</span> %</p>
+        <!-- strain message-->
+        <p>Strain: <span id="strain">--</span></p>
       </div>
       <div class="connectbtn">
         <!-- <p id="node-status"></p> -->
@@ -647,13 +650,15 @@
 
               log(`NeckGuard says: ${received}`);
 
-              const [email, temp, hum, deviceId] = received
+              const [email, temp, hum, deviceId, strainMsg] = received
                 .split(",")
                 .map((s) => s.trim());
 
               // Optional UI update:
               document.getElementById("liveTemp").textContent = temp;
               document.getElementById("liveDeviceId").textContent = deviceId;
+              document.getElementById("batt").textContent = hum; // Assuming humidity is used for battery
+              document.getElementById("strain").textContent = strainMsg; // Update strain message
 
               // Now send to cloud backend
               await fetch("https://calicareapp.up.railway.app/postData2", {
